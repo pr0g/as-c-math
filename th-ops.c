@@ -1,5 +1,4 @@
 #include "th-ops.h"
-#include "th-const.h"
 
 #include <math.h>
 

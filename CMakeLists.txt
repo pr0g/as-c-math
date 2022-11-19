@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.22)
-project(thh-math LANGUAGES C)
+project(th-math LANGUAGES C)
 
 include(FetchContent)
 
 add_library(${PROJECT_NAME})
-target_sources(${PROJECT_NAME} PRIVATE th-ops.c th-const.c)
+target_sources(${PROJECT_NAME} PRIVATE th-ops.c)
 target_include_directories(
-  ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>)
 target_compile_features(${PROJECT_NAME} PRIVATE c_std_99)
 
 option(THH_MATH_ENABLE_TEST "Enable testing" OFF)
@@ -21,5 +21,4 @@ if(THH_MATH_ENABLE_TEST)
   target_sources(${PROJECT_NAME}-test PRIVATE test.c)
   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME} unity)
   target_compile_features(${PROJECT_NAME}-test PRIVATE c_std_99)
-  # set_target_properties(${PROJECT_NAME}-test PROPERTIES LINKER_LANGUAGE C)
 endif()
