@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.22)
-project(th-math LANGUAGES C)
+project(as-c-math LANGUAGES C)
 
 include(FetchContent)
 
 add_library(${PROJECT_NAME})
-target_sources(${PROJECT_NAME} PRIVATE th-ops.c)
+target_sources(${PROJECT_NAME} PRIVATE as-ops.c)
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>)
 target_compile_features(${PROJECT_NAME} PRIVATE c_std_99)
 
-option(THH_MATH_ENABLE_TEST "Enable testing" OFF)
+option(AS_MATH_ENABLE_TEST "Enable testing" OFF)
 
-if(THH_MATH_ENABLE_TEST)
+if(AS_MATH_ENABLE_TEST)
   FetchContent_Declare(
     unity
     GIT_REPOSITORY https://github.com/ThrowTheSwitch/Unity.git

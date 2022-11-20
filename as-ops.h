@@ -1,7 +1,7 @@
 #ifndef TH_OPS_MATH_H
 #define TH_OPS_MATH_H
 
-#include "th-types.h"
+#include "as-types.h"
 
 // constants
 extern const float k_pi;
