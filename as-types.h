@@ -1,5 +1,5 @@
-#ifndef TH_TYPES_MATH_H
-#define TH_TYPES_MATH_H
+#ifndef AS_TYPES_MATH_H
+#define AS_TYPES_MATH_H
 
 typedef struct as_vec2f {
   float x;
@@ -83,4 +83,4 @@ typedef struct as_plane {
   as_vec3f normal;
 } as_plane;
 
-#endif // TH_TYPES_MATH_H
+#endif // AS_TYPES_MATH_H

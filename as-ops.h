@@ -1,5 +1,5 @@
-#ifndef TH_OPS_MATH_H
-#define TH_OPS_MATH_H
+#ifndef AS_OPS_MATH_H
+#define AS_OPS_MATH_H
 
 #include "as-types.h"
 
@@ -8,6 +8,10 @@ extern const float as_k_pi;
 extern const float as_k_half_pi;
 extern const float as_k_two_pi;
 extern const float as_k_tau;
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
 // vec2f
 as_vec2f as_vec2f_from_point2f(as_point2f point);
@@ -153,4 +157,8 @@ float as_mixf(float begin, float end, float t);
 float as_radians_from_degrees(float degrees);
 float as_degrees_from_radians(float radians);
 
-#endif // TH_OPS_MATH_H
+#ifdef __cplusplus
+}
+#endif // __cplusplus
+
+#endif // AS_OPS_MATH_H
