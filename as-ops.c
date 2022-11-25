@@ -15,6 +15,10 @@ as_vec2f as_vec2f_from_vec2i(const as_vec2i vec) {
   return (as_vec2f){(float)vec.x, (float)vec.y};
 }
 
+as_vec2f as_vec2f_from_float(const float value) {
+  return (as_vec2f){value, value};
+}
+
 as_vec2f as_vec2f_add_vec2f(const as_vec2f lhs, const as_vec2f rhs) {
   return (as_vec2f){.x = lhs.x + rhs.x, .y = lhs.y + rhs.y};
 }
@@ -23,16 +27,20 @@ as_vec2f as_vec2f_sub_vec2f(const as_vec2f lhs, const as_vec2f rhs) {
   return (as_vec2f){.x = lhs.x - rhs.x, .y = lhs.y - rhs.y};
 }
 
-as_vec2f as_vec2f_mul_scalar(const as_vec2f vec, const float scale) {
+as_vec2f as_vec2f_mul_float(const as_vec2f vec, const float scale) {
   return (as_vec2f){.x = vec.x * scale, .y = vec.y * scale};
 }
 
-as_vec2f as_vec2f_div_scalar(const as_vec2f vec, const float scale) {
+as_vec2f as_vec2f_div_float(const as_vec2f vec, const float scale) {
   return (as_vec2f){.x = vec.x / scale, .y = vec.y / scale};
 }
 
 float as_vec2f_length(const as_vec2f vec) {
-  return sqrtf(as_vec2f_dot_vec2f(vec, vec));
+  return sqrtf(as_vec2f_length_sq(vec));
+}
+
+float as_vec2f_length_sq(const as_vec2f vec) {
+  return as_vec2f_dot_vec2f(vec, vec);
 }
 
 float as_vec2f_wedge_vec2f(const as_vec2f lhs, const as_vec2f rhs) {
@@ -44,11 +52,15 @@ float as_vec2f_dot_vec2f(const as_vec2f lhs, const as_vec2f rhs) {
 }
 
 as_vec2f as_vec2f_normalized(const as_vec2f vec) {
-  return as_vec2f_div_scalar(vec, as_vec2f_length(vec));
+  return as_vec2f_div_float(vec, as_vec2f_length(vec));
 }
 
 as_vec2i as_vec2i_from_vec2f(const as_vec2f vec) {
   return (as_vec2i){(int)roundf(vec.x), (int)roundf(vec.y)};
+}
+
+as_vec2i as_vec2i_from_int(const int value) {
+  return (as_vec2i){(int)value, (int)value};
 }
 
 as_vec2i as_vec2i_add_vec2i(const as_vec2i lhs, const as_vec2i rhs) {
@@ -59,16 +71,20 @@ as_vec2i as_vec2i_sub_vec2i(const as_vec2i lhs, const as_vec2i rhs) {
   return (as_vec2i){.x = lhs.x - rhs.x, .y = lhs.y - rhs.y};
 }
 
-as_vec2f as_vec2i_mul_scalar(const as_vec2i vec, const float scale) {
+as_vec2f as_vec2i_mul_float(const as_vec2i vec, const float scale) {
   return (as_vec2f){.x = vec.x * scale, .y = vec.y * scale};
 }
 
-as_vec2f as_vec2i_div_scalar(const as_vec2i vec, const float scale) {
+as_vec2f as_vec2i_div_float(const as_vec2i vec, const float scale) {
   return (as_vec2f){.x = vec.x / scale, .y = vec.y / scale};
 }
 
 float as_vec2i_length(const as_vec2i vec) {
-  return sqrtf((float)(vec.x * vec.x + vec.y * vec.y));
+  return sqrtf((float)as_vec2i_length_sq(vec));
+}
+
+int as_vec2i_length_sq(const as_vec2i vec) {
+  return vec.x * vec.x + vec.y * vec.y;
 }
 
 as_vec3f as_vec3f_from_point3f(const as_point3f point) {
@@ -91,16 +107,20 @@ as_vec3f as_vec3f_sub_vec3f(const as_vec3f lhs, const as_vec3f rhs) {
   return (as_vec3f){.x = lhs.x - rhs.x, .y = lhs.y - rhs.y, .z = lhs.z - rhs.z};
 }
 
-as_vec3f as_vec3f_mul_scalar(const as_vec3f vec, const float scale) {
+as_vec3f as_vec3f_mul_float(const as_vec3f vec, const float scale) {
   return (as_vec3f){.x = vec.x * scale, .y = vec.y * scale, .z = vec.z * scale};
 }
 
-as_vec3f as_vec3f_div_scalar(const as_vec3f vec, const float scale) {
+as_vec3f as_vec3f_div_float(const as_vec3f vec, const float scale) {
   return (as_vec3f){.x = vec.x / scale, .y = vec.y / scale, .z = vec.z / scale};
 }
 
 float as_vec3f_length(const as_vec3f vec) {
-  return sqrtf(as_vec3f_dot_vec3f(vec, vec));
+  return sqrtf(as_vec3f_length_sq(vec));
+}
+
+float as_vec3f_length_sq(const as_vec3f vec) {
+  return as_vec3f_dot_vec3f(vec, vec);
 }
 
 as_vec3f as_vec3f_rotate_x(const as_vec3f vec, const float angle) {
@@ -136,7 +156,7 @@ float as_vec3f_dot_vec3f(const as_vec3f lhs, const as_vec3f rhs) {
 }
 
 as_vec3f as_vec3f_normalized(const as_vec3f vec) {
-  return as_vec3f_div_scalar(vec, as_vec3f_length(vec));
+  return as_vec3f_div_float(vec, as_vec3f_length(vec));
 }
 
 as_vec3f as_vec3f_x_axis(void) {
@@ -170,16 +190,20 @@ as_vec3i as_vec3i_sub_vec3i(const as_vec3i lhs, const as_vec3i rhs) {
   return (as_vec3i){.x = lhs.x - rhs.x, .y = lhs.y - rhs.y, .z = lhs.z - rhs.z};
 }
 
-as_vec3f as_vec3i_mul_scalar(const as_vec3i vec, const float scale) {
+as_vec3f as_vec3i_mul_float(const as_vec3i vec, const float scale) {
   return (as_vec3f){.x = vec.x * scale, .y = vec.y * scale, .z = vec.z * scale};
 }
 
-as_vec3f as_vec3i_div_scalar(const as_vec3i vec, const float scale) {
+as_vec3f as_vec3i_div_float(const as_vec3i vec, const float scale) {
   return (as_vec3f){.x = vec.x / scale, .y = vec.y / scale, .z = vec.z / scale};
 }
 
 float as_vec3i_length(const as_vec3i vec) {
-  return sqrtf((float)(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z));
+  return sqrtf((float)as_vec3i_length_sq(vec));
+}
+
+int as_vec3i_length_sq(const as_vec3i vec) {
+  return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
 }
 
 as_point2f as_point2f_from_vec2f(const as_vec2f vec) {
@@ -305,7 +329,7 @@ as_mat22f as_mat22f_scale_from_vec2f(const as_vec2f scale_xy) {
   return as_mat22f_scale_from_floats(scale_xy.x, scale_xy.y);
 }
 
-as_point2f as_mat22f_multiply_point2f(
+as_point2f as_mat22f_mul_point2f(
   const as_mat22f* const mat, const as_point2f point) {
   return (as_point2f){
     .x = mat->elem[0] * point.x + mat->elem[1] * point.y,
@@ -399,21 +423,20 @@ as_mat33f as_mat33f_z_rotation_from_float(const float rotation_radians) {
       [8] = 1.0f}};
 }
 
-as_point3f as_mat33f_multiply_point3f(
+as_point3f as_mat33f_mul_point3f(
   const as_mat33f* const mat, const as_point3f point) {
   return as_point3f_from_vec3f(
-    as_mat33f_multiply_vec3f(mat, as_vec3f_from_point3f(point)));
+    as_mat33f_mul_vec3f(mat, as_vec3f_from_point3f(point)));
 }
 
-as_vec3f as_mat33f_multiply_vec3f(
-  const as_mat33f* const mat, const as_vec3f vec) {
+as_vec3f as_mat33f_mul_vec3f(const as_mat33f* const mat, const as_vec3f vec) {
   return (as_vec3f){
     .x = mat->elem[0] * vec.x + mat->elem[1] * vec.y + mat->elem[2] * vec.z,
     .y = mat->elem[3] * vec.x + mat->elem[4] * vec.y + mat->elem[5] * vec.z,
     .z = mat->elem[6] * vec.x + mat->elem[7] * vec.y + mat->elem[8] * vec.z};
 }
 
-as_mat33f as_mat33f_multiply_mat33f(
+as_mat33f as_mat33f_mul_mat33f(
   const as_mat33f* const lhs, const as_mat33f* const rhs) {
   return (as_mat33f){
     .elem = {
@@ -437,7 +460,7 @@ as_mat33f as_mat33f_multiply_mat33f(
           + lhs->elem[8] * rhs->elem[8]}};
 }
 
-as_mat34f as_mat33f_multiply_mat34f(
+as_mat34f as_mat33f_mul_mat34f(
   const as_mat33f* const lhs, const as_mat34f* const rhs) {
   return (as_mat34f){
     .elem = {
@@ -516,7 +539,7 @@ as_mat34f as_mat34f_from_mat33f_and_vec3f(
       [11] = translation.z}};
 }
 
-as_point3f as_mat34f_multiply_point3f(
+as_point3f as_mat34f_mul_point3f(
   const as_mat34f* const mat, const as_point3f point) {
   return (as_point3f){
     .x = mat->elem[0] * point.x + mat->elem[1] * point.y
@@ -527,15 +550,14 @@ as_point3f as_mat34f_multiply_point3f(
        + mat->elem[10] * point.z + mat->elem[11]};
 }
 
-as_vec3f as_mat34f_multiply_vec3f(
-  const as_mat34f* const mat, const as_vec3f vec) {
+as_vec3f as_mat34f_mul_vec3f(const as_mat34f* const mat, const as_vec3f vec) {
   return (as_vec3f){
     .x = mat->elem[0] * vec.x + mat->elem[1] * vec.y + mat->elem[2] * vec.z,
     .y = mat->elem[4] * vec.x + mat->elem[5] * vec.y + mat->elem[6] * vec.z,
     .z = mat->elem[8] * vec.x + mat->elem[9] * vec.y + mat->elem[10] * vec.z};
 }
 
-as_mat34f as_mat34f_multiply_mat34f(
+as_mat34f as_mat34f_mul_mat34f(
   const as_mat34f* const lhs, const as_mat34f* const rhs) {
   return (as_mat34f){
     .elem = {
@@ -565,7 +587,7 @@ as_mat34f as_mat34f_multiply_mat34f(
            + lhs->elem[10] * rhs->elem[11] + lhs->elem[11]}};
 }
 
-as_mat34f as_mat34f_multiply_mat33f(
+as_mat34f as_mat34f_mul_mat33f(
   const as_mat34f* const lhs, const as_mat33f* const rhs) {
   return (as_mat34f){
     .elem = {
@@ -595,7 +617,7 @@ as_mat34f as_mat34f_multiply_mat33f(
 as_mat34f as_mat34f_inverse(const as_mat34f* const mat) {
   const as_mat33f mat33 = as_mat33f_from_mat34f(mat);
   const as_mat33f inverse_rotation = as_mat33f_transpose(&mat33);
-  const as_point3f inverse_translation = as_mat33f_multiply_point3f(
+  const as_point3f inverse_translation = as_mat33f_mul_point3f(
     &inverse_rotation,
     (as_point3f){.x = -mat->elem[3], .y = -mat->elem[7], .z = -mat->elem[11]});
   return as_mat34f_from_mat33f_and_vec3f(
@@ -611,7 +633,7 @@ as_mat44f as_mat44f_identity(void) {
     .elem = {[0] = 1.0f, [5] = 1.0f, [10] = 1.0f, [15] = 1.0f}};
 }
 
-as_mat44f as_mat44f_multiply_mat44f(
+as_mat44f as_mat44f_mul_mat44f(
   const as_mat44f* const lhs, const as_mat44f* const rhs) {
   return (as_mat44f){
     .elem = {
@@ -664,7 +686,7 @@ as_mat44f as_mat44f_perspective_projection(
       [14] = 1.0f}};
 }
 
-as_point4f as_mat44f_multiply_point4f(
+as_point4f as_mat44f_mul_point4f(
   const as_mat44f* const mat, const as_point4f point) {
   return (as_point4f){
     .x = mat->elem[0] * point.x + mat->elem[1] * point.y
@@ -688,17 +710,17 @@ static as_point4f perspective_divide(const as_point4f point) {
 as_point4f as_mat44f_project_point3f(
   const as_mat44f* const projection, const as_point3f point) {
   return perspective_divide(
-    as_mat44f_multiply_point4f(projection, as_point4f_from_point3f(point)));
+    as_mat44f_mul_point4f(projection, as_point4f_from_point3f(point)));
 }
 
 void as_swapf(float* lhs, float* rhs) {
-  float temp = *lhs;
+  const float temp = *lhs;
   *lhs = *rhs;
   *rhs = temp;
 }
 
 void as_swapi(int* lhs, int* rhs) {
-  int temp = *lhs;
+  const int temp = *lhs;
   *lhs = *rhs;
   *rhs = temp;
 }
