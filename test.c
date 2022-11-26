@@ -365,6 +365,43 @@ void test_vec3f_add_vec3f(void) {
   }
 }
 
+void test_vec3f_sub_vec3f(void) {
+  {
+    const as_vec3f vec3f = as_vec3f_sub_vec3f(
+      (as_vec3f){.x = 12.0f, .y = 24.0f, .z = 9.0f},
+      (as_vec3f){.x = 8.0f, .y = 12.0f, .z = 27.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -18.0f, vec3f.z);
+  }
+
+  {
+    const as_vec3f vec3f = as_vec3f_sub_vec3f(
+      (as_vec3f){.x = 20.0f, .y = 10.0f, .z = 1.0f},
+      (as_vec3f){.x = 5.0f, .y = 15.0f, .z = 5.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 15.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -5.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -4.0f, vec3f.z);
+  }
+}
+
+void test_vec3f_mul_float(void) {
+  {
+    const as_vec3f vec3f =
+      as_vec3f_mul_float((as_vec3f){.x = 2.0f, .y = 4.0f, .z = 6.0f}, 2.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, vec3f.z);
+  }
+  {
+    const as_vec3f vec3f =
+      as_vec3f_mul_float((as_vec3f){.x = 5.0f, .y = 4.0f, .z = 7.0f}, 5.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 35.0f, vec3f.z);
+  }
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_vec2f_expected_values);
@@ -392,5 +429,7 @@ int main(void) {
   RUN_TEST(test_vec3f_from_vec3i);
   RUN_TEST(test_vec3f_from_mat34f);
   RUN_TEST(test_vec3f_add_vec3f);
+  RUN_TEST(test_vec3f_sub_vec3f);
+  RUN_TEST(test_vec3f_mul_float);
   return UNITY_END();
 }
