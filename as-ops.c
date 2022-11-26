@@ -32,7 +32,7 @@ as_vec2f as_vec2f_mul_float(const as_vec2f vec, const float scalar) {
 }
 
 as_vec2f as_vec2f_div_float(const as_vec2f vec, const float scalar) {
-  return (as_vec2f){.x = vec.x / scalar, .y = vec.y / scalar};
+  return as_vec2f_mul_float(vec, 1.0f / scalar);
 }
 
 float as_vec2f_length(const as_vec2f vec) {
@@ -52,7 +52,7 @@ float as_vec2f_dot_vec2f(const as_vec2f lhs, const as_vec2f rhs) {
 }
 
 as_vec2f as_vec2f_normalized(const as_vec2f vec) {
-  return as_vec2f_div_float(vec, as_vec2f_length(vec));
+  return as_vec2f_mul_float(vec, 1.0f / as_vec2f_length(vec));
 }
 
 as_vec2i as_vec2i_from_vec2f(const as_vec2f vec) {
@@ -72,11 +72,11 @@ as_vec2i as_vec2i_sub_vec2i(const as_vec2i lhs, const as_vec2i rhs) {
 }
 
 as_vec2f as_vec2i_mul_float(const as_vec2i vec, const float scalar) {
-  return (as_vec2f){.x = vec.x * scalar, .y = vec.y * scalar};
+  return (as_vec2f){.x = (float)vec.x * scalar, .y = (float)vec.y * scalar};
 }
 
 as_vec2f as_vec2i_div_float(const as_vec2i vec, const float scalar) {
-  return (as_vec2f){.x = vec.x / scalar, .y = vec.y / scalar};
+  return as_vec2i_mul_float(vec, 1.0f / scalar);
 }
 
 float as_vec2i_length(const as_vec2i vec) {
@@ -113,8 +113,7 @@ as_vec3f as_vec3f_mul_float(const as_vec3f vec, const float scalar) {
 }
 
 as_vec3f as_vec3f_div_float(const as_vec3f vec, const float scalar) {
-  return (as_vec3f){
-    .x = vec.x / scalar, .y = vec.y / scalar, .z = vec.z / scalar};
+  return as_vec3f_mul_float(vec, 1.0f / scalar);
 }
 
 float as_vec3f_length(const as_vec3f vec) {
@@ -200,12 +199,13 @@ as_vec3i as_vec3i_sub_vec3i(const as_vec3i lhs, const as_vec3i rhs) {
 
 as_vec3f as_vec3i_mul_float(const as_vec3i vec, const float scalar) {
   return (as_vec3f){
-    .x = vec.x * scalar, .y = vec.y * scalar, .z = vec.z * scalar};
+    .x = (float)vec.x * scalar,
+    .y = (float)vec.y * scalar,
+    .z = (float)vec.z * scalar};
 }
 
 as_vec3f as_vec3i_div_float(const as_vec3i vec, const float scalar) {
-  return (as_vec3f){
-    .x = vec.x / scalar, .y = vec.y / scalar, .z = vec.z / scalar};
+  return as_vec3i_mul_float(vec, 1.0f / scalar);
 }
 
 float as_vec3i_length(const as_vec3i vec) {
