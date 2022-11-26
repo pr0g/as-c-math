@@ -432,6 +432,57 @@ void test_vec3f_length(void) {
   }
 }
 
+void test_vec3f_rotate_x_axis(void) {
+  {
+    const as_vec3f vec3f =
+      as_vec3f_rotate_x_axis((as_vec3f){.y = 1.0f}, as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, vec3f.z);
+  }
+  {
+    const as_vec3f vec3f =
+      as_vec3f_rotate_x_axis((as_vec3f){.z = 1.0f}, as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.z);
+  }
+}
+
+void test_vec3f_rotate_y_axis(void) {
+  {
+    const as_vec3f vec3f =
+      as_vec3f_rotate_y_axis((as_vec3f){.x = 1.0f}, as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, vec3f.z);
+  }
+  {
+    const as_vec3f vec3f =
+      as_vec3f_rotate_y_axis((as_vec3f){.z = 1.0f}, as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.z);
+  }
+}
+
+void test_vec3f_rotate_z_axis(void) {
+  {
+    const as_vec3f vec3f =
+      as_vec3f_rotate_z_axis((as_vec3f){.x = 1.0f}, as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.z);
+  }
+  {
+    const as_vec3f vec3f =
+      as_vec3f_rotate_z_axis((as_vec3f){.y = 1.0f}, as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, vec3f.z);
+  }
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_vec2f_expected_values);
@@ -463,5 +514,8 @@ int main(void) {
   RUN_TEST(test_vec3f_mul_float);
   RUN_TEST(test_vec3f_div_float);
   RUN_TEST(test_vec3f_length);
+  RUN_TEST(test_vec3f_rotate_x_axis);
+  RUN_TEST(test_vec3f_rotate_y_axis);
+  RUN_TEST(test_vec3f_rotate_z_axis);
   return UNITY_END();
 }

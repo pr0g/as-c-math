@@ -137,9 +137,9 @@ as_vec3f as_vec3f_rotate_y_axis(const as_vec3f vec, const float radians) {
   const float cos_angle = cosf(radians);
   const float sin_angle = sinf(radians);
   return (as_vec3f){
-    .x = vec.x * cos_angle - vec.z * sin_angle,
+    .x = vec.x * cos_angle + vec.z * sin_angle,
     .y = vec.y,
-    .z = vec.x * sin_angle + vec.z * cos_angle};
+    .z = -vec.x * sin_angle + vec.z * cos_angle};
 }
 
 as_vec3f as_vec3f_rotate_z_axis(const as_vec3f vec, const float radians) {
