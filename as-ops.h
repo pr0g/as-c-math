@@ -47,9 +47,9 @@ as_vec3f as_vec3f_mul_float(as_vec3f vec, float scalar);
 as_vec3f as_vec3f_div_float(as_vec3f vec, float scalar);
 float as_vec3f_length(as_vec3f vec);
 float as_vec3f_length_sq(as_vec3f vec);
-as_vec3f as_vec3f_rotate_x(as_vec3f vec, float angle);
-as_vec3f as_vec3f_rotate_y(as_vec3f vec, float angle);
-as_vec3f as_vec3f_rotate_z(as_vec3f vec, float angle);
+as_vec3f as_vec3f_rotate_x_axis(as_vec3f vec, float radians);
+as_vec3f as_vec3f_rotate_y_axis(as_vec3f vec, float radians);
+as_vec3f as_vec3f_rotate_z_axis(as_vec3f vec, float radians);
 as_vec3f as_vec3f_cross_vec3f(as_vec3f lhs, as_vec3f rhs);
 float as_vec3f_dot_vec3f(as_vec3f lhs, as_vec3f rhs);
 as_vec3f as_vec3f_normalized(as_vec3f vec);
@@ -87,9 +87,9 @@ as_point3f as_point3f_from_point3i(as_point3i point);
 as_point3f as_point3f_add_vec3f(as_point3f point, as_vec3f vec);
 as_point3f as_point3f_sub_vec3f(as_point3f point, as_vec3f vec);
 as_vec3f as_point3f_sub_point3f(as_point3f lhs, as_point3f rhs);
-as_point3f as_point3f_rotate_x(as_point3f point, float angle);
-as_point3f as_point3f_rotate_y(as_point3f point, float angle);
-as_point3f as_point3f_rotate_z(as_point3f point, float angle);
+as_point3f as_point3f_rotate_x_axis(as_point3f point, float radians);
+as_point3f as_point3f_rotate_y_axis(as_point3f point, float radians);
+as_point3f as_point3f_rotate_z_axis(as_point3f point, float radians);
 as_point3f as_point3f_mix(as_point3f begin, as_point3f end, float t);
 
 // point3i
@@ -115,9 +115,9 @@ as_mat33f as_mat33f_scale_from_floats(
   float scale_x, float scale_y, float scale_z);
 as_mat33f as_mat33f_scale_from_vec3f(as_vec3f scale_xyz);
 as_mat33f as_mat33f_transpose(const as_mat33f* mat);
-as_mat33f as_mat33f_x_rotation_from_float(float angle_radians);
-as_mat33f as_mat33f_y_rotation_from_float(float angle_radians);
-as_mat33f as_mat33f_z_rotation_from_float(float angle_radians);
+as_mat33f as_mat33f_x_axis_rotation_from_float(float radians);
+as_mat33f as_mat33f_y_axis_rotation_from_float(float radians);
+as_mat33f as_mat33f_z_axis_rotation_from_float(float radians);
 as_mat33f as_mat33f_from_mat34f(const as_mat34f* mat);
 as_point3f as_mat33f_mul_point3f(const as_mat33f* mat, as_point3f point);
 as_vec3f as_mat33f_mul_vec3f(const as_mat33f* mat, as_vec3f vec);
@@ -150,15 +150,15 @@ as_point4f as_mat44f_project_point3f(
   const as_mat44f* projection, as_point3f point);
 
 // utils
-void as_swapf(float* lhs, float* rhs);
-void as_swapi(int* lhs, int* rhs);
-int as_clampi(int value, int min, int max);
-float as_clampf(float value, float min, float max);
-int as_maxi(int lhs, int rhs);
-float as_maxf(float lhs, float rhs);
-int as_mini(int lhs, int rhs);
-int as_minf(float lhs, float rhs);
-float as_mixf(float begin, float end, float t);
+void as_swap_float(float* lhs, float* rhs);
+void as_swap_int(int* lhs, int* rhs);
+int as_clamp_int(int value, int min, int max);
+float as_clamp_float(float value, float min, float max);
+int as_max_int(int lhs, int rhs);
+float as_max_float(float lhs, float rhs);
+int as_min_int(int lhs, int rhs);
+int as_min_float(float lhs, float rhs);
+float as_mix_float(float begin, float end, float t);
 
 float as_radians_from_degrees(float degrees);
 float as_degrees_from_radians(float radians);

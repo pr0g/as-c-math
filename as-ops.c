@@ -125,27 +125,27 @@ float as_vec3f_length_sq(const as_vec3f vec) {
   return as_vec3f_dot_vec3f(vec, vec);
 }
 
-as_vec3f as_vec3f_rotate_x(const as_vec3f vec, const float angle_radians) {
-  const float cos_angle = cosf(angle_radians);
-  const float sin_angle = sinf(angle_radians);
+as_vec3f as_vec3f_rotate_x_axis(const as_vec3f vec, const float radians) {
+  const float cos_angle = cosf(radians);
+  const float sin_angle = sinf(radians);
   return (as_vec3f){
     .x = vec.x,
     .y = vec.y * cos_angle - vec.z * sin_angle,
     .z = vec.y * sin_angle + vec.z * cos_angle};
 }
 
-as_vec3f as_vec3f_rotate_y(const as_vec3f vec, const float angle_radians) {
-  const float cos_angle = cosf(angle_radians);
-  const float sin_angle = sinf(angle_radians);
+as_vec3f as_vec3f_rotate_y_axis(const as_vec3f vec, const float radians) {
+  const float cos_angle = cosf(radians);
+  const float sin_angle = sinf(radians);
   return (as_vec3f){
     .x = vec.x * cos_angle - vec.z * sin_angle,
     .y = vec.y,
     .z = vec.x * sin_angle + vec.z * cos_angle};
 }
 
-as_vec3f as_vec3f_rotate_z(const as_vec3f vec, const float angle_radians) {
-  const float cos_angle = cosf(angle_radians);
-  const float sin_angle = sinf(angle_radians);
+as_vec3f as_vec3f_rotate_z_axis(const as_vec3f vec, const float radians) {
+  const float cos_angle = cosf(radians);
+  const float sin_angle = sinf(radians);
   return (as_vec3f){
     .x = vec.x * cos_angle - vec.y * sin_angle,
     .y = vec.x * sin_angle + vec.y * cos_angle,
@@ -181,9 +181,9 @@ as_vec3f as_vec3f_z_axis(void) {
 
 as_vec3f as_vec3f_mix(const as_vec3f begin, const as_vec3f end, const float t) {
   return (as_vec3f){
-    .x = as_mixf(begin.x, end.x, t),
-    .y = as_mixf(begin.y, end.y, t),
-    .z = as_mixf(begin.z, end.z, t)};
+    .x = as_mix_float(begin.x, end.x, t),
+    .y = as_mix_float(begin.y, end.y, t),
+    .z = as_mix_float(begin.z, end.z, t)};
 }
 
 as_vec3i as_vec3i_from_vec3f(const as_vec3f vec) {
@@ -236,7 +236,7 @@ as_vec2f as_point2f_sub_point2f(const as_point2f lhs, const as_point2f rhs) {
   return (as_vec2f){lhs.x - rhs.x, lhs.y - rhs.y};
 }
 
-float as_point2f_distance_point2f(as_point2f lhs, as_point2f rhs) {
+float as_point2f_distance_point2f(const as_point2f lhs, const as_point2f rhs) {
   return as_vec2f_length(as_point2f_sub_point2f(lhs, rhs));
 }
 
@@ -252,7 +252,7 @@ as_vec2i as_point2i_sub_point2i(const as_point2i lhs, const as_point2i rhs) {
   return (as_vec2i){lhs.x - rhs.x, lhs.y - rhs.y};
 }
 
-float as_point2i_distance_point2i(as_point2i lhs, as_point2i rhs) {
+float as_point2i_distance_point2i(const as_point2i lhs, const as_point2i rhs) {
   return as_vec2i_length(as_point2i_sub_point2i(lhs, rhs));
 }
 
@@ -278,30 +278,30 @@ as_vec3f as_point3f_sub_point3f(const as_point3f lhs, const as_point3f rhs) {
   return (as_vec3f){.x = lhs.x - rhs.x, .y = lhs.y - rhs.y, .z = lhs.z - rhs.z};
 }
 
-as_point3f as_point3f_rotate_x(
-  const as_point3f point, const float angle_radians) {
+as_point3f as_point3f_rotate_x_axis(
+  const as_point3f point, const float radians) {
   return as_point3f_from_vec3f(
-    as_vec3f_rotate_x(as_vec3f_from_point3f(point), angle_radians));
+    as_vec3f_rotate_x_axis(as_vec3f_from_point3f(point), radians));
 }
 
-as_point3f as_point3f_rotate_y(
-  const as_point3f point, const float angle_radians) {
+as_point3f as_point3f_rotate_y_axis(
+  const as_point3f point, const float radians) {
   return as_point3f_from_vec3f(
-    as_vec3f_rotate_y(as_vec3f_from_point3f(point), angle_radians));
+    as_vec3f_rotate_y_axis(as_vec3f_from_point3f(point), radians));
 }
 
-as_point3f as_point3f_rotate_z(
-  const as_point3f point, const float angle_radians) {
+as_point3f as_point3f_rotate_z_axis(
+  const as_point3f point, const float radians) {
   return as_point3f_from_vec3f(
-    as_vec3f_rotate_z(as_vec3f_from_point3f(point), angle_radians));
+    as_vec3f_rotate_z_axis(as_vec3f_from_point3f(point), radians));
 }
 
 as_point3f as_point3f_mix(
   const as_point3f begin, const as_point3f end, const float t) {
   return (as_point3f){
-    .x = as_mixf(begin.x, end.x, t),
-    .y = as_mixf(begin.y, end.y, t),
-    .z = as_mixf(begin.z, end.z, t)};
+    .x = as_mix_float(begin.x, end.x, t),
+    .y = as_mix_float(begin.y, end.y, t),
+    .z = as_mix_float(begin.z, end.z, t)};
 }
 
 as_point3i as_point3i_from_point3f(const as_point3f point) {
@@ -400,9 +400,9 @@ as_mat33f as_mat33f_transpose(const as_mat33f* const mat) {
     }};
 }
 
-as_mat33f as_mat33f_x_rotation_from_float(const float angle_radians) {
-  const float cos_angle = cosf(angle_radians);
-  const float sin_angle = sinf(angle_radians);
+as_mat33f as_mat33f_x_axis_rotation_from_float(const float radians) {
+  const float cos_angle = cosf(radians);
+  const float sin_angle = sinf(radians);
   return (as_mat33f){
     .elem = {
       [0] = 1.0f,
@@ -412,9 +412,9 @@ as_mat33f as_mat33f_x_rotation_from_float(const float angle_radians) {
       [8] = cos_angle}};
 }
 
-as_mat33f as_mat33f_y_rotation_from_float(const float angle_radians) {
-  const float cos_angle = cosf(angle_radians);
-  const float sin_angle = sinf(angle_radians);
+as_mat33f as_mat33f_y_axis_rotation_from_float(const float radians) {
+  const float cos_angle = cosf(radians);
+  const float sin_angle = sinf(radians);
   return (as_mat33f){
     .elem = {
       [0] = cos_angle,
@@ -424,9 +424,9 @@ as_mat33f as_mat33f_y_rotation_from_float(const float angle_radians) {
       [8] = cos_angle}};
 }
 
-as_mat33f as_mat33f_z_rotation_from_float(const float angle_radians) {
-  const float cos_angle = cosf(angle_radians);
-  const float sin_angle = sinf(angle_radians);
+as_mat33f as_mat33f_z_axis_rotation_from_float(const float radians) {
+  const float cos_angle = cosf(radians);
+  const float sin_angle = sinf(radians);
   return (as_mat33f){
     .elem = {
       [0] = cos_angle,
@@ -726,19 +726,19 @@ as_point4f as_mat44f_project_point3f(
     as_mat44f_mul_point4f(projection, as_point4f_from_point3f(point)));
 }
 
-void as_swapf(float* lhs, float* rhs) {
+void as_swap_float(float* lhs, float* rhs) {
   const float temp = *lhs;
   *lhs = *rhs;
   *rhs = temp;
 }
 
-void as_swapi(int* lhs, int* rhs) {
+void as_swap_int(int* lhs, int* rhs) {
   const int temp = *lhs;
   *lhs = *rhs;
   *rhs = temp;
 }
 
-int as_clampi(const int value, const int min, const int max) {
+int as_clamp_int(const int value, const int min, const int max) {
   if (value < min) {
     return min;
   }
@@ -748,7 +748,7 @@ int as_clampi(const int value, const int min, const int max) {
   return value;
 }
 
-float as_clampf(const float value, const float min, const float max) {
+float as_clamp_float(const float value, const float min, const float max) {
   if (value < min) {
     return min;
   }
@@ -758,35 +758,35 @@ float as_clampf(const float value, const float min, const float max) {
   return value;
 }
 
-int as_maxi(const int lhs, const int rhs) {
+int as_max_int(const int lhs, const int rhs) {
   if (lhs > rhs) {
     return lhs;
   }
   return rhs;
 }
 
-float as_maxf(const float lhs, const float rhs) {
+float as_max_float(const float lhs, const float rhs) {
   if (lhs > rhs) {
     return lhs;
   }
   return rhs;
 }
 
-int as_mini(const int lhs, const int rhs) {
+int as_min_int(const int lhs, const int rhs) {
   if (lhs < rhs) {
     return lhs;
   }
   return rhs;
 }
 
-int as_minf(const float lhs, const float rhs) {
+int as_min_float(const float lhs, const float rhs) {
   if (lhs < rhs) {
     return lhs;
   }
   return rhs;
 }
 
-float as_mixf(const float begin, const float end, const float t) {
+float as_mix_float(const float begin, const float end, const float t) {
   return (1.0f - t) * begin + t * end;
 }
 
