@@ -326,10 +326,10 @@ int as_mat22_rc(const int r, const int c) {
 }
 
 as_mat22f as_mat22f_identity(void) {
-  return as_mat22f_uniform_scale_from_float(1.0f);
+  return as_mat22f_uniform_scale(1.0f);
 }
 
-as_mat22f as_mat22f_uniform_scale_from_float(const float scale) {
+as_mat22f as_mat22f_uniform_scale(const float scale) {
   return as_mat22f_scale_from_floats(scale, scale);
 }
 
@@ -354,10 +354,10 @@ int as_mat33_rc(const int r, const int c) {
 }
 
 as_mat33f as_mat33f_identity(void) {
-  return as_mat33f_uniform_scale_from_float(1.0f);
+  return as_mat33f_uniform_scale(1.0f);
 }
 
-as_mat33f as_mat33f_uniform_scale_from_float(const float scale) {
+as_mat33f as_mat33f_uniform_scale(const float scale) {
   return as_mat33f_scale_from_floats(scale, scale, scale);
 }
 
@@ -400,7 +400,7 @@ as_mat33f as_mat33f_transpose(const as_mat33f* const mat) {
     }};
 }
 
-as_mat33f as_mat33f_x_axis_rotation_from_float(const float radians) {
+as_mat33f as_mat33f_x_axis_rotation(const float radians) {
   const float cos_angle = cosf(radians);
   const float sin_angle = sinf(radians);
   return (as_mat33f){
@@ -412,7 +412,7 @@ as_mat33f as_mat33f_x_axis_rotation_from_float(const float radians) {
       [8] = cos_angle}};
 }
 
-as_mat33f as_mat33f_y_axis_rotation_from_float(const float radians) {
+as_mat33f as_mat33f_y_axis_rotation(const float radians) {
   const float cos_angle = cosf(radians);
   const float sin_angle = sinf(radians);
   return (as_mat33f){
@@ -424,7 +424,7 @@ as_mat33f as_mat33f_y_axis_rotation_from_float(const float radians) {
       [8] = cos_angle}};
 }
 
-as_mat33f as_mat33f_z_axis_rotation_from_float(const float radians) {
+as_mat33f as_mat33f_z_axis_rotation(const float radians) {
   const float cos_angle = cosf(radians);
   const float sin_angle = sinf(radians);
   return (as_mat33f){

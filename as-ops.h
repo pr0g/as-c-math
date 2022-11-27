@@ -102,7 +102,7 @@ as_point4f as_point4f_from_point2f(as_point2f point);
 // mat22
 int as_mat22_rc(int r, int c);
 as_mat22f as_mat22f_identity(void);
-as_mat22f as_mat22f_uniform_scale_from_float(float scale);
+as_mat22f as_mat22f_uniform_scale(float scale);
 as_mat22f as_mat22f_scale_from_floats(float scale_x, float scale_y);
 as_mat22f as_mat22f_scale_from_vec2f(as_vec2f scale_xy);
 as_point2f as_mat22f_mul_point2f(const as_mat22f* mat, as_point2f point);
@@ -110,14 +110,14 @@ as_point2f as_mat22f_mul_point2f(const as_mat22f* mat, as_point2f point);
 // mat33
 int as_mat33_rc(int r, int c);
 as_mat33f as_mat33f_identity(void);
-as_mat33f as_mat33f_uniform_scale_from_float(float scale);
+as_mat33f as_mat33f_uniform_scale(float scale);
 as_mat33f as_mat33f_scale_from_floats(
   float scale_x, float scale_y, float scale_z);
 as_mat33f as_mat33f_scale_from_vec3f(as_vec3f scale_xyz);
 as_mat33f as_mat33f_transpose(const as_mat33f* mat);
-as_mat33f as_mat33f_x_axis_rotation_from_float(float radians);
-as_mat33f as_mat33f_y_axis_rotation_from_float(float radians);
-as_mat33f as_mat33f_z_axis_rotation_from_float(float radians);
+as_mat33f as_mat33f_x_axis_rotation(float radians);
+as_mat33f as_mat33f_y_axis_rotation(float radians);
+as_mat33f as_mat33f_z_axis_rotation(float radians);
 as_mat33f as_mat33f_from_mat34f(const as_mat34f* mat);
 as_point3f as_mat33f_mul_point3f(const as_mat33f* mat, as_point3f point);
 as_vec3f as_mat33f_mul_vec3f(const as_mat33f* mat, as_vec3f vec);
