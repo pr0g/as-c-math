@@ -41,6 +41,7 @@ int as_vec2i_length_sq(as_vec2i vec);
 as_vec3f as_vec3f_from_point3f(as_point3f point);
 as_vec3f as_vec3f_from_vec3i(as_vec3i vec);
 as_vec3f as_vec3f_from_mat34f(const as_mat34f* mat, int col);
+as_vec3f as_vec3f_from_float(float value);
 as_vec3f as_vec3f_add_vec3f(as_vec3f lhs, as_vec3f rhs);
 as_vec3f as_vec3f_sub_vec3f(as_vec3f lhs, as_vec3f rhs);
 as_vec3f as_vec3f_mul_float(as_vec3f vec, float scalar);

@@ -99,6 +99,10 @@ as_vec3f as_vec3f_from_mat34f(const as_mat34f* const mat, const int col) {
   return (as_vec3f){mat->elem[col], mat->elem[col + 4], mat->elem[col + 8]};
 }
 
+as_vec3f as_vec3f_from_float(const float value) {
+  return (as_vec3f){value, value, value};
+}
+
 as_vec3f as_vec3f_add_vec3f(const as_vec3f lhs, const as_vec3f rhs) {
   return (as_vec3f){.x = lhs.x + rhs.x, .y = lhs.y + rhs.y, .z = lhs.z + rhs.z};
 }
