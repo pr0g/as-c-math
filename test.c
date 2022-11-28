@@ -744,6 +744,47 @@ void test_vec3i_div_float(void) {
   }
 }
 
+void test_vec3i_length(void) {
+  {
+    const float length = as_vec3i_length((as_vec3i){.x = 3, .y = 6, .z = 9});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.22497216f, length);
+  }
+  {
+    const float length = as_vec3i_length((as_vec3i){.x = 6, .y = 8, .z = 2});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.1980390f, length);
+  }
+}
+
+void test_point2f_from_vec2f(void) {
+  {
+    const as_point2f point2f =
+      as_point2f_from_vec2f((as_vec2f){.x = 10.0f, .y = 20.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, point2f.y);
+  }
+  {
+    const as_point2f point2f =
+      as_point2f_from_vec2f((as_vec2f){.x = 5.0f, .y = 10.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, point2f.y);
+  }
+}
+
+void test_point2f_from_point4f(void) {
+  {
+    const as_point2f point2f = as_point2f_from_point4f(
+      (as_point4f){.x = 10.0f, .y = 20.0f, .z = 30.0f, .w = 40.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, point2f.y);
+  }
+  {
+    const as_point2f point2f = as_point2f_from_point4f(
+      (as_point4f){.x = 5.0f, .y = 10.0f, .z = 2.0f, .w = 15.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, point2f.y);
+  }
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_vec2f_expected_values);
@@ -789,5 +830,8 @@ int main(void) {
   RUN_TEST(test_vec3i_sub_vec3i);
   RUN_TEST(test_vec3i_mul_float);
   RUN_TEST(test_vec3i_div_float);
+  RUN_TEST(test_vec3i_length);
+  RUN_TEST(test_point2f_from_vec2f);
+  RUN_TEST(test_point2f_from_point4f);
   return UNITY_END();
 }
