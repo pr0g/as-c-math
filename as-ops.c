@@ -730,28 +730,128 @@ as_point4f as_mat44f_project_point3f(
     as_mat44f_mul_point4f(projection, as_point4f_from_point3f(point)));
 }
 
-float as_mat44f_determinant(const as_mat44f* mat) {
+float as_mat44f_determinant(const as_mat44f* const mat) {
   return
     (mat->elem[0]
-   * ((mat->elem[5] * (mat->elem[10] * mat->elem[15] - mat->elem[11] * mat->elem[14]))
-    + (mat->elem[6] * (mat->elem[11] * mat->elem[13] - mat->elem[9] * mat->elem[15]))
-    + (mat->elem[7] * (mat->elem[9] * mat->elem[14] - mat->elem[10] * mat->elem[13]))))
-   - (mat->elem[1]
-   * ((mat->elem[4] * (mat->elem[10] * mat->elem[15] - mat->elem[11] * mat->elem[14]))
-    + (mat->elem[6] * (mat->elem[11] * mat->elem[12] - mat->elem[8] * mat->elem[15]))
-    + (mat->elem[7] * (mat->elem[8] * mat->elem[14] - mat->elem[10] * mat->elem[12]))))
-   + (mat->elem[2]
-   * ((mat->elem[4] * (mat->elem[9] * mat->elem[15] - mat->elem[11] * mat->elem[13]))
-    + (mat->elem[5] * (mat->elem[11] * mat->elem[12] - mat->elem[8] * mat->elem[15]))
-    + (mat->elem[7] * (mat->elem[8] * mat->elem[13] - mat->elem[9] * mat->elem[12]))))
-   - (mat->elem[3]
-   * ((mat->elem[4] * (mat->elem[9] * mat->elem[14] - mat->elem[10] * mat->elem[13]))
-    + (mat->elem[5] * (mat->elem[10] * mat->elem[12] - mat->elem[8] * mat->elem[14]))
-    + (mat->elem[6] * (mat->elem[8] * mat->elem[13] - mat->elem[9] * mat->elem[12]))));
+    * (mat->elem[5] * mat->elem[10] * mat->elem[15] + mat->elem[6] * mat->elem[11] * mat->elem[13] + mat->elem[7] * mat->elem[9] * mat->elem[14]
+     - mat->elem[7] * mat->elem[10] * mat->elem[13] - mat->elem[6] * mat->elem[9] * mat->elem[15] - mat->elem[5] * mat->elem[11] * mat->elem[14]))
+    - (mat->elem[4]
+    * (mat->elem[1] * mat->elem[10] * mat->elem[15] + mat->elem[2] * mat->elem[11] * mat->elem[13] + mat->elem[3] * mat->elem[9] * mat->elem[14]
+    - mat->elem[3] * mat->elem[10] * mat->elem[13] - mat->elem[2] * mat->elem[9] * mat->elem[15] - mat->elem[1] * mat->elem[11] * mat->elem[14]))
+    + (mat->elem[8]
+    * (mat->elem[1] * mat->elem[6] * mat->elem[15] + mat->elem[2] * mat->elem[7] * mat->elem[13] + mat->elem[3] * mat->elem[5] * mat->elem[14]
+    - mat->elem[3] * mat->elem[6] * mat->elem[13] - mat->elem[2] * mat->elem[5] * mat->elem[15] - mat->elem[1] * mat->elem[7] * mat->elem[14]))
+    - (mat->elem[12]
+    * (mat->elem[1] * mat->elem[6] * mat->elem[11] + mat->elem[2] * mat->elem[7] * mat->elem[9] + mat->elem[3] * mat->elem[5] * mat->elem[10]
+    - mat->elem[3] * mat->elem[6] * mat->elem[9] - mat->elem[2] * mat->elem[5] * mat->elem[11] - mat->elem[1] * mat->elem[7] * mat->elem[10]));
 }
 
 as_mat44f as_mat44f_inverse(const as_mat44f* const mat) {
-  return (as_mat44f){};
+  const float det = as_mat44f_determinant(mat);
+  const float m_11 = mat->elem[5] * mat->elem[10] * mat->elem[15]
+                   + mat->elem[6] * mat->elem[11] * mat->elem[13]
+                   + mat->elem[7] * mat->elem[9] * mat->elem[14]
+                   - mat->elem[7] * mat->elem[10] * mat->elem[13]
+                   - mat->elem[6] * mat->elem[9] * mat->elem[15]
+                   - mat->elem[5] * mat->elem[11] * mat->elem[14];
+  const float m_12 = mat->elem[4] * mat->elem[10] * mat->elem[15]
+                   + mat->elem[6] * mat->elem[11] * mat->elem[12]
+                   + mat->elem[7] * mat->elem[8] * mat->elem[14]
+                   - mat->elem[7] * mat->elem[10] * mat->elem[12]
+                   - mat->elem[6] * mat->elem[8] * mat->elem[15]
+                   - mat->elem[4] * mat->elem[11] * mat->elem[14];
+  const float m_13 = mat->elem[4] * mat->elem[9] * mat->elem[15]
+                   + mat->elem[5] * mat->elem[11] * mat->elem[12]
+                   + mat->elem[7] * mat->elem[8] * mat->elem[13]
+                   - mat->elem[7] * mat->elem[9] * mat->elem[12]
+                   - mat->elem[5] * mat->elem[8] * mat->elem[15]
+                   - mat->elem[4] * mat->elem[11] * mat->elem[13];
+  const float m_14 = mat->elem[4] * mat->elem[9] * mat->elem[14]
+                   + mat->elem[5] * mat->elem[10] * mat->elem[12]
+                   + mat->elem[6] * mat->elem[8] * mat->elem[13]
+                   - mat->elem[6] * mat->elem[9] * mat->elem[12]
+                   - mat->elem[5] * mat->elem[8] * mat->elem[14]
+                   - mat->elem[4] * mat->elem[10] * mat->elem[13];
+  const float m_21 = mat->elem[1] * mat->elem[10] * mat->elem[15]
+                   + mat->elem[2] * mat->elem[11] * mat->elem[13]
+                   + mat->elem[3] * mat->elem[9] * mat->elem[14]
+                   - mat->elem[3] * mat->elem[10] * mat->elem[13]
+                   - mat->elem[2] * mat->elem[9] * mat->elem[15]
+                   - mat->elem[1] * mat->elem[11] * mat->elem[14];
+  const float m_22 = mat->elem[0] * mat->elem[10] * mat->elem[15]
+                   + mat->elem[2] * mat->elem[11] * mat->elem[12]
+                   + mat->elem[3] * mat->elem[8] * mat->elem[14]
+                   - mat->elem[3] * mat->elem[10] * mat->elem[12]
+                   - mat->elem[2] * mat->elem[8] * mat->elem[15]
+                   - mat->elem[0] * mat->elem[11] * mat->elem[14];
+  const float m_23 = mat->elem[0] * mat->elem[9] * mat->elem[15]
+                   + mat->elem[1] * mat->elem[11] * mat->elem[12]
+                   + mat->elem[3] * mat->elem[8] * mat->elem[13]
+                   - mat->elem[3] * mat->elem[9] * mat->elem[12]
+                   - mat->elem[1] * mat->elem[8] * mat->elem[15]
+                   - mat->elem[0] * mat->elem[11] * mat->elem[13];
+  const float m_24 = mat->elem[0] * mat->elem[9] * mat->elem[14]
+                   + mat->elem[1] * mat->elem[10] * mat->elem[12]
+                   + mat->elem[2] * mat->elem[8] * mat->elem[13]
+                   - mat->elem[2] * mat->elem[9] * mat->elem[12]
+                   - mat->elem[1] * mat->elem[8] * mat->elem[14]
+                   - mat->elem[0] * mat->elem[10] * mat->elem[13];
+  const float m_31 = mat->elem[1] * mat->elem[6] * mat->elem[15]
+                   + mat->elem[2] * mat->elem[7] * mat->elem[13]
+                   + mat->elem[3] * mat->elem[5] * mat->elem[14]
+                   - mat->elem[3] * mat->elem[6] * mat->elem[13]
+                   - mat->elem[2] * mat->elem[5] * mat->elem[15]
+                   - mat->elem[1] * mat->elem[7] * mat->elem[14];
+  const float m_32 = mat->elem[0] * mat->elem[6] * mat->elem[15]
+                   + mat->elem[2] * mat->elem[7] * mat->elem[12]
+                   + mat->elem[3] * mat->elem[4] * mat->elem[14]
+                   - mat->elem[3] * mat->elem[6] * mat->elem[12]
+                   - mat->elem[2] * mat->elem[4] * mat->elem[15]
+                   - mat->elem[0] * mat->elem[7] * mat->elem[14];
+  const float m_33 = mat->elem[0] * mat->elem[5] * mat->elem[15]
+                   + mat->elem[1] * mat->elem[7] * mat->elem[12]
+                   + mat->elem[3] * mat->elem[4] * mat->elem[13]
+                   - mat->elem[3] * mat->elem[5] * mat->elem[12]
+                   - mat->elem[1] * mat->elem[4] * mat->elem[15]
+                   - mat->elem[0] * mat->elem[7] * mat->elem[13];
+  const float m_34 = mat->elem[0] * mat->elem[5] * mat->elem[14]
+                   + mat->elem[1] * mat->elem[6] * mat->elem[12]
+                   + mat->elem[2] * mat->elem[4] * mat->elem[13]
+                   - mat->elem[2] * mat->elem[5] * mat->elem[12]
+                   - mat->elem[1] * mat->elem[4] * mat->elem[14]
+                   - mat->elem[0] * mat->elem[6] * mat->elem[13];
+  const float m_41 = mat->elem[1] * mat->elem[6] * mat->elem[11]
+                   + mat->elem[2] * mat->elem[7] * mat->elem[9]
+                   + mat->elem[3] * mat->elem[5] * mat->elem[10]
+                   - mat->elem[3] * mat->elem[6] * mat->elem[9]
+                   - mat->elem[2] * mat->elem[5] * mat->elem[11]
+                   - mat->elem[1] * mat->elem[7] * mat->elem[10];
+  const float m_42 = mat->elem[0] * mat->elem[6] * mat->elem[11]
+                   + mat->elem[2] * mat->elem[7] * mat->elem[8]
+                   + mat->elem[3] * mat->elem[4] * mat->elem[10]
+                   - mat->elem[3] * mat->elem[6] * mat->elem[8]
+                   - mat->elem[2] * mat->elem[4] * mat->elem[11]
+                   - mat->elem[0] * mat->elem[7] * mat->elem[10];
+  const float m_43 = mat->elem[0] * mat->elem[5] * mat->elem[11]
+                   + mat->elem[1] * mat->elem[7] * mat->elem[8]
+                   + mat->elem[3] * mat->elem[4] * mat->elem[9]
+                   - mat->elem[3] * mat->elem[5] * mat->elem[8]
+                   - mat->elem[1] * mat->elem[4] * mat->elem[11]
+                   - mat->elem[0] * mat->elem[7] * mat->elem[9];
+  const float m_44 = mat->elem[0] * mat->elem[5] * mat->elem[10]
+                   + mat->elem[1] * mat->elem[6] * mat->elem[8]
+                   + mat->elem[2] * mat->elem[4] * mat->elem[9]
+                   - mat->elem[2] * mat->elem[5] * mat->elem[8]
+                   - mat->elem[1] * mat->elem[4] * mat->elem[10]
+                   - mat->elem[0] * mat->elem[6] * mat->elem[9];
+
+  // clang-format off
+  return (as_mat44f){.elem = {
+    [0] = m_11 / det, [1] = -m_21 / det, [2] = m_31 / det, [3] = -m_41 / det,
+    [4] = -m_12 / det, [5] = m_22 / det, [6] = -m_32 / det, [7] = m_42 / det,
+    [8] = m_13 / det, [9] = -m_23 / det, [10] = m_33 / det, [11] = -m_43 / det,
+    [12] = -m_14 / det, [13] = m_24 / det, [14] = -m_34 / det, [15] = m_44 / det}};
+  // clang-format on
 }
 
 void as_swap_float(float* lhs, float* rhs) {
