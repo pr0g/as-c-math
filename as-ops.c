@@ -730,6 +730,30 @@ as_point4f as_mat44f_project_point3f(
     as_mat44f_mul_point4f(projection, as_point4f_from_point3f(point)));
 }
 
+float as_mat44f_determinant(const as_mat44f* mat) {
+  return
+    (mat->elem[0]
+   * ((mat->elem[5] * (mat->elem[10] * mat->elem[15] - mat->elem[11] * mat->elem[14]))
+    + (mat->elem[6] * (mat->elem[11] * mat->elem[13] - mat->elem[9] * mat->elem[15]))
+    + (mat->elem[7] * (mat->elem[9] * mat->elem[14] - mat->elem[10] * mat->elem[13]))))
+   - (mat->elem[1]
+   * ((mat->elem[4] * (mat->elem[10] * mat->elem[15] - mat->elem[11] * mat->elem[14]))
+    + (mat->elem[6] * (mat->elem[11] * mat->elem[12] - mat->elem[8] * mat->elem[15]))
+    + (mat->elem[7] * (mat->elem[8] * mat->elem[14] - mat->elem[10] * mat->elem[12]))))
+   + (mat->elem[2]
+   * ((mat->elem[4] * (mat->elem[9] * mat->elem[15] - mat->elem[11] * mat->elem[13]))
+    + (mat->elem[5] * (mat->elem[11] * mat->elem[12] - mat->elem[8] * mat->elem[15]))
+    + (mat->elem[7] * (mat->elem[8] * mat->elem[13] - mat->elem[9] * mat->elem[12]))))
+   - (mat->elem[3]
+   * ((mat->elem[4] * (mat->elem[9] * mat->elem[14] - mat->elem[10] * mat->elem[13]))
+    + (mat->elem[5] * (mat->elem[10] * mat->elem[12] - mat->elem[8] * mat->elem[14]))
+    + (mat->elem[6] * (mat->elem[8] * mat->elem[13] - mat->elem[9] * mat->elem[12]))));
+}
+
+as_mat44f as_mat44f_inverse(const as_mat44f* const mat) {
+  return (as_mat44f){};
+}
+
 void as_swap_float(float* lhs, float* rhs) {
   const float temp = *lhs;
   *lhs = *rhs;

@@ -149,6 +149,8 @@ as_mat44f as_mat44f_perspective_projection(
 as_point4f as_mat44f_mul_point4f(const as_mat44f* mat, as_point4f point);
 as_point4f as_mat44f_project_point3f(
   const as_mat44f* projection, as_point3f point);
+float as_mat44f_determinant(const as_mat44f* mat);
+as_mat44f as_mat44f_inverse(const as_mat44f* mat);
 
 // utils
 void as_swap_float(float* lhs, float* rhs);

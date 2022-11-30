@@ -785,6 +785,67 @@ void test_point2f_from_point4f(void) {
   }
 }
 
+void test_mat44f_determinant(void) {
+  {
+    // clang-format off
+    const as_mat44f mat44f = (as_mat44f){.elem = {
+      1.0f, 3.0f, 5.0f, 9.0f,
+      1.0f, 3.0f, 1.0f, 7.0f,
+      4.0f, 3.0f, 9.0f, 7.0f,
+      5.0f, 2.0f, 0.0f, 9.0f}};
+    // clang-format on
+
+    const float determinant = as_mat44f_determinant(&mat44f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -376.0f, determinant);
+  }
+  {
+    // clang-format off
+    const as_mat44f mat44f = (as_mat44f){.elem = {
+      1.0f, 2.0f, 3.0f, 4.0f,
+      4.0f, 6.0f, 7.0f, 8.0f,
+      9.0f, 6.0f, 11.0f, 3.0f,
+      13.0f, 14.0f, 3.0f, 4.0f}};
+    // clang-format on
+
+    const float determinant = as_mat44f_determinant(&mat44f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -180.0f, determinant);
+  }
+}
+
+void test_mat44f_inverse(void) {
+  // clang-format off
+  const as_mat44f mat44f = (as_mat44f){.elem = {
+      1.0f, 3.0f, 5.0f, 9.0f,
+      1.0f, 3.0f, 1.0f, 7.0f,
+      4.0f, 3.0f, 9.0f, 7.0f,
+      5.0f, 2.0f, 0.0f, 9.0f}};
+  const float expected[] = {
+    -13.0f/47.0f, 2.0f/47.0f, 7.0f/47.0f, 6.0f/47.0f,
+    -5.0f/8.0f, 7.0f/8.0f, 1.0f/4.0f, -1.0f/4.0f,
+     39.0f/376.0f, -53.0f/376.0f, 13.0f/188.0f, -9.0f/188.0f,
+     55.0f/188.0f, -41.0f/188.0f, -13.0f/94.0f, 9.0f/94.0f};
+  // clang-format on
+
+  const as_mat44f inverse = as_mat44f_inverse(&mat44f);
+
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[0], inverse.elem[0]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[1], inverse.elem[1]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[2], inverse.elem[2]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[3], inverse.elem[3]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[4], inverse.elem[4]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[5], inverse.elem[5]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[6], inverse.elem[6]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[7], inverse.elem[7]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[8], inverse.elem[8]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[9], inverse.elem[9]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[10], inverse.elem[10]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[11], inverse.elem[11]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[12], inverse.elem[12]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[13], inverse.elem[13]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[14], inverse.elem[14]);
+  // TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[15], inverse.elem[15]);
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_vec2f_expected_values);
@@ -833,5 +894,8 @@ int main(void) {
   RUN_TEST(test_vec3i_length);
   RUN_TEST(test_point2f_from_vec2f);
   RUN_TEST(test_point2f_from_point4f);
+  //
+  RUN_TEST(test_mat44f_determinant);
+  RUN_TEST(test_mat44f_inverse);
   return UNITY_END();
 }
