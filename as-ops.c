@@ -507,6 +507,41 @@ as_mat34f as_mat33f_mul_mat34f(
            + lhs->elem[8] * rhs->elem[11]}};
 }
 
+float as_mat33f_determinant(const as_mat33f* const mat) {
+  return mat->elem[0]
+         * (mat->elem[4] * mat->elem[8] - mat->elem[5] * mat->elem[7])
+       + mat->elem[1]
+           * (mat->elem[5] * mat->elem[6] - mat->elem[3] * mat->elem[8])
+       + mat->elem[2]
+           * (mat->elem[3] * mat->elem[7] - mat->elem[4] * mat->elem[6]);
+}
+
+as_mat33f as_mat33f_inverse(const as_mat33f* const mat) {
+  const float m_11 = mat->elem[4] * mat->elem[8] - mat->elem[5] * mat->elem[7];
+  const float m_12 = mat->elem[3] * mat->elem[8] - mat->elem[5] * mat->elem[6];
+  const float m_13 = mat->elem[3] * mat->elem[7] - mat->elem[4] * mat->elem[6];
+  const float m_21 = mat->elem[1] * mat->elem[8] - mat->elem[2] * mat->elem[7];
+  const float m_22 = mat->elem[0] * mat->elem[8] - mat->elem[2] * mat->elem[6];
+  const float m_23 = mat->elem[0] * mat->elem[7] - mat->elem[1] * mat->elem[6];
+  const float m_31 = mat->elem[1] * mat->elem[5] - mat->elem[2] * mat->elem[4];
+  const float m_32 = mat->elem[0] * mat->elem[5] - mat->elem[2] * mat->elem[3];
+  const float m_33 = mat->elem[0] * mat->elem[4] - mat->elem[1] * mat->elem[3];
+  const float det_recip =
+    1.0f / (mat->elem[0] * m_11 - mat->elem[1] * m_12 + mat->elem[2] * m_13);
+  return (as_mat33f){
+    .elem = {
+      [0] = m_11 * det_recip,
+      [1] = -m_21 * det_recip,
+      [2] = m_31 * det_recip,
+      [3] = -m_12 * det_recip,
+      [4] = m_22 * det_recip,
+      [5] = -m_32 * det_recip,
+      [6] = m_13 * det_recip,
+      [7] = -m_23 * det_recip,
+      [8] = m_33 * det_recip,
+    }};
+}
+
 int as_mat34_rc(const int r, const int c) {
   return as_mat44_rc(r, c);
 }
@@ -846,13 +881,24 @@ as_mat44f as_mat44f_inverse(const as_mat44f* const mat) {
   const float det_recip = 1.0f
                         / (m_11 * mat->elem[0] - m_21 * mat->elem[4]
                            + m_31 * mat->elem[8] - m_41 * mat->elem[12]);
-  // clang-format off
-  return (as_mat44f){.elem = {
-    [0] = m_11 * det_recip, [1] = -m_21 * det_recip, [2] = m_31 * det_recip, [3] = -m_41 * det_recip,
-    [4] = -m_12 * det_recip, [5] = m_22 * det_recip, [6] = -m_32 * det_recip, [7] = m_42 * det_recip,
-    [8] = m_13 * det_recip, [9] = -m_23 * det_recip, [10] = m_33 * det_recip, [11] = -m_43 * det_recip,
-    [12] = -m_14 * det_recip, [13] = m_24 * det_recip, [14] = -m_34 * det_recip, [15] = m_44 * det_recip}};
-  // clang-format on
+  return (as_mat44f){
+    .elem = {
+      [0] = m_11 * det_recip,
+      [1] = -m_21 * det_recip,
+      [2] = m_31 * det_recip,
+      [3] = -m_41 * det_recip,
+      [4] = -m_12 * det_recip,
+      [5] = m_22 * det_recip,
+      [6] = -m_32 * det_recip,
+      [7] = m_42 * det_recip,
+      [8] = m_13 * det_recip,
+      [9] = -m_23 * det_recip,
+      [10] = m_33 * det_recip,
+      [11] = -m_43 * det_recip,
+      [12] = -m_14 * det_recip,
+      [13] = m_24 * det_recip,
+      [14] = -m_34 * det_recip,
+      [15] = m_44 * det_recip}};
 }
 
 void as_swap_float(float* lhs, float* rhs) {

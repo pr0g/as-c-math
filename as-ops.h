@@ -124,6 +124,8 @@ as_point3f as_mat33f_mul_point3f(const as_mat33f* mat, as_point3f point);
 as_vec3f as_mat33f_mul_vec3f(const as_mat33f* mat, as_vec3f vec);
 as_mat33f as_mat33f_mul_mat33f(const as_mat33f* lhs, const as_mat33f* rhs);
 as_mat34f as_mat33f_mul_mat34f(const as_mat33f* lhs, const as_mat34f* rhs);
+float as_mat33f_determinant(const as_mat33f* mat);
+as_mat33f as_mat33f_inverse(const as_mat33f* mat);
 
 // mat34
 int as_mat34_rc(int r, int c);

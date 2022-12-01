@@ -785,6 +785,76 @@ void test_point2f_from_point4f(void) {
   }
 }
 
+void test_mat33f_determinant(void) {
+  {
+    // clang-format off
+    const as_mat33f mat33f = (as_mat33f){.elem = {
+      1.0f, 3.0f, 5.0f,
+      1.0f, 3.0f, 1.0f,
+      4.0f, 3.0f, 9.0f}};
+    // clang-format on
+    const float determinant = as_mat33f_determinant(&mat33f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -36.0f, determinant);
+  }
+  {
+    // clang-format off
+    const as_mat33f mat33f = (as_mat33f){.elem = {
+      2.0f, 24.0f, 9.0f,
+      3.0f, 11.0f, 15.0f,
+      1.0f, 3.0f, 2.0f}};
+    // clang-format on
+    const float determinant = as_mat33f_determinant(&mat33f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 152.0f, determinant);
+  }
+}
+
+void test_mat33f_inverse(void) {
+  {
+    // clang-format off
+    const as_mat33f mat33f = (as_mat33f){.elem = {
+      1.0f, 3.0f, 5.0f,
+      1.0f, 3.0f, 1.0f,
+      4.0f, 3.0f, 9.0f}};
+    const float expected[] = {
+      -2.0f/3.0f, 1.0f/3.0f, 1.0f/3.0f,
+      5.0f/36.0f, 11.0f/36.0f, -1.0f/9.0f,
+      1.0f/4.0f, -1.0f/4.0f, 0.0f};
+    // clang-format on
+    const as_mat33f inverse = as_mat33f_inverse(&mat33f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[0], inverse.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[1], inverse.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[2], inverse.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[3], inverse.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[4], inverse.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[5], inverse.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[6], inverse.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[7], inverse.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[8], inverse.elem[8]);
+  }
+  {
+    // clang-format off
+    const as_mat33f mat33f = (as_mat33f){.elem = {
+      1.0f, 2.0f, 3.0f,
+      4.0f, 5.0f, 6.0f,
+      7.0f, 2.0f, 9.0f}};
+    const float expected[] = {
+      -11.0f/12.0f, 1.0f/3.0f, 1.0f/12.0f,
+      -1.0f/6.0f, 1.0f/3.0f, -1.0f/6.0f,
+      3.0f/4.0f, -1.0f/3.0f, 1.0f/12.0f};
+    // clang-format on
+    const as_mat33f inverse = as_mat33f_inverse(&mat33f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[0], inverse.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[1], inverse.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[2], inverse.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[3], inverse.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[4], inverse.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[5], inverse.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[6], inverse.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[7], inverse.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[8], inverse.elem[8]);
+  }
+}
+
 void test_mat44f_determinant(void) {
   {
     // clang-format off
@@ -935,6 +1005,8 @@ int main(void) {
   RUN_TEST(test_point2f_from_vec2f);
   RUN_TEST(test_point2f_from_point4f);
   //
+  RUN_TEST(test_mat33f_determinant);
+  RUN_TEST(test_mat33f_inverse);
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);
   return UNITY_END();
