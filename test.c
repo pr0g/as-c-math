@@ -785,6 +785,113 @@ void test_point2f_from_point4f(void) {
   }
 }
 
+void test_point2f_from_point2i(void) {
+  {
+    const as_point2f point2f =
+      as_point2f_from_point2i((as_point2i){.x = 3, .y = 8});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, point2f.y);
+  }
+  {
+    const as_point2f point2f =
+      as_point2f_from_point2i((as_point2i){.x = 25, .y = 50});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50.0f, point2f.y);
+  }
+}
+
+void test_point2f_add_vec2f(void) {
+  {
+    as_point2f point2f =
+      as_point2f_add_vec2f((as_point2f){2.0f, 5.0f}, (as_vec2f){7.0f, 11.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 16.0f, point2f.y);
+  }
+  {
+    as_point2f point2f = as_point2f_add_vec2f(
+      (as_point2f){37.0f, 123.0f}, (as_vec2f){13.0f, 27.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 150.0f, point2f.y);
+  }
+  {
+    as_point2f point2f = as_point2f_add_vec2f(
+      (as_point2f){37.0f, 123.0f}, (as_vec2f){-4.0f, -20.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 103.0f, point2f.y);
+  }
+}
+
+void test_point2f_sub_point2f(void) {
+  {
+    as_vec2f vec2f = as_point2f_sub_point2f(
+      (as_point2f){100.0f, 50.0f}, (as_point2f){20.0f, 30.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 80.0f, vec2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, vec2f.y);
+  }
+  {
+    as_vec2f vec2f = as_point2f_sub_point2f(
+      (as_point2f){200.0f, 150.0f}, (as_point2f){100.0f, -20.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 100.0f, vec2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 170.0f, vec2f.y);
+  }
+}
+
+void test_point2f_distance_point2f(void) {
+  {
+    const float distance = as_point2f_distance_point2f(
+      (as_point2f){0.0f, 0.0f}, (as_point2f){3.0f, 4.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, distance);
+  }
+
+  {
+    const float distance = as_point2f_distance_point2f(
+      (as_point2f){3.0f, 4.0f}, (as_point2f){-3.0f, -4.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, distance);
+  }
+}
+
+void test_point2i_from_point2f(void) {
+  {
+    const as_point2i point2i =
+      as_point2i_from_point2f((as_point2f){.x = 3.8f, .y = 7.2f});
+    TEST_ASSERT_EQUAL_INT32(4, point2i.x);
+    TEST_ASSERT_EQUAL_INT32(7, point2i.y);
+  }
+  {
+    const as_point2i point2i =
+      as_point2i_from_point2f((as_point2f){.x = 0.1f, .y = -0.1f});
+    TEST_ASSERT_EQUAL_INT32(0, point2i.x);
+    TEST_ASSERT_EQUAL_INT32(0, point2i.y);
+  }
+  {
+    const as_point2i point2i =
+      as_point2i_from_point2f((as_point2f){.x = 55.99f, .y = 6.49f});
+    TEST_ASSERT_EQUAL_INT32(56, point2i.x);
+    TEST_ASSERT_EQUAL_INT32(6, point2i.y);
+  }
+}
+
+void test_point2i_add_vec2i(void) {
+  {
+    as_point2i point2i =
+      as_point2i_add_vec2i((as_point2i){2, 5}, (as_vec2i){7, 11});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9, point2i.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 16, point2i.y);
+  }
+  {
+    as_point2i point2i =
+      as_point2i_add_vec2i((as_point2i){37, 123}, (as_vec2i){13, 27});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50, point2i.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 150, point2i.y);
+  }
+  {
+    as_point2i point2i =
+      as_point2i_add_vec2i((as_point2i){37, 123}, (as_vec2i){-4, -20});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33, point2i.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 103, point2i.y);
+  }
+}
+
 void test_mat22f_determinant(void) {
   {
     const as_mat22f mat44f = (as_mat22f){.elem = {1.0f, 3.0f, 6.0f, 7.0f}};
@@ -1040,6 +1147,12 @@ int main(void) {
   RUN_TEST(test_vec3i_length);
   RUN_TEST(test_point2f_from_vec2f);
   RUN_TEST(test_point2f_from_point4f);
+  RUN_TEST(test_point2f_from_point2i);
+  RUN_TEST(test_point2f_add_vec2f);
+  RUN_TEST(test_point2f_sub_point2f);
+  RUN_TEST(test_point2f_distance_point2f);
+  RUN_TEST(test_point2i_from_point2f);
+  RUN_TEST(test_point2i_add_vec2i);
   //
   RUN_TEST(test_mat22f_determinant);
   RUN_TEST(test_mat22f_inverse);
