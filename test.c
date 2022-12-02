@@ -785,6 +785,42 @@ void test_point2f_from_point4f(void) {
   }
 }
 
+void test_mat22f_determinant(void) {
+  {
+    const as_mat22f mat44f = (as_mat22f){.elem = {1.0f, 3.0f, 6.0f, 7.0f}};
+    const float determinant = as_mat22f_determinant(&mat44f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -11.0f, determinant);
+  }
+  {
+    const as_mat22f mat44f = (as_mat22f){.elem = {10.0f, 20.0f, 25.0f, 35.0f}};
+    const float determinant = as_mat22f_determinant(&mat44f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -150.0f, determinant);
+  }
+}
+
+void test_mat22f_inverse(void) {
+  {
+    const as_mat22f mat22f = (as_mat22f){.elem = {5.0f, 12.0f, 11.0f, 16.0f}};
+    const float expected[] = {
+      -4.0f / 13.0f, 3.0f / 13.0f, 11.0f / 52.0f, -5.0f / 52.0f};
+    const as_mat22f inverse = as_mat22f_inverse(&mat22f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[0], inverse.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[1], inverse.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[2], inverse.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[3], inverse.elem[3]);
+  }
+  {
+    const as_mat22f mat22f = (as_mat22f){.elem = {1.0f, 5.0f, 2.0f, 1.0f}};
+    const float expected[] = {
+      -1.0f / 9.0f, 5.0f / 9.0f, 2.0f / 9.0f, -1.0f / 9.0f};
+    const as_mat22f inverse = as_mat22f_inverse(&mat22f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[0], inverse.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[1], inverse.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[2], inverse.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[3], inverse.elem[3]);
+  }
+}
+
 void test_mat33f_determinant(void) {
   {
     // clang-format off
@@ -1005,6 +1041,8 @@ int main(void) {
   RUN_TEST(test_point2f_from_vec2f);
   RUN_TEST(test_point2f_from_point4f);
   //
+  RUN_TEST(test_mat22f_determinant);
+  RUN_TEST(test_mat22f_inverse);
   RUN_TEST(test_mat33f_determinant);
   RUN_TEST(test_mat33f_inverse);
   RUN_TEST(test_mat44f_determinant);

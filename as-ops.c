@@ -353,6 +353,20 @@ as_point2f as_mat22f_mul_point2f(
     .y = mat->elem[2] * point.x + mat->elem[3] * point.y};
 }
 
+float as_mat22f_determinant(const as_mat22f* mat) {
+  return mat->elem[0] * mat->elem[3] - mat->elem[1] * mat->elem[2];
+}
+
+as_mat22f as_mat22f_inverse(const as_mat22f* mat) {
+  const float det_recip = 1.0f / as_mat22f_determinant(mat);
+  return (as_mat22f){
+    .elem = {
+      [0] = mat->elem[3] * det_recip,
+      [1] = -mat->elem[1] * det_recip,
+      [2] = -mat->elem[2] * det_recip,
+      [3] = mat->elem[0] * det_recip}};
+}
+
 int as_mat33_rc(const int r, const int c) {
   return mat_rc(r, c, 3);
 }

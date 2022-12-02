@@ -107,6 +107,8 @@ as_mat22f as_mat22f_uniform_scale(float scale);
 as_mat22f as_mat22f_scale_from_floats(float scale_x, float scale_y);
 as_mat22f as_mat22f_scale_from_vec2f(as_vec2f scale_xy);
 as_point2f as_mat22f_mul_point2f(const as_mat22f* mat, as_point2f point);
+float as_mat22f_determinant(const as_mat22f* mat);
+as_mat22f as_mat22f_inverse(const as_mat22f* mat);
 
 // mat33
 int as_mat33_rc(int r, int c);
