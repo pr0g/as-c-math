@@ -873,22 +873,119 @@ void test_point2i_from_point2f(void) {
 
 void test_point2i_add_vec2i(void) {
   {
-    as_point2i point2i =
+    const as_point2i point2i =
       as_point2i_add_vec2i((as_point2i){2, 5}, (as_vec2i){7, 11});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9, point2i.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 16, point2i.y);
   }
   {
-    as_point2i point2i =
+    const as_point2i point2i =
       as_point2i_add_vec2i((as_point2i){37, 123}, (as_vec2i){13, 27});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50, point2i.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 150, point2i.y);
   }
   {
-    as_point2i point2i =
+    const as_point2i point2i =
       as_point2i_add_vec2i((as_point2i){37, 123}, (as_vec2i){-4, -20});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33, point2i.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 103, point2i.y);
+  }
+}
+
+void test_point2i_sub_point2i(void) {
+  {
+    const as_vec2i vec2i =
+      as_point2i_sub_point2i((as_point2i){2, 5}, (as_point2i){7, 11});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -5, vec2i.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -6, vec2i.y);
+  }
+  {
+    const as_vec2i vec2i =
+      as_point2i_sub_point2i((as_point2i){37, 123}, (as_point2i){13, 27});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 24, vec2i.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 96, vec2i.y);
+  }
+  {
+    const as_vec2i vec2i =
+      as_point2i_sub_point2i((as_point2i){37, 123}, (as_point2i){-4, -20});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 41, vec2i.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 143, vec2i.y);
+  }
+}
+
+void test_point2i_distance_point2i(void) {
+  {
+    const float distance =
+      as_point2i_distance_point2i((as_point2i){9, 12}, (as_point2i){142, 213});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 241.0186714f, distance);
+  }
+  {
+    const float distance =
+      as_point2i_distance_point2i((as_point2i){15, 10}, (as_point2i){250, 12});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 235.0085104f, distance);
+  }
+  {
+    const float distance =
+      as_point2i_distance_point2i((as_point2i){12, 24}, (as_point2i){16, 2});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 22.3606797f, distance);
+  }
+}
+
+void test_point3f_from_vec3f(void) {
+  {
+    const as_point3f point3f =
+      as_point3f_from_vec3f((as_vec3f){.x = 3.0f, .y = 2.0f, .z = 11.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.0f, point3f.z);
+  }
+  {
+    const as_point3f point3f =
+      as_point3f_from_vec3f((as_vec3f){.x = 9.0f, .y = 1.0f, .z = 5.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, point3f.z);
+  }
+}
+
+void test_point3f_from_point3i(void) {
+  {
+    const as_point3f point3f =
+      as_point3f_from_point3i((as_point3i){.x = 3, .y = 8, .z = 10});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, point3f.z);
+  }
+  {
+    const as_point3f point3f =
+      as_point3f_from_point3i((as_point3i){.x = 25, .y = 50, .z = 5});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, point3f.z);
+  }
+}
+
+void test_point3i_from_point3f(void) {
+  {
+    const as_point3i point3i =
+      as_point3i_from_point3f((as_point3f){.x = 3.8f, .y = 7.2f, .z = 0.99f});
+    TEST_ASSERT_EQUAL_INT32(4, point3i.x);
+    TEST_ASSERT_EQUAL_INT32(7, point3i.y);
+    TEST_ASSERT_EQUAL_INT32(1, point3i.z);
+  }
+  {
+    const as_point3i point3i =
+      as_point3i_from_point3f((as_point3f){.x = 0.1f, .y = -0.1f, .z = -0.99f});
+    TEST_ASSERT_EQUAL_INT32(0, point3i.x);
+    TEST_ASSERT_EQUAL_INT32(0, point3i.y);
+    TEST_ASSERT_EQUAL_INT32(-1, point3i.z);
+  }
+  {
+    const as_point3i point3i = as_point3i_from_point3f(
+      (as_point3f){.x = 55.99f, .y = 6.49f, .z = 102.5f});
+    TEST_ASSERT_EQUAL_INT32(56, point3i.x);
+    TEST_ASSERT_EQUAL_INT32(6, point3i.y);
+    TEST_ASSERT_EQUAL_INT32(103, point3i.z);
   }
 }
 
@@ -1153,6 +1250,11 @@ int main(void) {
   RUN_TEST(test_point2f_distance_point2f);
   RUN_TEST(test_point2i_from_point2f);
   RUN_TEST(test_point2i_add_vec2i);
+  RUN_TEST(test_point2i_sub_point2i);
+  RUN_TEST(test_point2i_distance_point2i);
+  RUN_TEST(test_point3f_from_vec3f);
+  RUN_TEST(test_point3f_from_point3i);
+  RUN_TEST(test_point3i_from_point3f);
   //
   RUN_TEST(test_mat22f_determinant);
   RUN_TEST(test_mat22f_inverse);
