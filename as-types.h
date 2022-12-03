@@ -46,12 +46,6 @@ typedef struct as_point2i {
   int y;
 } as_point2i;
 
-typedef struct as_point3i {
-  int x;
-  int y;
-  int z;
-} as_point3i;
-
 typedef struct as_size2i {
   int width;
   int height;

@@ -232,6 +232,10 @@ as_point2f as_point2f_from_point2i(const as_point2i point) {
   return (as_point2f){(float)point.x, (float)point.y};
 }
 
+as_point2f as_point2f_from_float(const float value) {
+  return (as_point2f){value, value};
+}
+
 as_point2f as_point2f_add_vec2f(const as_point2f point, const as_vec2f vec) {
   return (as_point2f){point.x + vec.x, point.y + vec.y};
 }
@@ -246,6 +250,14 @@ float as_point2f_distance_point2f(const as_point2f lhs, const as_point2f rhs) {
 
 as_point2i as_point2i_from_point2f(const as_point2f point) {
   return (as_point2i){(int)roundf(point.x), (int)roundf(point.y)};
+}
+
+as_point2i as_point2i_from_vec2i(const as_vec2i vec) {
+  return (as_point2i){vec.x, vec.y};
+}
+
+as_point2i as_point2i_from_int(const int value) {
+  return (as_point2i){value, value};
 }
 
 as_point2i as_point2i_add_vec2i(const as_point2i point, const as_vec2i vec) {
@@ -264,18 +276,13 @@ as_point3f as_point3f_from_vec3f(const as_vec3f vec) {
   return (as_point3f){vec.x, vec.y, vec.z};
 }
 
-as_point3f as_point3f_from_point3i(const as_point3i point) {
-  return (as_point3f){(float)point.x, (float)point.y, (float)point.z};
+as_point3f as_point3f_from_float(const float value) {
+  return (as_point3f){value, value, value};
 }
 
 as_point3f as_point3f_add_vec3f(const as_point3f point, const as_vec3f vec) {
   return (as_point3f){
     .x = point.x + vec.x, .y = point.y + vec.y, .z = point.z + vec.z};
-}
-
-as_point3f as_point3f_sub_vec3f(const as_point3f point, const as_vec3f vec) {
-  return (as_point3f){
-    .x = point.x - vec.x, .y = point.y - vec.y, .z = point.z - vec.z};
 }
 
 as_vec3f as_point3f_sub_point3f(const as_point3f lhs, const as_point3f rhs) {
@@ -306,11 +313,6 @@ as_point3f as_point3f_mix(
     .x = as_mix_float(begin.x, end.x, t),
     .y = as_mix_float(begin.y, end.y, t),
     .z = as_mix_float(begin.z, end.z, t)};
-}
-
-as_point3i as_point3i_from_point3f(const as_point3f point) {
-  return (as_point3i){
-    (int)roundf(point.x), (int)roundf(point.y), (int)roundf(point.z)};
 }
 
 as_point4f as_point4f_from_point3f(const as_point3f point) {
