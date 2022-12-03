@@ -348,6 +348,14 @@ as_mat22f as_mat22f_scale_from_vec2f(const as_vec2f scale_xy) {
   return as_mat22f_scale_from_floats(scale_xy.x, scale_xy.y);
 }
 
+as_mat22f as_mat22f_rotation(const float radians) {
+  const float cos_angle = cosf(radians);
+  const float sin_angle = sinf(radians);
+  return (as_mat22f){
+    .elem = {
+      [0] = cos_angle, [1] = -sin_angle, [2] = sin_angle, [3] = cos_angle}};
+}
+
 as_point2f as_mat22f_mul_point2f(
   const as_mat22f* const mat, const as_point2f point) {
   return (as_point2f){

@@ -916,20 +916,20 @@ void test_point2i_add_vec2i(void) {
   {
     const as_point2i point2i =
       as_point2i_add_vec2i((as_point2i){2, 5}, (as_vec2i){7, 11});
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9, point2i.x);
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 16, point2i.y);
+    TEST_ASSERT_EQUAL_INT32(9, point2i.x);
+    TEST_ASSERT_EQUAL_INT32(16, point2i.y);
   }
   {
     const as_point2i point2i =
       as_point2i_add_vec2i((as_point2i){37, 123}, (as_vec2i){13, 27});
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50, point2i.x);
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 150, point2i.y);
+    TEST_ASSERT_EQUAL_INT32(50, point2i.x);
+    TEST_ASSERT_EQUAL_INT32(150, point2i.y);
   }
   {
     const as_point2i point2i =
       as_point2i_add_vec2i((as_point2i){37, 123}, (as_vec2i){-4, -20});
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33, point2i.x);
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 103, point2i.y);
+    TEST_ASSERT_EQUAL_INT32(33, point2i.x);
+    TEST_ASSERT_EQUAL_INT32(103, point2i.y);
   }
 }
 
@@ -937,20 +937,20 @@ void test_point2i_sub_point2i(void) {
   {
     const as_vec2i vec2i =
       as_point2i_sub_point2i((as_point2i){2, 5}, (as_point2i){7, 11});
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -5, vec2i.x);
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -6, vec2i.y);
+    TEST_ASSERT_EQUAL_INT32(-5, vec2i.x);
+    TEST_ASSERT_EQUAL_INT32(-6, vec2i.y);
   }
   {
     const as_vec2i vec2i =
       as_point2i_sub_point2i((as_point2i){37, 123}, (as_point2i){13, 27});
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 24, vec2i.x);
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 96, vec2i.y);
+    TEST_ASSERT_EQUAL_INT32(24, vec2i.x);
+    TEST_ASSERT_EQUAL_INT32(96, vec2i.y);
   }
   {
     const as_vec2i vec2i =
       as_point2i_sub_point2i((as_point2i){37, 123}, (as_point2i){-4, -20});
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 41, vec2i.x);
-    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 143, vec2i.y);
+    TEST_ASSERT_EQUAL_INT32(41, vec2i.x);
+    TEST_ASSERT_EQUAL_INT32(143, vec2i.y);
   }
 }
 
@@ -1135,6 +1135,112 @@ void test_point4f_from_point2f(void) {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, point4f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, point4f.z);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, point4f.w);
+  }
+}
+
+void test_mat22_rc(void) {
+  const int m00 = as_mat22_rc(0, 0);
+  const int m01 = as_mat22_rc(0, 1);
+  const int m10 = as_mat22_rc(1, 0);
+  const int m11 = as_mat22_rc(1, 1);
+  TEST_ASSERT_EQUAL_INT32(0, m00);
+  TEST_ASSERT_EQUAL_INT32(1, m01);
+  TEST_ASSERT_EQUAL_INT32(2, m10);
+  TEST_ASSERT_EQUAL_INT32(3, m11);
+}
+
+void test_mat22f_identity(void) {
+  const as_mat22f mat22f = as_mat22f_identity();
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat22f.elem[0]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat22f.elem[3]);
+}
+
+void test_mat22f_uniform_scale(void) {
+  {
+    const as_mat22f mat22f = as_mat22f_uniform_scale(2.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat22f.elem[3]);
+  }
+  {
+    const as_mat22f mat22f = as_mat22f_uniform_scale(10.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat22f.elem[3]);
+  }
+}
+
+void test_mat22f_scale_from_floats(void) {
+  {
+    const as_mat22f mat22f = as_mat22f_scale_from_floats(2.0f, 4.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat22f.elem[3]);
+  }
+  {
+    const as_mat22f mat22f = as_mat22f_scale_from_floats(11.0f, 12.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, mat22f.elem[3]);
+  }
+}
+
+void test_mat22f_scale_from_vec2f(void) {
+  {
+    const as_mat22f mat22f = as_mat22f_scale_from_vec2f((as_vec2f){2.0f, 4.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat22f.elem[3]);
+  }
+  {
+    const as_mat22f mat22f =
+      as_mat22f_scale_from_vec2f((as_vec2f){11.0f, 12.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, mat22f.elem[3]);
+  }
+}
+
+void test_mat22f_rotation(void) {
+  {
+    const as_mat22f mat22f = as_mat22f_rotation(as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[3]);
+  }
+  {
+    const as_mat22f mat22f = as_mat22f_rotation(-as_k_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, mat22f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat22f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, mat22f.elem[3]);
+  }
+}
+
+void test_mat22f_mul_point2f(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_mat22f mat22f = as_mat22f_rotation(as_k_half_pi);
+    const as_point2f point2f =
+      as_mat22f_mul_point2f(&mat22f, (as_point2f){2.0f, 2.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -2.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 2.0f, point2f.y);
+  }
+  {
+    const as_mat22f mat22f = as_mat22f_rotation(as_k_pi);
+    const as_point2f point2f =
+      as_mat22f_mul_point2f(&mat22f, (as_point2f){5.0f, 0.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -5.0f, point2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point2f.y);
   }
 }
 
@@ -1413,6 +1519,13 @@ int main(void) {
   RUN_TEST(test_point3f_mix);
   RUN_TEST(test_point4f_from_point3f);
   RUN_TEST(test_point4f_from_point2f);
+  RUN_TEST(test_mat22_rc);
+  RUN_TEST(test_mat22f_identity);
+  RUN_TEST(test_mat22f_uniform_scale);
+  RUN_TEST(test_mat22f_scale_from_floats);
+  RUN_TEST(test_mat22f_scale_from_vec2f);
+  RUN_TEST(test_mat22f_rotation);
+  RUN_TEST(test_mat22f_mul_point2f);
   //
   RUN_TEST(test_mat22f_determinant);
   RUN_TEST(test_mat22f_inverse);
