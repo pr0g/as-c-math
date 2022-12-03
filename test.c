@@ -1280,6 +1280,27 @@ void test_mat22f_inverse(void) {
   }
 }
 
+void test_mat33_rc(void) {
+  const int m00 = as_mat33_rc(0, 0);
+  const int m01 = as_mat33_rc(0, 1);
+  const int m02 = as_mat33_rc(0, 2);
+  const int m10 = as_mat33_rc(1, 0);
+  const int m11 = as_mat33_rc(1, 1);
+  const int m12 = as_mat33_rc(1, 2);
+  const int m20 = as_mat33_rc(2, 0);
+  const int m21 = as_mat33_rc(2, 1);
+  const int m22 = as_mat33_rc(2, 2);
+  TEST_ASSERT_EQUAL_INT32(0, m00);
+  TEST_ASSERT_EQUAL_INT32(1, m01);
+  TEST_ASSERT_EQUAL_INT32(2, m02);
+  TEST_ASSERT_EQUAL_INT32(3, m10);
+  TEST_ASSERT_EQUAL_INT32(4, m11);
+  TEST_ASSERT_EQUAL_INT32(5, m12);
+  TEST_ASSERT_EQUAL_INT32(6, m20);
+  TEST_ASSERT_EQUAL_INT32(7, m21);
+  TEST_ASSERT_EQUAL_INT32(8, m22);
+}
+
 void test_mat33f_determinant(void) {
   {
     // clang-format off
@@ -1526,9 +1547,10 @@ int main(void) {
   RUN_TEST(test_mat22f_scale_from_vec2f);
   RUN_TEST(test_mat22f_rotation);
   RUN_TEST(test_mat22f_mul_point2f);
-  //
   RUN_TEST(test_mat22f_determinant);
   RUN_TEST(test_mat22f_inverse);
+  RUN_TEST(test_mat33_rc);
+  //
   RUN_TEST(test_mat33f_determinant);
   RUN_TEST(test_mat33f_inverse);
   RUN_TEST(test_mat44f_determinant);
