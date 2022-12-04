@@ -1301,6 +1301,330 @@ void test_mat33_rc(void) {
   TEST_ASSERT_EQUAL_INT32(8, m22);
 }
 
+void test_mat33f_identity(void) {
+  const as_mat33f mat33f = as_mat33f_identity();
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat33f.elem[0]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[1]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[2]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[3]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat33f.elem[4]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[5]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[6]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[7]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat33f.elem[8]);
+}
+
+void test_mat33f_uniform_scale(void) {
+  {
+    const as_mat33f mat33f = as_mat33f_uniform_scale(2.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[8]);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_uniform_scale(10.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat33f.elem[8]);
+  }
+}
+
+void test_mat33f_scale_from_floats(void) {
+  {
+    const as_mat33f mat33f = as_mat33f_scale_from_floats(1.0f, 2.0f, 3.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat33f.elem[8]);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_scale_from_floats(15.0f, 30.0f, 45.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 15.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 30.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 45.0f, mat33f.elem[8]);
+  }
+}
+
+void test_mat33f_scale_from_vec3f(void) {
+  {
+    const as_mat33f mat33f =
+      as_mat33f_scale_from_vec3f((as_vec3f){.x = 1.0f, .y = 2.0f, .z = 3.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat33f.elem[8]);
+  }
+
+  {
+    const as_mat33f mat33f =
+      as_mat33f_scale_from_vec3f((as_vec3f){.x = 2.0f, .y = 4.0f, .z = 8.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, mat33f.elem[8]);
+  }
+}
+
+void test_mat33f_from_mat34f(void) {
+  {
+    // clang-format off
+    const as_mat33f mat33f = as_mat33f_from_mat34f(
+      &(as_mat34f){ .elem = {
+        1.0f, 2.0f, 3.0f, 4.0f,
+        5.0f, 6.0f, 7.0f, 8.0f,
+        9.0f, 10.0f, 11.0f, 12.0f}});
+    // clang-format on
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 6.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 7.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.0f, mat33f.elem[8]);
+  }
+  {
+    // clang-format off
+    const as_mat33f mat33f = as_mat33f_from_mat34f(
+      &(as_mat34f){ .elem = {
+        23.0f, 14.0f, 97.0f, 11.0f,
+        16.0f, 22.0f, 14.0f, 64.0f,
+        75.0f, 27.0f, 18.0f, 33.0f}});
+    // clang-format on
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 23.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 14.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 97.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 16.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 22.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 14.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 75.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 27.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 18.0f, mat33f.elem[8]);
+  }
+}
+
+void test_mat33f_transpose(void) {
+  {
+    // clang-format off
+    const as_mat33f mat33f = as_mat33f_transpose(
+      &(as_mat33f){.elem = {
+        1.0f, 2.0f, 3.0f,
+        4.0f, 5.0f, 6.0f,
+        7.0f, 8.0f, 9.0f}});
+    // clang-format on
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 7.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 6.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f, mat33f.elem[8]);
+  }
+  {
+    // clang-format off
+    const as_mat33f mat33f = as_mat33f_transpose(
+      &(as_mat33f){.elem = {
+        11.0f, 22.0f, 33.0f,
+        44.0f, 55.0f, 66.0f,
+        77.0f, 88.0f, 99.0f}});
+    // clang-format on
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 44.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 77.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 22.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 55.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 88.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 66.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 99.0f, mat33f.elem[8]);
+  }
+}
+
+void test_mat33f_x_axis_rotation(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_mat33f mat33f = as_mat33f_x_axis_rotation(as_k_half_pi);
+    const as_point3f point3f =
+      as_mat33f_mul_point3f(&mat33f, (as_point3f){.x = 10.0f, .y = 2.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 10.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 2.0f, point3f.z);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_x_axis_rotation(as_k_half_pi);
+    const as_point3f point3f =
+      as_mat33f_mul_point3f(&mat33f, (as_point3f){.x = 20.0f, .z = 5.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 20.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -5.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.z);
+  }
+}
+
+void test_mat33f_y_axis_rotation(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_mat33f mat33f = as_mat33f_y_axis_rotation(as_k_half_pi);
+    const as_point3f point3f =
+      as_mat33f_mul_point3f(&mat33f, (as_point3f){.y = 50.0f, .x = 10.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 50.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -10.0f, point3f.z);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_y_axis_rotation(as_k_half_pi);
+    const as_point3f point3f =
+      as_mat33f_mul_point3f(&mat33f, (as_point3f){.y = 10.0f, .z = 12.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 12.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 10.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.z);
+  }
+}
+
+void test_mat33f_z_axis_rotation(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
+    const as_point3f point3f =
+      as_mat33f_mul_point3f(&mat33f, (as_point3f){.z = 5.0f, .x = 2.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 2.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 5.0f, point3f.z);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
+    const as_point3f point3f =
+      as_mat33f_mul_point3f(&mat33f, (as_point3f){.z = 16.0f, .y = 4.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -4.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 16.0f, point3f.z);
+  }
+}
+
+void test_mat33f_mul_point3f(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_mat33f mat33f = as_mat33f_scale_from_floats(10.0f, 5.0f, 2.0f);
+    const as_point3f point3f = as_mat33f_mul_point3f(
+      &mat33f, (as_point3f){.x = 2.0f, .y = 4.0f, .z = 8.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 20.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 20.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 16.0f, point3f.z);
+  }
+}
+
+void test_mat33f_mul_mat33f(void) {
+  {
+    const as_mat33f mat33f = as_mat33f_mul_mat33f(
+      &(as_mat33f){
+        .elem = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}},
+      &(as_mat33f){
+        .elem = {
+          2.0f, 4.0f, 8.0f, 16.0f, 32.0f, 64.0f, 128.0f, 256.0f, 512.0f}});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 418.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 836.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1672.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 856.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1712.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3424.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1294.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2588.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5176.0f, mat33f.elem[8]);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_mul_mat33f(
+      &(as_mat33f){
+        .elem = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}},
+      &(as_mat33f){
+        .elem = {2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 36.0f, mat33f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 42.0f, mat33f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 48.0f, mat33f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 81.0f, mat33f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 96.0f, mat33f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 111.0f, mat33f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 126.0f, mat33f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 150.0f, mat33f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 174.0f, mat33f.elem[8]);
+  }
+}
+
+void test_mat33f_mul_mat34f(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
+    const as_mat34f mat34f =
+      as_mat34f_translation_from_vec3f((as_vec3f){.x = 10.0f});
+    const as_mat34f result = as_mat33f_mul_mat34f(&mat33f, &mat34f);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -1.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 1.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 10.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 1.0f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[11]);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
+    const as_mat33f opp_mat33f = as_mat33f_z_axis_rotation(-as_k_half_pi);
+    const as_mat34f mat34f =
+      as_mat34f_from_mat33f_and_vec3f(&opp_mat33f, (as_vec3f){.x = 10.0f});
+    const as_mat34f result = as_mat33f_mul_mat34f(&mat33f, &mat34f);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 1.0f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 1.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 10.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 1.0f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.elem[11]);
+  }
+}
+
 void test_mat33f_determinant(void) {
   {
     // clang-format off
@@ -1369,6 +1693,242 @@ void test_mat33f_inverse(void) {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[7], inverse.elem[7]);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, expected[8], inverse.elem[8]);
   }
+}
+
+void test_mat34_rc(void) {
+  const int m00 = as_mat34_rc(0, 0);
+  const int m01 = as_mat34_rc(0, 1);
+  const int m02 = as_mat34_rc(0, 2);
+  const int m03 = as_mat34_rc(0, 3);
+  const int m10 = as_mat34_rc(1, 0);
+  const int m11 = as_mat34_rc(1, 1);
+  const int m12 = as_mat34_rc(1, 2);
+  const int m13 = as_mat34_rc(1, 3);
+  const int m20 = as_mat34_rc(2, 0);
+  const int m21 = as_mat34_rc(2, 1);
+  const int m22 = as_mat34_rc(2, 2);
+  const int m23 = as_mat34_rc(2, 3);
+  TEST_ASSERT_EQUAL_INT32(0, m00);
+  TEST_ASSERT_EQUAL_INT32(1, m01);
+  TEST_ASSERT_EQUAL_INT32(2, m02);
+  TEST_ASSERT_EQUAL_INT32(3, m03);
+  TEST_ASSERT_EQUAL_INT32(4, m10);
+  TEST_ASSERT_EQUAL_INT32(5, m11);
+  TEST_ASSERT_EQUAL_INT32(6, m12);
+  TEST_ASSERT_EQUAL_INT32(7, m13);
+  TEST_ASSERT_EQUAL_INT32(8, m20);
+  TEST_ASSERT_EQUAL_INT32(9, m21);
+  TEST_ASSERT_EQUAL_INT32(10, m22);
+  TEST_ASSERT_EQUAL_INT32(11, m23);
+}
+
+void test_mat34f_identity(void) {
+  const as_mat34f mat34f = as_mat34f_identity();
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[0]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[1]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[2]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[3]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[4]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[5]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[6]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[7]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[8]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[9]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[10]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[11]);
+}
+
+void test_mat34f_translation_from_floats(void) {
+  {
+    const as_mat34f mat34f =
+      as_mat34f_translation_from_floats(1.0f, 2.0f, 3.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat34f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat34f.elem[11]);
+  }
+  {
+    const as_mat34f mat34f =
+      as_mat34f_translation_from_floats(2.0f, 4.0f, 8.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat34f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat34f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, mat34f.elem[11]);
+  }
+}
+
+void test_mat34f_translation_from_vec3f(void) {
+  {
+    const as_mat34f mat34f =
+      as_mat34f_translation_from_vec3f((as_vec3f){1.0f, 2.0f, 3.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat34f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat34f.elem[11]);
+  }
+  {
+    const as_mat34f mat34f =
+      as_mat34f_translation_from_vec3f((as_vec3f){2.0f, 4.0f, 8.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat34f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat34f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, mat34f.elem[11]);
+  }
+}
+
+void test_mat34f_translation_from_point3f(void) {
+  {
+    const as_mat34f mat34f =
+      as_mat34f_translation_from_point3f((as_point3f){10.0f, 20.0f, 30.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat34f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, mat34f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 30.0f, mat34f.elem[11]);
+  }
+  {
+    const as_mat34f mat34f =
+      as_mat34f_translation_from_point3f((as_point3f){11.0f, 22.0f, 33.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.0f, mat34f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 22.0f, mat34f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat34f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat34f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33.0f, mat34f.elem[11]);
+  }
+}
+
+void test_mat34f_from_mat33f_and_vec3f(void) {
+  const as_mat34f mat34f = as_mat34f_from_mat33f_and_vec3f(
+    &(as_mat33f){
+      .elem = {2.0f, 4.0f, 6.0f, 8.0f, 10.0f, 12.0f, 14.0f, 16.0f, 18.0f}},
+    (as_vec3f){123.0f, 456.0f, 789.0f});
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat34f.elem[0]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat34f.elem[1]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 6.0f, mat34f.elem[2]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 123.0f, mat34f.elem[3]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, mat34f.elem[4]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat34f.elem[5]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, mat34f.elem[6]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 456.0f, mat34f.elem[7]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 14.0f, mat34f.elem[8]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 16.0f, mat34f.elem[9]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 18.0f, mat34f.elem[10]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 789.0f, mat34f.elem[11]);
+}
+
+void test_mat34f_mul_point3f(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
+    const as_mat34f mat34f =
+      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 10.0f});
+    const as_point3f result =
+      as_mat34f_mul_point3f(&mat34f, (as_point3f){.y = 50.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -40.0f, result.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.z);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_y_axis_rotation(-as_k_half_pi);
+    const as_mat34f mat34f =
+      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 2.0f});
+    const as_point3f result =
+      as_mat34f_mul_point3f(&mat34f, (as_point3f){.z = -5.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 7.0f, result.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.z);
+  }
+  {
+    const as_mat33f mat33f = as_mat33f_x_axis_rotation(as_k_pi);
+    const as_mat34f mat34f =
+      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.z = -2.0f});
+    const as_point3f result =
+      as_mat34f_mul_point3f(&mat34f, (as_point3f){.y = 10.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -10.0f, result.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -2.0f, result.z);
+  }
+}
+
+void test_mat44_rc(void) {
+  const int m00 = as_mat34_rc(0, 0);
+  const int m01 = as_mat34_rc(0, 1);
+  const int m02 = as_mat34_rc(0, 2);
+  const int m03 = as_mat34_rc(0, 3);
+  const int m10 = as_mat34_rc(1, 0);
+  const int m11 = as_mat34_rc(1, 1);
+  const int m12 = as_mat34_rc(1, 2);
+  const int m13 = as_mat34_rc(1, 3);
+  const int m20 = as_mat34_rc(2, 0);
+  const int m21 = as_mat34_rc(2, 1);
+  const int m22 = as_mat34_rc(2, 2);
+  const int m23 = as_mat34_rc(2, 3);
+  const int m30 = as_mat34_rc(3, 0);
+  const int m31 = as_mat34_rc(3, 1);
+  const int m32 = as_mat34_rc(3, 2);
+  const int m33 = as_mat34_rc(3, 3);
+  TEST_ASSERT_EQUAL_INT32(0, m00);
+  TEST_ASSERT_EQUAL_INT32(1, m01);
+  TEST_ASSERT_EQUAL_INT32(2, m02);
+  TEST_ASSERT_EQUAL_INT32(3, m03);
+  TEST_ASSERT_EQUAL_INT32(4, m10);
+  TEST_ASSERT_EQUAL_INT32(5, m11);
+  TEST_ASSERT_EQUAL_INT32(6, m12);
+  TEST_ASSERT_EQUAL_INT32(7, m13);
+  TEST_ASSERT_EQUAL_INT32(8, m20);
+  TEST_ASSERT_EQUAL_INT32(9, m21);
+  TEST_ASSERT_EQUAL_INT32(10, m22);
+  TEST_ASSERT_EQUAL_INT32(11, m23);
+  TEST_ASSERT_EQUAL_INT32(12, m30);
+  TEST_ASSERT_EQUAL_INT32(13, m31);
+  TEST_ASSERT_EQUAL_INT32(14, m32);
+  TEST_ASSERT_EQUAL_INT32(15, m33);
 }
 
 void test_mat44f_determinant(void) {
@@ -1550,9 +2110,29 @@ int main(void) {
   RUN_TEST(test_mat22f_determinant);
   RUN_TEST(test_mat22f_inverse);
   RUN_TEST(test_mat33_rc);
-  //
+  RUN_TEST(test_mat33f_identity);
+  RUN_TEST(test_mat33f_uniform_scale);
+  RUN_TEST(test_mat33f_scale_from_floats);
+  RUN_TEST(test_mat33f_scale_from_vec3f);
+  RUN_TEST(test_mat33f_from_mat34f);
+  RUN_TEST(test_mat33f_transpose);
+  RUN_TEST(test_mat33f_x_axis_rotation);
+  RUN_TEST(test_mat33f_y_axis_rotation);
+  RUN_TEST(test_mat33f_z_axis_rotation);
+  RUN_TEST(test_mat33f_mul_point3f);
+  RUN_TEST(test_mat33f_mul_mat33f);
+  RUN_TEST(test_mat33f_mul_mat34f);
   RUN_TEST(test_mat33f_determinant);
   RUN_TEST(test_mat33f_inverse);
+  RUN_TEST(test_mat34_rc);
+  RUN_TEST(test_mat34f_identity);
+  RUN_TEST(test_mat34f_translation_from_floats);
+  RUN_TEST(test_mat34f_translation_from_vec3f);
+  RUN_TEST(test_mat34f_translation_from_point3f);
+  RUN_TEST(test_mat34f_from_mat33f_and_vec3f);
+  RUN_TEST(test_mat34f_mul_point3f);
+  //
+  RUN_TEST(test_mat44_rc);
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);
   return UNITY_END();
