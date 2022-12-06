@@ -2018,6 +2018,26 @@ void test_mat44_rc(void) {
   TEST_ASSERT_EQUAL_INT32(15, m33);
 }
 
+void test_mat44f_identity(void) {
+  const as_mat44f mat44f = as_mat44f_identity();
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[0]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[1]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[2]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[3]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[4]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[5]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[6]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[7]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[8]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[9]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[10]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[11]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[12]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[13]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[14]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
+}
+
 void test_mat44f_determinant(void) {
   {
     // clang-format off
@@ -2222,6 +2242,7 @@ int main(void) {
   RUN_TEST(test_mat34f_mul_mat34f);
   //
   RUN_TEST(test_mat44_rc);
+  RUN_TEST(test_mat44f_identity);
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);
   return UNITY_END();
