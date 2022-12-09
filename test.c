@@ -2070,6 +2070,61 @@ void test_mat34f_inverse(void) {
   }
 }
 
+void test_mat44_rc(void) {
+  const int m00 = as_mat34_rc(0, 0);
+  const int m01 = as_mat34_rc(0, 1);
+  const int m02 = as_mat34_rc(0, 2);
+  const int m03 = as_mat34_rc(0, 3);
+  const int m10 = as_mat34_rc(1, 0);
+  const int m11 = as_mat34_rc(1, 1);
+  const int m12 = as_mat34_rc(1, 2);
+  const int m13 = as_mat34_rc(1, 3);
+  const int m20 = as_mat34_rc(2, 0);
+  const int m21 = as_mat34_rc(2, 1);
+  const int m22 = as_mat34_rc(2, 2);
+  const int m23 = as_mat34_rc(2, 3);
+  const int m30 = as_mat34_rc(3, 0);
+  const int m31 = as_mat34_rc(3, 1);
+  const int m32 = as_mat34_rc(3, 2);
+  const int m33 = as_mat34_rc(3, 3);
+  TEST_ASSERT_EQUAL_INT32(0, m00);
+  TEST_ASSERT_EQUAL_INT32(1, m01);
+  TEST_ASSERT_EQUAL_INT32(2, m02);
+  TEST_ASSERT_EQUAL_INT32(3, m03);
+  TEST_ASSERT_EQUAL_INT32(4, m10);
+  TEST_ASSERT_EQUAL_INT32(5, m11);
+  TEST_ASSERT_EQUAL_INT32(6, m12);
+  TEST_ASSERT_EQUAL_INT32(7, m13);
+  TEST_ASSERT_EQUAL_INT32(8, m20);
+  TEST_ASSERT_EQUAL_INT32(9, m21);
+  TEST_ASSERT_EQUAL_INT32(10, m22);
+  TEST_ASSERT_EQUAL_INT32(11, m23);
+  TEST_ASSERT_EQUAL_INT32(12, m30);
+  TEST_ASSERT_EQUAL_INT32(13, m31);
+  TEST_ASSERT_EQUAL_INT32(14, m32);
+  TEST_ASSERT_EQUAL_INT32(15, m33);
+}
+
+void test_mat44f_identity(void) {
+  const as_mat44f mat44f = as_mat44f_identity();
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[0]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[1]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[2]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[3]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[4]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[5]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[6]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[7]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[8]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[9]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[10]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[11]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[12]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[13]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[14]);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
+}
+
 void test_mat44f_mul_mat44f(void) {
   {
     // clang-format off
@@ -2139,59 +2194,29 @@ void test_mat44f_mul_mat44f(void) {
   }
 }
 
-void test_mat44_rc(void) {
-  const int m00 = as_mat34_rc(0, 0);
-  const int m01 = as_mat34_rc(0, 1);
-  const int m02 = as_mat34_rc(0, 2);
-  const int m03 = as_mat34_rc(0, 3);
-  const int m10 = as_mat34_rc(1, 0);
-  const int m11 = as_mat34_rc(1, 1);
-  const int m12 = as_mat34_rc(1, 2);
-  const int m13 = as_mat34_rc(1, 3);
-  const int m20 = as_mat34_rc(2, 0);
-  const int m21 = as_mat34_rc(2, 1);
-  const int m22 = as_mat34_rc(2, 2);
-  const int m23 = as_mat34_rc(2, 3);
-  const int m30 = as_mat34_rc(3, 0);
-  const int m31 = as_mat34_rc(3, 1);
-  const int m32 = as_mat34_rc(3, 2);
-  const int m33 = as_mat34_rc(3, 3);
-  TEST_ASSERT_EQUAL_INT32(0, m00);
-  TEST_ASSERT_EQUAL_INT32(1, m01);
-  TEST_ASSERT_EQUAL_INT32(2, m02);
-  TEST_ASSERT_EQUAL_INT32(3, m03);
-  TEST_ASSERT_EQUAL_INT32(4, m10);
-  TEST_ASSERT_EQUAL_INT32(5, m11);
-  TEST_ASSERT_EQUAL_INT32(6, m12);
-  TEST_ASSERT_EQUAL_INT32(7, m13);
-  TEST_ASSERT_EQUAL_INT32(8, m20);
-  TEST_ASSERT_EQUAL_INT32(9, m21);
-  TEST_ASSERT_EQUAL_INT32(10, m22);
-  TEST_ASSERT_EQUAL_INT32(11, m23);
-  TEST_ASSERT_EQUAL_INT32(12, m30);
-  TEST_ASSERT_EQUAL_INT32(13, m31);
-  TEST_ASSERT_EQUAL_INT32(14, m32);
-  TEST_ASSERT_EQUAL_INT32(15, m33);
-}
-
-void test_mat44f_identity(void) {
-  const as_mat44f mat44f = as_mat44f_identity();
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[0]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[1]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[2]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[3]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[4]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[5]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[6]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[7]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[8]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[9]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[10]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[11]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[12]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[13]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[14]);
-  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
+void test_mat44f_perspective_projection_lh(void) {
+  {
+    const float fov = as_k_half_pi;
+    const float aspect = 16.0f / 9.0f;
+    const as_mat44f result =
+      as_mat44f_perspective_projection_lh(aspect, fov, 0.01f, 1000.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.562500f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.000010f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -0.01f, result.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, result.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[15]);
+  }
 }
 
 void test_mat44f_determinant(void) {
@@ -2398,10 +2423,11 @@ int main(void) {
   RUN_TEST(test_mat34f_mul_mat34f);
   RUN_TEST(test_mat34f_mul_mat33f);
   RUN_TEST(test_mat34f_inverse);
-  RUN_TEST(test_mat44f_mul_mat44f);
-  //
   RUN_TEST(test_mat44_rc);
   RUN_TEST(test_mat44f_identity);
+  RUN_TEST(test_mat44f_mul_mat44f);
+  RUN_TEST(test_mat44f_perspective_projection_lh);
+  //
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);
   return UNITY_END();

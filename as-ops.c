@@ -747,18 +747,18 @@ as_mat44f as_mat44f_mul_mat44f(
            + lhs->elem[14] * rhs->elem[11] + lhs->elem[15] * rhs->elem[15]}};
 }
 
-as_mat44f as_mat44f_perspective_projection(
+as_mat44f as_mat44f_perspective_projection_lh(
   const float aspect_ratio,
-  const float fov,
+  const float vertical_fov,
   const float near,
   const float far) {
-  const float e = 1.0f / tanf(fov * 0.5f);
+  const float e = 1.0f / tanf(vertical_fov * 0.5f);
   return (as_mat44f){
     .elem = {
       [0] = e / aspect_ratio,
       [5] = e,
       [10] = far / (far - near),
-      [11] = (-far * near) / (far - near),
+      [11] = (far * near) / (near - far),
       [14] = 1.0f}};
 }
 

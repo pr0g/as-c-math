@@ -148,8 +148,8 @@ as_mat34f as_mat34f_inverse(const as_mat34f* mat);
 int as_mat44_rc(int r, int c);
 as_mat44f as_mat44f_identity(void);
 as_mat44f as_mat44f_mul_mat44f(const as_mat44f* lhs, const as_mat44f* rhs);
-as_mat44f as_mat44f_perspective_projection(
-  float aspect_ratio, float fov, float near, float far);
+as_mat44f as_mat44f_perspective_projection_lh(
+  float aspect_ratio, float vertical_fov, float near, float far);
 as_point4f as_mat44f_mul_point4f(const as_mat44f* mat, as_point4f point);
 as_point4f as_mat44f_project_point3f(
   const as_mat44f* projection, as_point3f point);
