@@ -2036,6 +2036,40 @@ void test_mat34f_mul_mat33f(void) {
   }
 }
 
+void test_mat34f_inverse(void) {
+  // ensure inverse restores original point (scale)
+  {
+    const as_mat33f scale = as_mat33f_scale_from_floats(2.0f, 4.0f, 8.0f);
+    const as_mat34f scale_and_translation = as_mat34f_from_mat33f_and_vec3f(
+      &scale, (as_vec3f){.x = 1.0f, .y = 1.0f, .z = 1.0f});
+    const as_point3f transformed_point3f = as_mat34f_mul_point3f(
+      &scale_and_translation, (as_point3f){.x = 5.0f, .y = 5.0f, .z = 5.0f});
+    const as_mat34f scale_and_translation_inv =
+      as_mat34f_inverse(&scale_and_translation);
+    const as_point3f inverse_point3f =
+      as_mat34f_mul_point3f(&scale_and_translation_inv, transformed_point3f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, inverse_point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, inverse_point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, inverse_point3f.z);
+  }
+  // ensure inverse restores original point (rotation)
+  {
+    const as_mat33f rotation = as_mat33f_x_axis_rotation(as_k_half_pi);
+    const as_mat34f rotation_and_translation = as_mat34f_from_mat33f_and_vec3f(
+      &rotation, (as_vec3f){.x = 1.0f, .y = 1.0f, .z = 1.0f});
+    const as_point3f transformed_point3f = as_mat34f_mul_point3f(
+      &rotation_and_translation,
+      (as_point3f){.x = 15.0f, .y = 30.0f, .z = 45.0f});
+    const as_mat34f scale_and_translation_inv =
+      as_mat34f_inverse(&rotation_and_translation);
+    const as_point3f inverse_point3f =
+      as_mat34f_mul_point3f(&scale_and_translation_inv, transformed_point3f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 15.0f, inverse_point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 30.0f, inverse_point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 45.0f, inverse_point3f.z);
+  }
+}
+
 void test_mat44_rc(void) {
   const int m00 = as_mat34_rc(0, 0);
   const int m01 = as_mat34_rc(0, 1);
@@ -2294,6 +2328,7 @@ int main(void) {
   RUN_TEST(test_mat34f_mul_vec3f);
   RUN_TEST(test_mat34f_mul_mat34f);
   RUN_TEST(test_mat34f_mul_mat33f);
+  RUN_TEST(test_mat34f_inverse);
   //
   RUN_TEST(test_mat44_rc);
   RUN_TEST(test_mat44f_identity);

@@ -691,13 +691,13 @@ as_mat34f as_mat34f_mul_mat33f(
 }
 
 as_mat34f as_mat34f_inverse(const as_mat34f* const mat) {
-  const as_mat33f mat33 = as_mat33f_from_mat34f(mat);
-  const as_mat33f inverse_rotation = as_mat33f_transpose(&mat33);
+  const as_mat33f rotation_scale = as_mat33f_from_mat34f(mat);
+  const as_mat33f inverse_rotation_scale = as_mat33f_inverse(&rotation_scale);
   const as_point3f inverse_translation = as_mat33f_mul_point3f(
-    &inverse_rotation,
+    &inverse_rotation_scale,
     (as_point3f){.x = -mat->elem[3], .y = -mat->elem[7], .z = -mat->elem[11]});
   return as_mat34f_from_mat33f_and_vec3f(
-    &inverse_rotation, as_vec3f_from_point3f(inverse_translation));
+    &inverse_rotation_scale, as_vec3f_from_point3f(inverse_translation));
 }
 
 int as_mat44_rc(const int r, const int c) {
