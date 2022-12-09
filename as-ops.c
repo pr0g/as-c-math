@@ -730,13 +730,13 @@ as_mat44f as_mat44f_mul_mat44f(
       [7] = lhs->elem[4] * rhs->elem[3] + lhs->elem[5] * rhs->elem[7]
           + lhs->elem[6] * rhs->elem[11] + lhs->elem[7] * rhs->elem[15],
       [8] = lhs->elem[8] * rhs->elem[0] + lhs->elem[9] * rhs->elem[4]
-          + lhs->elem[10] * rhs->elem[8] + lhs->elem[10] * rhs->elem[12],
+          + lhs->elem[10] * rhs->elem[8] + lhs->elem[11] * rhs->elem[12],
       [9] = lhs->elem[8] * rhs->elem[1] + lhs->elem[9] * rhs->elem[5]
-          + lhs->elem[10] * rhs->elem[9] + lhs->elem[10] * rhs->elem[13],
+          + lhs->elem[10] * rhs->elem[9] + lhs->elem[11] * rhs->elem[13],
       [10] = lhs->elem[8] * rhs->elem[2] + lhs->elem[9] * rhs->elem[6]
-           + lhs->elem[10] * rhs->elem[10] + lhs->elem[10] * rhs->elem[14],
+           + lhs->elem[10] * rhs->elem[10] + lhs->elem[11] * rhs->elem[14],
       [11] = lhs->elem[8] * rhs->elem[3] + lhs->elem[9] * rhs->elem[7]
-           + lhs->elem[10] * rhs->elem[11] + lhs->elem[10] * rhs->elem[15],
+           + lhs->elem[10] * rhs->elem[11] + lhs->elem[11] * rhs->elem[15],
       [12] = lhs->elem[12] * rhs->elem[0] + lhs->elem[13] * rhs->elem[4]
            + lhs->elem[14] * rhs->elem[8] + lhs->elem[15] * rhs->elem[12],
       [13] = lhs->elem[12] * rhs->elem[1] + lhs->elem[13] * rhs->elem[5]

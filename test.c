@@ -2070,6 +2070,75 @@ void test_mat34f_inverse(void) {
   }
 }
 
+void test_mat44f_mul_mat44f(void) {
+  {
+    // clang-format off
+    const as_mat44f lhs = (as_mat44f){.elem = {
+      1.0f, 2.0f, 3.0f, 4.0f,
+      5.0f, 6.0f, 7.0f, 8.0f,
+      9.0f, 10.0f, 11.0f, 12.0f,
+      13.0f, 14.0f, 15.0f, 16.0f
+    }};
+    const as_mat44f rhs = (as_mat44f){.elem = {
+      16.0f, 15.0f, 14.0f, 13.0f,
+      12.0f, 11.0f, 10.0f, 9.0f,
+      8.0f, 7.0f, 6.0f, 5.0f,
+      4.0f, 3.0f, 2.0f, 1.0f
+    }};
+    // clang-format on
+    const as_mat44f result = as_mat44f_mul_mat44f(&lhs, &rhs);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 80.0f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 70.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 60.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 240.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 214.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 188.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 162.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 400.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 358.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 316.0f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 274.0f, result.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 560.0f, result.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 502.0f, result.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 444.0f, result.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 386.0f, result.elem[15]);
+  }
+  {
+    // clang-format off
+    const as_mat44f lhs = (as_mat44f){.elem = {
+      6.0f, 1.0f, 8.0f, 2.0f,
+      7.0f, 9.0f, 4.0f, 3.0f,
+      5.0f, 14.0f, 20.0f, 17.0f,
+      21.0f, 33.0f, 97.0f, 42.0f
+    }};
+    const as_mat44f rhs = (as_mat44f){.elem = {
+      3.0f, 2.0f, 1.0f, 4.0f,
+      36.0f, 88.0f, 34.0f, 8.0f,
+      64.0f, 72.0f, 12.0f, 91.0f,
+      22.0f, 35.0f, 42.0f, 18.0f
+    }};
+    // clang-format on
+    const as_mat44f result = as_mat44f_mul_mat44f(&lhs, &rhs);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 610.0f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 746.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 220.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 796.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 667.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1199.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 487.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 518.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2173.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3277.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1435.0f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2258.0f, result.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8383.0f, result.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11400.0f, result.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4071.0f, result.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9931.0f, result.elem[15]);
+  }
+}
+
 void test_mat44_rc(void) {
   const int m00 = as_mat34_rc(0, 0);
   const int m01 = as_mat34_rc(0, 1);
@@ -2329,6 +2398,7 @@ int main(void) {
   RUN_TEST(test_mat34f_mul_mat34f);
   RUN_TEST(test_mat34f_mul_mat33f);
   RUN_TEST(test_mat34f_inverse);
+  RUN_TEST(test_mat44f_mul_mat44f);
   //
   RUN_TEST(test_mat44_rc);
   RUN_TEST(test_mat44f_identity);
