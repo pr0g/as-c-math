@@ -2454,6 +2454,70 @@ void test_mat44f_inverse(void) {
   }
 }
 
+void test_swap_float(void) {
+  {
+    float a = 3.0f;
+    float b = 5.0f;
+    as_swap_float(&a, &b);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, a);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, b);
+  }
+  {
+    float a = 12.0f;
+    float b = 25.0f;
+    as_swap_float(&a, &b);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, a);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, b);
+  }
+}
+
+void test_swap_int(void) {
+  {
+    int a = 7;
+    int b = 2;
+    as_swap_int(&a, &b);
+    TEST_ASSERT_EQUAL_INT32(2, a);
+    TEST_ASSERT_EQUAL_INT32(7, b);
+  }
+  {
+    int a = 15;
+    int b = 30;
+    as_swap_int(&a, &b);
+    TEST_ASSERT_EQUAL_INT32(30, a);
+    TEST_ASSERT_EQUAL_INT32(15, b);
+  }
+}
+
+void test_clamp_float(void) {
+  {
+    const int clamped = as_clamp_float(2.0f, 5.0f, 10.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, clamped);
+  }
+  {
+    const int clamped = as_clamp_float(30.0f, 10.0f, 20.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, clamped);
+  }
+  {
+    const int clamped = as_clamp_float(18.0f, 15.0f, 20.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 18.0f, clamped);
+  }
+}
+
+void test_clamp_int(void) {
+  {
+    const int clamped = as_clamp_int(2, 5, 10);
+    TEST_ASSERT_EQUAL_INT32(5, clamped);
+  }
+  {
+    const int clamped = as_clamp_int(30, 10, 20);
+    TEST_ASSERT_EQUAL_INT32(20, clamped);
+  }
+  {
+    const int clamped = as_clamp_int(18, 15, 20);
+    TEST_ASSERT_EQUAL_INT32(18, clamped);
+  }
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_vec2f_expected_values);
@@ -2567,8 +2631,11 @@ int main(void) {
   RUN_TEST(test_mat44f_perspective_projection_lh);
   RUN_TEST(test_mat44f_mul_point4f);
   RUN_TEST(test_mat44f_project_point3f);
-  //
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);
+  RUN_TEST(test_swap_float);
+  RUN_TEST(test_swap_int);
+  RUN_TEST(test_clamp_float);
+  RUN_TEST(test_clamp_int);
   return UNITY_END();
 }

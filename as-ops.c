@@ -980,16 +980,6 @@ void as_swap_int(int* lhs, int* rhs) {
   *rhs = temp;
 }
 
-int as_clamp_int(const int value, const int min, const int max) {
-  if (value < min) {
-    return min;
-  }
-  if (value > max) {
-    return max;
-  }
-  return value;
-}
-
 float as_clamp_float(const float value, const float min, const float max) {
   if (value < min) {
     return min;
@@ -1000,11 +990,14 @@ float as_clamp_float(const float value, const float min, const float max) {
   return value;
 }
 
-int as_max_int(const int lhs, const int rhs) {
-  if (lhs > rhs) {
-    return lhs;
+int as_clamp_int(const int value, const int min, const int max) {
+  if (value < min) {
+    return min;
   }
-  return rhs;
+  if (value > max) {
+    return max;
+  }
+  return value;
 }
 
 float as_max_float(const float lhs, const float rhs) {
@@ -1014,14 +1007,21 @@ float as_max_float(const float lhs, const float rhs) {
   return rhs;
 }
 
-int as_min_int(const int lhs, const int rhs) {
-  if (lhs < rhs) {
+int as_max_int(const int lhs, const int rhs) {
+  if (lhs > rhs) {
     return lhs;
   }
   return rhs;
 }
 
 int as_min_float(const float lhs, const float rhs) {
+  if (lhs < rhs) {
+    return lhs;
+  }
+  return rhs;
+}
+
+int as_min_int(const int lhs, const int rhs) {
   if (lhs < rhs) {
     return lhs;
   }
