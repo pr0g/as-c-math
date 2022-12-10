@@ -55,6 +55,15 @@ as_vec2f as_vec2f_normalize(const as_vec2f vec) {
   return as_vec2f_mul_float(vec, 1.0f / as_vec2f_length(vec));
 }
 
+as_vec2f as_vec2f_mix(const as_vec2f begin, const as_vec2f end, const float t) {
+  return (as_vec2f){
+    .x = as_mix_float(begin.x, end.x, t), .y = as_mix_float(begin.y, end.y, t)};
+}
+
+as_vec2f as_vec2f_negate(const as_vec2f vec) {
+  return (as_vec2f){.x = -vec.x, .y = -vec.y};
+}
+
 as_vec2i as_vec2i_from_vec2f(const as_vec2f vec) {
   return (as_vec2i){(int)roundf(vec.x), (int)roundf(vec.y)};
 }
@@ -85,6 +94,10 @@ float as_vec2i_length(const as_vec2i vec) {
 
 int as_vec2i_length_sq(const as_vec2i vec) {
   return vec.x * vec.x + vec.y * vec.y;
+}
+
+as_vec2i as_vec2i_negate(const as_vec2i vec) {
+  return (as_vec2i){.x = -vec.x, .y = -vec.y};
 }
 
 as_vec3f as_vec3f_from_point3f(const as_point3f point) {
@@ -189,6 +202,10 @@ as_vec3f as_vec3f_mix(const as_vec3f begin, const as_vec3f end, const float t) {
     .z = as_mix_float(begin.z, end.z, t)};
 }
 
+as_vec3f as_vec3f_negate(const as_vec3f vec) {
+  return (as_vec3f){-vec.x, -vec.y, -vec.z};
+}
+
 as_vec3i as_vec3i_from_vec3f(const as_vec3f vec) {
   return (as_vec3i){(int)roundf(vec.x), (int)roundf(vec.y), (int)roundf(vec.z)};
 }
@@ -220,6 +237,10 @@ int as_vec3i_length_sq(const as_vec3i vec) {
   return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
 }
 
+as_vec3i as_vec3i_negate(const as_vec3i vec) {
+  return (as_vec3i){.x = -vec.x, .y = -vec.y, .z = -vec.z};
+}
+
 as_point2f as_point2f_from_vec2f(const as_vec2f vec) {
   return (as_point2f){vec.x, vec.y};
 }
@@ -248,6 +269,10 @@ float as_point2f_distance_point2f(const as_point2f lhs, const as_point2f rhs) {
   return as_vec2f_length(as_point2f_sub_point2f(lhs, rhs));
 }
 
+as_point2f as_point2f_negate(const as_point2f point) {
+  return (as_point2f){.x = -point.x, .y = -point.y};
+}
+
 as_point2i as_point2i_from_point2f(const as_point2f point) {
   return (as_point2i){(int)roundf(point.x), (int)roundf(point.y)};
 }
@@ -270,6 +295,10 @@ as_vec2i as_point2i_sub_point2i(const as_point2i lhs, const as_point2i rhs) {
 
 float as_point2i_distance_point2i(const as_point2i lhs, const as_point2i rhs) {
   return as_vec2i_length(as_point2i_sub_point2i(lhs, rhs));
+}
+
+as_point2i as_point2i_negate(const as_point2i point) {
+  return (as_point2i){.x = -point.x, .y = -point.y};
 }
 
 as_point3f as_point3f_from_vec3f(const as_vec3f vec) {
@@ -313,6 +342,10 @@ as_point3f as_point3f_mix(
     .x = as_mix_float(begin.x, end.x, t),
     .y = as_mix_float(begin.y, end.y, t),
     .z = as_mix_float(begin.z, end.z, t)};
+}
+
+as_point3f as_point3f_negate(const as_point3f point) {
+  return (as_point3f){.x = -point.x, .y = -point.y, .z = -point.z};
 }
 
 as_point4f as_point4f_from_point3f(const as_point3f point) {

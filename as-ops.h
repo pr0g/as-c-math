@@ -26,6 +26,8 @@ float as_vec2f_length_sq(as_vec2f vec);
 float as_vec2f_wedge_vec2f(as_vec2f lhs, as_vec2f rhs);
 float as_vec2f_dot_vec2f(as_vec2f lhs, as_vec2f rhs);
 as_vec2f as_vec2f_normalize(as_vec2f vec);
+as_vec2f as_vec2f_mix(as_vec2f begin, as_vec2f end, float t);
+as_vec2f as_vec2f_negate(as_vec2f vec);
 
 // vec2i
 as_vec2i as_vec2i_from_vec2f(as_vec2f vec);
@@ -36,6 +38,7 @@ as_vec2f as_vec2i_mul_float(as_vec2i vec, float scalar);
 as_vec2f as_vec2i_div_float(as_vec2i vec, float scalar);
 float as_vec2i_length(as_vec2i vec);
 int as_vec2i_length_sq(as_vec2i vec);
+as_vec2i as_vec2i_negate(as_vec2i vec);
 
 // vec3f
 as_vec3f as_vec3f_from_point3f(as_point3f point);
@@ -58,6 +61,7 @@ as_vec3f as_vec3f_x_axis(void);
 as_vec3f as_vec3f_y_axis(void);
 as_vec3f as_vec3f_z_axis(void);
 as_vec3f as_vec3f_mix(as_vec3f begin, as_vec3f end, float t);
+as_vec3f as_vec3f_negate(as_vec3f vec);
 
 // vec3i
 as_vec3i as_vec3i_from_vec3f(as_vec3f vec);
@@ -67,6 +71,7 @@ as_vec3f as_vec3i_mul_float(as_vec3i vec, float scalar);
 as_vec3f as_vec3i_div_float(as_vec3i vec, float scalar);
 float as_vec3i_length(as_vec3i vec);
 int as_vec3i_length_sq(as_vec3i vec);
+as_vec3i as_vec3i_negate(as_vec3i vec);
 
 // point2f
 as_point2f as_point2f_from_vec2f(as_vec2f vec);
@@ -76,6 +81,7 @@ as_point2f as_point2f_from_float(float value);
 as_point2f as_point2f_add_vec2f(as_point2f point, as_vec2f vec);
 as_vec2f as_point2f_sub_point2f(as_point2f lhs, as_point2f rhs);
 float as_point2f_distance_point2f(as_point2f lhs, as_point2f rhs);
+as_point2f as_point2f_negate(as_point2f point);
 
 // point2i
 as_point2i as_point2i_from_point2f(as_point2f point);
@@ -84,6 +90,7 @@ as_point2i as_point2i_from_int(int value);
 as_point2i as_point2i_add_vec2i(as_point2i point, as_vec2i vec);
 as_vec2i as_point2i_sub_point2i(as_point2i lhs, as_point2i rhs);
 float as_point2i_distance_point2i(as_point2i lhs, as_point2i rhs);
+as_point2i as_point2i_negate(as_point2i point);
 
 // point3f
 as_point3f as_point3f_from_vec3f(as_vec3f vec);
@@ -94,6 +101,7 @@ as_point3f as_point3f_rotate_x_axis(as_point3f point, float radians);
 as_point3f as_point3f_rotate_y_axis(as_point3f point, float radians);
 as_point3f as_point3f_rotate_z_axis(as_point3f point, float radians);
 as_point3f as_point3f_mix(as_point3f begin, as_point3f end, float t);
+as_point3f as_point3f_negate(as_point3f point);
 
 // point4f
 as_point4f as_point4f_from_point3f(as_point3f point);

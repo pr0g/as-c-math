@@ -173,6 +173,52 @@ void test_vec2f_normalize(void) {
   }
 }
 
+void test_vec2f_mix(void) {
+  {
+    const as_vec2f begin = (as_vec2f){};
+    const as_vec2f end = as_vec2f_from_float(10.0f);
+    const as_vec2f mixed = as_vec2f_mix(begin, end, 0.5f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mixed.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mixed.y);
+  }
+  {
+    const as_vec2f begin = as_vec2f_from_float(10.0f);
+    const as_vec2f end = as_vec2f_from_float(20.0f);
+    const as_vec2f mixed = as_vec2f_mix(begin, end, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mixed.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mixed.y);
+  }
+  {
+    const as_vec2f begin = as_vec2f_from_float(50.0f);
+    const as_vec2f end = as_vec2f_from_float(100.0f);
+    const as_vec2f mixed = as_vec2f_mix(begin, end, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 100.0f, mixed.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 100.0f, mixed.y);
+  }
+  {
+    const as_vec2f begin = as_vec2f_from_float(0.0f);
+    const as_vec2f end = as_vec2f_from_float(100.0f);
+    const as_vec2f mixed = as_vec2f_mix(begin, end, 1.5f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 150.0f, mixed.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 150.0f, mixed.y);
+  }
+}
+
+void test_vec2f_negate(void) {
+  {
+    const as_vec2f negated =
+      as_vec2f_negate((as_vec2f){.x = 10.5f, .y = 20.2f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -10.5f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -20.2f, negated.y);
+  }
+  {
+    const as_vec2f negated =
+      as_vec2f_negate((as_vec2f){.x = -2.0f, .y = -4.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, negated.y);
+  }
+}
+
 void test_vec2i_from_vec2f(void) {
   {
     const as_vec2i vec2i =
@@ -283,6 +329,19 @@ void test_vec2i_length_sq(void) {
   {
     const int length = as_vec2i_length_sq((as_vec2i){.x = 6, .y = 8});
     TEST_ASSERT_EQUAL_INT32(100.0f, length);
+  }
+}
+
+void test_vec2i_negate(void) {
+  {
+    const as_vec2i negated = as_vec2i_negate((as_vec2i){.x = 12, .y = 36});
+    TEST_ASSERT_EQUAL_INT32(-12, negated.x);
+    TEST_ASSERT_EQUAL_INT32(-36, negated.y);
+  }
+  {
+    const as_vec2i negated = as_vec2i_negate((as_vec2i){.x = -5, .y = -10});
+    TEST_ASSERT_EQUAL_INT32(5, negated.x);
+    TEST_ASSERT_EQUAL_INT32(10, negated.y);
   }
 }
 
@@ -648,6 +707,23 @@ void test_vec3f_mix(void) {
   }
 }
 
+void test_vec3f_negate(void) {
+  {
+    const as_vec3f negated =
+      as_vec3f_negate((as_vec3f){.x = 1.5f, .y = 25.2f, .z = 35.1f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.5f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -25.2f, negated.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -35.1f, negated.z);
+  }
+  {
+    const as_vec3f negated =
+      as_vec3f_negate((as_vec3f){.x = -1.0f, .y = -5.0f, .z = 6.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, negated.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -6.0f, negated.z);
+  }
+}
+
 void test_vec3i_from_vec3f(void) {
   {
     const as_vec3i vec3i =
@@ -755,6 +831,23 @@ void test_vec3i_length(void) {
   }
 }
 
+void test_vec3i_negate(void) {
+  {
+    const as_vec3i negated =
+      as_vec3i_negate((as_vec3i){.x = 4, .y = 8, .z = 12});
+    TEST_ASSERT_EQUAL_INT32(-4, negated.x);
+    TEST_ASSERT_EQUAL_INT32(-8, negated.y);
+    TEST_ASSERT_EQUAL_INT32(-12, negated.z);
+  }
+  {
+    const as_vec3i negated =
+      as_vec3i_negate((as_vec3i){.x = -1, .y = -5, .z = 6.0f});
+    TEST_ASSERT_EQUAL_INT32(1, negated.x);
+    TEST_ASSERT_EQUAL_INT32(5, negated.y);
+    TEST_ASSERT_EQUAL_INT32(-6, negated.z);
+  }
+}
+
 void test_point2f_from_vec2f(void) {
   {
     const as_point2f point2f =
@@ -846,6 +939,21 @@ void test_point2f_sub_point2f(void) {
       (as_point2f){200.0f, 150.0f}, (as_point2f){100.0f, -20.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 100.0f, vec2f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 170.0f, vec2f.y);
+  }
+}
+
+void test_point2f_negate(void) {
+  {
+    const as_point2f negated =
+      as_point2f_negate((as_point2f){.x = 10.5f, .y = 20.2f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -10.5f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -20.2f, negated.y);
+  }
+  {
+    const as_point2f negated =
+      as_point2f_negate((as_point2f){.x = -2.0f, .y = -4.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, negated.y);
   }
 }
 
@@ -969,6 +1077,21 @@ void test_point2i_distance_point2i(void) {
     const float distance =
       as_point2i_distance_point2i((as_point2i){12, 24}, (as_point2i){16, 2});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 22.3606797f, distance);
+  }
+}
+
+void test_point2i_negate(void) {
+  {
+    const as_point2i negated =
+      as_point2i_negate((as_point2i){.x = 12, .y = 36});
+    TEST_ASSERT_EQUAL_INT32(-12, negated.x);
+    TEST_ASSERT_EQUAL_INT32(-36, negated.y);
+  }
+  {
+    const as_point2i negated =
+      as_point2i_negate((as_point2i){.x = -5, .y = -10});
+    TEST_ASSERT_EQUAL_INT32(5, negated.x);
+    TEST_ASSERT_EQUAL_INT32(10, negated.y);
   }
 }
 
@@ -1097,6 +1220,23 @@ void test_point3f_mix(void) {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mixed.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mixed.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mixed.z);
+  }
+}
+
+void test_point3f_negate(void) {
+  {
+    const as_point3f negated =
+      as_point3f_negate((as_point3f){.x = 1.5f, .y = 25.2f, .z = 35.1f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.5f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -25.2f, negated.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -35.1f, negated.z);
+  }
+  {
+    const as_point3f negated =
+      as_point3f_negate((as_point3f){.x = -1.0f, .y = -5.0f, .z = 6.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, negated.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, negated.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -6.0f, negated.z);
   }
 }
 
@@ -2615,6 +2755,8 @@ int main(void) {
   RUN_TEST(test_vec2f_dot_vec2f);
   RUN_TEST(test_vec2f_wedge_vec2f);
   RUN_TEST(test_vec2f_normalize);
+  RUN_TEST(test_vec2f_mix);
+  RUN_TEST(test_vec2f_negate);
   RUN_TEST(test_vec2i_from_vec2f);
   RUN_TEST(test_vec2i_from_int);
   RUN_TEST(test_vec2i_add_vec2i);
@@ -2623,6 +2765,7 @@ int main(void) {
   RUN_TEST(test_vec2i_div_float);
   RUN_TEST(test_vec2i_length);
   RUN_TEST(test_vec2i_length_sq);
+  RUN_TEST(test_vec2i_negate);
   RUN_TEST(test_vec3f_from_point3f);
   RUN_TEST(test_vec3f_from_vec3i);
   RUN_TEST(test_vec3f_from_mat34f);
@@ -2640,18 +2783,21 @@ int main(void) {
   RUN_TEST(test_vec3f_normalize);
   RUN_TEST(test_vec3f_axes);
   RUN_TEST(test_vec3f_mix);
+  RUN_TEST(test_vec3f_negate);
   RUN_TEST(test_vec3i_from_vec3f);
   RUN_TEST(test_vec3i_add_vec3i);
   RUN_TEST(test_vec3i_sub_vec3i);
   RUN_TEST(test_vec3i_mul_float);
   RUN_TEST(test_vec3i_div_float);
   RUN_TEST(test_vec3i_length);
+  RUN_TEST(test_vec3i_negate);
   RUN_TEST(test_point2f_from_vec2f);
   RUN_TEST(test_point2f_from_point4f);
   RUN_TEST(test_point2f_from_point2i);
   RUN_TEST(test_point2f_from_float);
   RUN_TEST(test_point2f_add_vec2f);
   RUN_TEST(test_point2f_sub_point2f);
+  RUN_TEST(test_point2f_negate);
   RUN_TEST(test_point2f_distance_point2f);
   RUN_TEST(test_point2i_from_point2f);
   RUN_TEST(test_point2i_from_vec2i);
@@ -2659,6 +2805,7 @@ int main(void) {
   RUN_TEST(test_point2i_add_vec2i);
   RUN_TEST(test_point2i_sub_point2i);
   RUN_TEST(test_point2i_distance_point2i);
+  RUN_TEST(test_point2i_negate);
   RUN_TEST(test_point3f_from_vec3f);
   RUN_TEST(test_point3f_add_vec3f);
   RUN_TEST(test_point3f_sub_point3f);
@@ -2666,6 +2813,7 @@ int main(void) {
   RUN_TEST(test_point3f_rotate_y_axis);
   RUN_TEST(test_point3f_rotate_z_axis);
   RUN_TEST(test_point3f_mix);
+  RUN_TEST(test_point3f_negate);
   RUN_TEST(test_point4f_from_point3f);
   RUN_TEST(test_point4f_from_point2f);
   RUN_TEST(test_mat22_rc);
