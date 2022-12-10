@@ -2490,15 +2490,15 @@ void test_swap_int(void) {
 
 void test_clamp_float(void) {
   {
-    const int clamped = as_clamp_float(2.0f, 5.0f, 10.0f);
+    const float clamped = as_clamp_float(2.0f, 5.0f, 10.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, clamped);
   }
   {
-    const int clamped = as_clamp_float(30.0f, 10.0f, 20.0f);
+    const float clamped = as_clamp_float(30.0f, 10.0f, 20.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, clamped);
   }
   {
-    const int clamped = as_clamp_float(18.0f, 15.0f, 20.0f);
+    const float clamped = as_clamp_float(18.0f, 15.0f, 20.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 18.0f, clamped);
   }
 }
@@ -2515,6 +2515,88 @@ void test_clamp_int(void) {
   {
     const int clamped = as_clamp_int(18, 15, 20);
     TEST_ASSERT_EQUAL_INT32(18, clamped);
+  }
+}
+
+void test_max_float(void) {
+  {
+    const float max = as_max_float(5.0f, 10.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, max);
+  }
+  {
+    const float max = as_max_float(25.0f, 8.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, max);
+  }
+}
+
+void test_max_int(void) {
+  {
+    const int max = as_max_int(5, 10);
+    TEST_ASSERT_EQUAL_INT32(10, max);
+  }
+  {
+    const int max = as_max_int(25.0f, 8.0f);
+    TEST_ASSERT_EQUAL_INT32(25, max);
+  }
+}
+
+void test_min_float(void) {
+  {
+    const float min = as_min_float(2.0f, 21.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, min);
+  }
+  {
+    const float min = as_min_float(36.0f, 14.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 14.0f, min);
+  }
+}
+
+void test_min_int(void) {
+  {
+    const int min = as_min_int(57, 63);
+    TEST_ASSERT_EQUAL_INT32(57, min);
+  }
+  {
+    const int min = as_min_int(102.0f, 45.0f);
+    TEST_ASSERT_EQUAL_INT32(45, min);
+  }
+}
+
+void test_radians_from_degrees(void) {
+  {
+    const float radians = as_radians_from_degrees(45.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, as_k_half_pi * 0.5f, radians);
+  }
+  {
+    const float radians = as_radians_from_degrees(90.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, as_k_half_pi, radians);
+  }
+  {
+    const float radians = as_radians_from_degrees(180.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, as_k_pi, radians);
+  }
+  {
+    const float radians = as_radians_from_degrees(-360.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -as_k_two_pi, radians);
+  }
+}
+
+void test_degrees_from_radians(void) {
+  {
+    const float degrees = as_degrees_from_radians(as_k_half_pi * 0.5f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 45.0f, degrees);
+  }
+  {
+    const float degrees = as_degrees_from_radians(as_k_half_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 90.0f, degrees);
+  }
+  {
+    const float degrees = as_degrees_from_radians(as_k_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 180.0f, degrees);
+  }
+  {
+    const float degrees = as_degrees_from_radians(-as_k_two_pi);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -360.0f, degrees);
   }
 }
 
@@ -2637,5 +2719,11 @@ int main(void) {
   RUN_TEST(test_swap_int);
   RUN_TEST(test_clamp_float);
   RUN_TEST(test_clamp_int);
+  RUN_TEST(test_max_float);
+  RUN_TEST(test_max_int);
+  RUN_TEST(test_min_float);
+  RUN_TEST(test_min_int);
+  RUN_TEST(test_radians_from_degrees);
+  RUN_TEST(test_degrees_from_radians);
   return UNITY_END();
 }
