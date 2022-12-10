@@ -51,7 +51,7 @@ float as_vec2f_dot_vec2f(const as_vec2f lhs, const as_vec2f rhs) {
   return lhs.x * rhs.x + lhs.y * rhs.y;
 }
 
-as_vec2f as_vec2f_normalized(const as_vec2f vec) {
+as_vec2f as_vec2f_normalize(const as_vec2f vec) {
   return as_vec2f_mul_float(vec, 1.0f / as_vec2f_length(vec));
 }
 
@@ -166,7 +166,7 @@ float as_vec3f_dot_vec3f(const as_vec3f lhs, const as_vec3f rhs) {
   return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
 }
 
-as_vec3f as_vec3f_normalized(const as_vec3f vec) {
+as_vec3f as_vec3f_normalize(const as_vec3f vec) {
   return as_vec3f_div_float(vec, as_vec3f_length(vec));
 }
 

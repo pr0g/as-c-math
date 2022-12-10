@@ -152,22 +152,22 @@ void test_vec2f_wedge_vec2f(void) {
   }
 }
 
-void test_vec2f_normalized(void) {
+void test_vec2f_normalize(void) {
   {
     const as_vec2f normalized =
-      as_vec2f_normalized((as_vec2f){.x = 1.0f, .y = 1.0f});
+      as_vec2f_normalize((as_vec2f){.x = 1.0f, .y = 1.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.7071068f, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.7071068f, normalized.y);
   }
   {
     const as_vec2f normalized =
-      as_vec2f_normalized((as_vec2f){.x = 10.0f, .y = 0.0f});
+      as_vec2f_normalize((as_vec2f){.x = 10.0f, .y = 0.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.y);
   }
   {
     const as_vec2f normalized =
-      as_vec2f_normalized((as_vec2f){.x = 0.0f, .y = 5.0f});
+      as_vec2f_normalize((as_vec2f){.x = 0.0f, .y = 5.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, normalized.y);
   }
@@ -564,28 +564,28 @@ void test_vec3f_dot_vec3f(void) {
   }
 }
 
-void test_vec3f_normalized(void) {
+void test_vec3f_normalize(void) {
   {
     const as_vec3f normalized =
-      as_vec3f_normalized((as_vec3f){.x = 1.0f, .y = 1.0f, .z = 1.0f});
+      as_vec3f_normalize((as_vec3f){.x = 1.0f, .y = 1.0f, .z = 1.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.577350269f, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.577350269f, normalized.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.577350269f, normalized.z);
   }
   {
-    const as_vec3f normalized = as_vec3f_normalized((as_vec3f){.x = 10.0f});
+    const as_vec3f normalized = as_vec3f_normalize((as_vec3f){.x = 10.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.z);
   }
   {
-    const as_vec3f normalized = as_vec3f_normalized((as_vec3f){.y = 5.0f});
+    const as_vec3f normalized = as_vec3f_normalize((as_vec3f){.y = 5.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, normalized.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.z);
   }
   {
-    const as_vec3f normalized = as_vec3f_normalized((as_vec3f){.z = 12.0f});
+    const as_vec3f normalized = as_vec3f_normalize((as_vec3f){.z = 12.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, normalized.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, normalized.z);
@@ -2614,7 +2614,7 @@ int main(void) {
   RUN_TEST(test_vec2f_length_sq);
   RUN_TEST(test_vec2f_dot_vec2f);
   RUN_TEST(test_vec2f_wedge_vec2f);
-  RUN_TEST(test_vec2f_normalized);
+  RUN_TEST(test_vec2f_normalize);
   RUN_TEST(test_vec2i_from_vec2f);
   RUN_TEST(test_vec2i_from_int);
   RUN_TEST(test_vec2i_add_vec2i);
@@ -2637,7 +2637,7 @@ int main(void) {
   RUN_TEST(test_vec3f_rotate_z_axis);
   RUN_TEST(test_vec3f_cross_vec3f);
   RUN_TEST(test_vec3f_dot_vec3f);
-  RUN_TEST(test_vec3f_normalized);
+  RUN_TEST(test_vec3f_normalize);
   RUN_TEST(test_vec3f_axes);
   RUN_TEST(test_vec3f_mix);
   RUN_TEST(test_vec3i_from_vec3f);

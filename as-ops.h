@@ -25,7 +25,7 @@ float as_vec2f_length(as_vec2f vec);
 float as_vec2f_length_sq(as_vec2f vec);
 float as_vec2f_wedge_vec2f(as_vec2f lhs, as_vec2f rhs);
 float as_vec2f_dot_vec2f(as_vec2f lhs, as_vec2f rhs);
-as_vec2f as_vec2f_normalized(as_vec2f vec);
+as_vec2f as_vec2f_normalize(as_vec2f vec);
 
 // vec2i
 as_vec2i as_vec2i_from_vec2f(as_vec2f vec);
@@ -53,7 +53,7 @@ as_vec3f as_vec3f_rotate_y_axis(as_vec3f vec, float radians);
 as_vec3f as_vec3f_rotate_z_axis(as_vec3f vec, float radians);
 as_vec3f as_vec3f_cross_vec3f(as_vec3f lhs, as_vec3f rhs);
 float as_vec3f_dot_vec3f(as_vec3f lhs, as_vec3f rhs);
-as_vec3f as_vec3f_normalized(as_vec3f vec);
+as_vec3f as_vec3f_normalize(as_vec3f vec);
 as_vec3f as_vec3f_x_axis(void);
 as_vec3f as_vec3f_y_axis(void);
 as_vec3f as_vec3f_z_axis(void);
