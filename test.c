@@ -2125,6 +2125,100 @@ void test_mat44f_identity(void) {
   TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
 }
 
+void test_mat44f_translation_from_floats(void) {
+  {
+    const as_mat44f mat44f =
+      as_mat44f_translation_from_floats(2.0f, 3.0f, 4.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat44f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat44f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat44f.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
+  }
+}
+
+void test_mat44f_translation_from_vec3f(void) {
+  {
+    const as_mat44f mat44f =
+      as_mat44f_translation_from_vec3f((as_vec3f){10.0f, 20.0f, 30.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, mat44f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, mat44f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 30.0f, mat44f.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
+  }
+}
+
+void test_mat44f_translation_from_point3f(void) {
+  {
+    const as_mat44f mat44f =
+      as_mat44f_translation_from_point3f((as_point3f){99.0f, 98.0f, 97.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 99.0f, mat44f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 98.0f, mat44f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 97.0f, mat44f.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
+  }
+}
+
+void test_mat44f_from_mat33f_and_vec3f(void) {
+  {
+    const as_mat33f mat33f = (as_mat33f){
+      .elem = {4.0f, 1.0f, 9.0f, 2.0f, 8.0f, 7.0f, 6.0f, 3.0f, 5.0f}};
+    const as_mat44f mat44f =
+      as_mat44f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){22.0f, 33.0f, 97.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, mat44f.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f, mat44f.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 22.0f, mat44f.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, mat44f.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, mat44f.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 7.0f, mat44f.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33.0f, mat44f.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 6.0f, mat44f.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, mat44f.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mat44f.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 97.0f, mat44f.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, mat44f.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, mat44f.elem[15]);
+  }
+}
+
 void test_mat44f_mul_mat44f(void) {
   {
     // clang-format off
@@ -2216,6 +2310,46 @@ void test_mat44f_perspective_projection_lh(void) {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[13]);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, result.elem[14]);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[15]);
+  }
+}
+
+void test_mat44f_mul_point4f(void) {
+  {
+    const as_mat44f translation =
+      as_mat44f_translation_from_floats(20.0f, 40.0f, 60.0f);
+    const as_point4f point4f = as_mat44f_mul_point4f(
+      &translation, (as_point4f){5.0f, 10.0f, 15.0f, 1.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, point4f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50.0f, point4f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 75.0f, point4f.z);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, point4f.w);
+  }
+  {
+    const float fov = as_k_half_pi;
+    const float aspect = 16.0f / 9.0f;
+    const as_mat44f projection =
+      as_mat44f_perspective_projection_lh(aspect, fov, 0.01f, 1000.0f);
+    const as_point4f point4f = as_mat44f_mul_point4f(
+      &projection, (as_point4f){67.0f, 12.0f, 34.0f, 1.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 37.6875f, point4f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, point4f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33.99034f, point4f.z);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 34.0f, point4f.w);
+  }
+}
+
+void test_mat44f_project_point3f(void) {
+  {
+    const float fov = as_k_half_pi;
+    const float aspect = 16.0f / 9.0f;
+    const as_mat44f projection =
+      as_mat44f_perspective_projection_lh(aspect, fov, 0.01f, 1000.0f);
+    const as_point4f point4f =
+      as_mat44f_project_point3f(&projection, (as_point3f){16.0f, 17.0f, 18.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f / 18.0f, point4f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 17.0 / 18.0f, point4f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 17.99018f / 18.0f, point4f.z);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 18.0f, point4f.w);
   }
 }
 
@@ -2425,8 +2559,14 @@ int main(void) {
   RUN_TEST(test_mat34f_inverse);
   RUN_TEST(test_mat44_rc);
   RUN_TEST(test_mat44f_identity);
+  RUN_TEST(test_mat44f_translation_from_floats);
+  RUN_TEST(test_mat44f_translation_from_vec3f);
+  RUN_TEST(test_mat44f_translation_from_point3f);
+  RUN_TEST(test_mat44f_from_mat33f_and_vec3f);
   RUN_TEST(test_mat44f_mul_mat44f);
   RUN_TEST(test_mat44f_perspective_projection_lh);
+  RUN_TEST(test_mat44f_mul_point4f);
+  RUN_TEST(test_mat44f_project_point3f);
   //
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);

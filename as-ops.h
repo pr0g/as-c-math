@@ -147,6 +147,12 @@ as_mat34f as_mat34f_inverse(const as_mat34f* mat);
 // mat44
 int as_mat44_rc(int r, int c);
 as_mat44f as_mat44f_identity(void);
+as_mat44f as_mat44f_translation_from_floats(
+  float translation_x, float translation_y, float translation_z);
+as_mat44f as_mat44f_translation_from_vec3f(as_vec3f translation);
+as_mat44f as_mat44f_translation_from_point3f(as_point3f position);
+as_mat44f as_mat44f_from_mat33f_and_vec3f(
+  const as_mat33f* rotation, as_vec3f translation);
 as_mat44f as_mat44f_mul_mat44f(const as_mat44f* lhs, const as_mat44f* rhs);
 as_mat44f as_mat44f_perspective_projection_lh(
   float aspect_ratio, float vertical_fov, float near, float far);

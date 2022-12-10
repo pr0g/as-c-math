@@ -709,6 +709,49 @@ as_mat44f as_mat44f_identity(void) {
     .elem = {[0] = 1.0f, [5] = 1.0f, [10] = 1.0f, [15] = 1.0f}};
 }
 
+as_mat44f as_mat44f_translation_from_floats(
+  const float translation_x,
+  const float translation_y,
+  const float translation_z) {
+  return (as_mat44f){
+    .elem = {
+      [0] = 1.0f,
+      [5] = 1.0f,
+      [10] = 1.0f,
+      [15] = 1.0f,
+      [3] = translation_x,
+      [7] = translation_y,
+      [11] = translation_z}};
+}
+
+as_mat44f as_mat44f_translation_from_vec3f(const as_vec3f translation) {
+  return as_mat44f_translation_from_floats(
+    translation.x, translation.y, translation.z);
+}
+
+as_mat44f as_mat44f_translation_from_point3f(const as_point3f position) {
+  return as_mat44f_translation_from_floats(position.x, position.y, position.z);
+}
+
+as_mat44f as_mat44f_from_mat33f_and_vec3f(
+  const as_mat33f* rotation, const as_vec3f translation) {
+  return (as_mat44f){
+    .elem = {
+      [0] = rotation->elem[0],
+      [1] = rotation->elem[1],
+      [2] = rotation->elem[2],
+      [4] = rotation->elem[3],
+      [5] = rotation->elem[4],
+      [6] = rotation->elem[5],
+      [8] = rotation->elem[6],
+      [9] = rotation->elem[7],
+      [10] = rotation->elem[8],
+      [3] = translation.x,
+      [7] = translation.y,
+      [11] = translation.z,
+      [15] = 1.0f}};
+}
+
 as_mat44f as_mat44f_mul_mat44f(
   const as_mat44f* const lhs, const as_mat44f* const rhs) {
   return (as_mat44f){
