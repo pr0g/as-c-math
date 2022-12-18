@@ -2485,12 +2485,13 @@ void test_mat44f_mul_mat44f(void) {
   }
 }
 
-void test_mat44f_perspective_projection_lh(void) {
+void test_mat44f_perspective_projection_depth_zero_to_one_lh(void) {
   {
     const float fov = as_k_half_pi;
     const float aspect = 16.0f / 9.0f;
     const as_mat44f result =
-      as_mat44f_perspective_projection_lh(aspect, fov, 0.01f, 1000.0f);
+      as_mat44f_perspective_projection_depth_zero_to_one_lh(
+        aspect, fov, 0.01f, 1000.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.562500f, result.elem[0]);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[1]);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[2]);
@@ -2510,6 +2511,84 @@ void test_mat44f_perspective_projection_lh(void) {
   }
 }
 
+void test_mat44f_perspective_projection_depth_zero_to_one_rh(void) {
+  {
+    const float fov = as_k_half_pi;
+    const float aspect = 16.0f / 9.0f;
+    const as_mat44f result =
+      as_mat44f_perspective_projection_depth_zero_to_one_rh(
+        aspect, fov, 0.01f, 1000.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.562500f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.000010f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -0.01f, result.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, result.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[15]);
+  }
+}
+
+void test_mat44f_perspective_projection_depth_minus_one_to_one_lh(void) {
+  {
+    const float fov = as_k_half_pi;
+    const float aspect = 16.0f / 9.0f;
+    const as_mat44f result =
+      as_mat44f_perspective_projection_depth_minus_one_to_one_lh(
+        aspect, fov, 0.01f, 1000.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.562500f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.000020f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -0.0200002f, result.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, result.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[15]);
+  }
+}
+
+void test_mat44f_perspective_projection_depth_minus_one_to_one_rh(void) {
+  {
+    const float fov = as_k_half_pi;
+    const float aspect = 16.0f / 9.0f;
+    const as_mat44f result =
+      as_mat44f_perspective_projection_depth_minus_one_to_one_rh(
+        aspect, fov, 0.01f, 1000.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.562500f, result.elem[0]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[1]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[2]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[3]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[4]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, result.elem[5]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[6]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[7]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[8]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[9]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.000020f, result.elem[10]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -0.0200002f, result.elem[11]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[12]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[13]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, result.elem[14]);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, result.elem[15]);
+  }
+}
+
 void test_mat44f_mul_point4f(void) {
   {
     const as_mat44f translation =
@@ -2525,7 +2604,8 @@ void test_mat44f_mul_point4f(void) {
     const float fov = as_k_half_pi;
     const float aspect = 16.0f / 9.0f;
     const as_mat44f projection =
-      as_mat44f_perspective_projection_lh(aspect, fov, 0.01f, 1000.0f);
+      as_mat44f_perspective_projection_depth_zero_to_one_lh(
+        aspect, fov, 0.01f, 1000.0f);
     const as_point4f point4f = as_mat44f_mul_point4f(
       &projection, (as_point4f){67.0f, 12.0f, 34.0f, 1.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 37.6875f, point4f.x);
@@ -2540,7 +2620,8 @@ void test_mat44f_project_point3f(void) {
     const float fov = as_k_half_pi;
     const float aspect = 16.0f / 9.0f;
     const as_mat44f projection =
-      as_mat44f_perspective_projection_lh(aspect, fov, 0.01f, 1000.0f);
+      as_mat44f_perspective_projection_depth_zero_to_one_lh(
+        aspect, fov, 0.01f, 1000.0f);
     const as_point4f point4f =
       as_mat44f_project_point3f(&projection, (as_point3f){16.0f, 17.0f, 18.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f / 18.0f, point4f.x);
@@ -2916,7 +2997,10 @@ int main(void) {
   RUN_TEST(test_mat44f_from_mat33f_and_vec3f);
   RUN_TEST(test_mat44f_transpose);
   RUN_TEST(test_mat44f_mul_mat44f);
-  RUN_TEST(test_mat44f_perspective_projection_lh);
+  RUN_TEST(test_mat44f_perspective_projection_depth_zero_to_one_lh);
+  RUN_TEST(test_mat44f_perspective_projection_depth_zero_to_one_rh);
+  RUN_TEST(test_mat44f_perspective_projection_depth_minus_one_to_one_lh);
+  RUN_TEST(test_mat44f_perspective_projection_depth_minus_one_to_one_rh);
   RUN_TEST(test_mat44f_mul_point4f);
   RUN_TEST(test_mat44f_project_point3f);
   RUN_TEST(test_mat44f_determinant);

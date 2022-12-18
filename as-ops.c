@@ -845,19 +845,72 @@ as_mat44f as_mat44f_mul_mat44f(
            + lhs->elem[14] * rhs->elem[11] + lhs->elem[15] * rhs->elem[15]}};
 }
 
-as_mat44f as_mat44f_perspective_projection_lh(
+static as_mat44f as_mat44f_perspective_projection_depth_zero_to_one_handed(
   const float aspect_ratio,
-  const float vertical_fov,
+  const float vertical_fov_radians,
   const float near,
-  const float far) {
-  const float e = 1.0f / tanf(vertical_fov * 0.5f);
+  const float far,
+  const float handed) {
+  const float e = 1.0f / tanf(vertical_fov_radians * 0.5f);
   return (as_mat44f){
     .elem = {
       [0] = e / aspect_ratio,
       [5] = e,
-      [10] = far / (far - near),
+      [10] = far / ((far - near) * handed),
       [11] = (far * near) / (near - far),
-      [14] = 1.0f}};
+      [14] = handed}};
+}
+
+as_mat44f as_mat44f_perspective_projection_depth_zero_to_one_lh(
+  const float aspect_ratio,
+  const float vertical_fov_radians,
+  const float near,
+  const float far) {
+  return as_mat44f_perspective_projection_depth_zero_to_one_handed(
+    aspect_ratio, vertical_fov_radians, near, far, 1.0f);
+}
+
+as_mat44f as_mat44f_perspective_projection_depth_zero_to_one_rh(
+  const float aspect_ratio,
+  const float vertical_fov_radians,
+  const float near,
+  const float far) {
+  return as_mat44f_perspective_projection_depth_zero_to_one_handed(
+    aspect_ratio, vertical_fov_radians, near, far, -1.0f);
+}
+
+static as_mat44f as_mat44f_perspective_projection_depth_minus_one_to_one_handed(
+  const float aspect_ratio,
+  const float vertical_fov_radians,
+  const float near,
+  const float far,
+  const float handed) {
+  const float e = 1.0f / tanf(vertical_fov_radians * 0.5f);
+  return (as_mat44f){
+    .elem = {
+      [0] = e / aspect_ratio,
+      [5] = e,
+      [10] = (far + near) / ((far - near) * handed),
+      [11] = (2.0f * far * near) / (near - far),
+      [14] = handed}};
+}
+
+as_mat44f as_mat44f_perspective_projection_depth_minus_one_to_one_lh(
+  const float aspect_ratio,
+  const float vertical_fov_radians,
+  const float near,
+  const float far) {
+  return as_mat44f_perspective_projection_depth_minus_one_to_one_handed(
+    aspect_ratio, vertical_fov_radians, near, far, 1.0f);
+}
+
+as_mat44f as_mat44f_perspective_projection_depth_minus_one_to_one_rh(
+  const float aspect_ratio,
+  const float vertical_fov_radians,
+  const float near,
+  const float far) {
+  return as_mat44f_perspective_projection_depth_minus_one_to_one_handed(
+    aspect_ratio, vertical_fov_radians, near, far, -1.0f);
 }
 
 as_point4f as_mat44f_mul_point4f(
