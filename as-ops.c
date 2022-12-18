@@ -785,6 +785,28 @@ as_mat44f as_mat44f_from_mat33f_and_vec3f(
       [15] = 1.0f}};
 }
 
+as_mat44f as_mat44f_transpose(const as_mat44f* mat) {
+  return (as_mat44f){
+    .elem = {
+      [0] = mat->elem[0],
+      [1] = mat->elem[4],
+      [2] = mat->elem[8],
+      [3] = mat->elem[12],
+      [4] = mat->elem[1],
+      [5] = mat->elem[5],
+      [6] = mat->elem[9],
+      [7] = mat->elem[13],
+      [8] = mat->elem[2],
+      [9] = mat->elem[6],
+      [10] = mat->elem[10],
+      [11] = mat->elem[14],
+      [12] = mat->elem[3],
+      [13] = mat->elem[7],
+      [14] = mat->elem[11],
+      [15] = mat->elem[15],
+    }};
+}
+
 as_mat44f as_mat44f_mul_mat44f(
   const as_mat44f* const lhs, const as_mat44f* const rhs) {
   return (as_mat44f){
