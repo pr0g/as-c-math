@@ -21,7 +21,7 @@ if(AS_MATH_ENABLE_TEST)
   FetchContent_Declare(
     unity
     GIT_REPOSITORY https://github.com/ThrowTheSwitch/Unity.git
-    GIT_TAG 67ca5c57c9c50cc1580518cc6f822558c0009b1e)
+    GIT_TAG 5a36b197fb34c0a77ac891c355596cb5c25aaf5b)
   FetchContent_MakeAvailable(unity)
   add_executable(${PROJECT_NAME}-test)
   target_sources(${PROJECT_NAME}-test PRIVATE test.c)
