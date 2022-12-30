@@ -387,25 +387,25 @@ void test_vec3f_from_mat34f(void) {
         9.0f, 10.0f, 11.0f, 12.0f}};
   // clang-format on
   {
-    const as_vec3f vec3f = as_vec3f_from_mat34f(&mat34f, 0);
+    const as_vec3f vec3f = as_vec3f_from_mat34f_v(mat34f, 0);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, vec3f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, vec3f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f, vec3f.z);
   }
   {
-    const as_vec3f vec3f = as_vec3f_from_mat34f(&mat34f, 1);
+    const as_vec3f vec3f = as_vec3f_from_mat34f_v(mat34f, 1);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, vec3f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 6.0f, vec3f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, vec3f.z);
   }
   {
-    const as_vec3f vec3f = as_vec3f_from_mat34f(&mat34f, 2);
+    const as_vec3f vec3f = as_vec3f_from_mat34f_v(mat34f, 2);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, vec3f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 7.0f, vec3f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 11.0f, vec3f.z);
   }
   {
-    const as_vec3f vec3f = as_vec3f_from_mat34f(&mat34f, 3);
+    const as_vec3f vec3f = as_vec3f_from_mat34f_v(mat34f, 3);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 4.0f, vec3f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 8.0f, vec3f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, vec3f.z);
@@ -1355,16 +1355,14 @@ void test_mat22f_rotation(void) {
 void test_mat22f_mul_point2f(void) {
   const float epsilon = 0.0001f;
   {
-    const as_mat22f mat22f = as_mat22f_rotation(as_k_half_pi);
-    const as_point2f point2f =
-      as_mat22f_mul_point2f(&mat22f, (as_point2f){2.0f, 2.0f});
+    const as_point2f point2f = as_mat22f_mul_point2f_v(
+      as_mat22f_rotation(as_k_half_pi), (as_point2f){2.0f, 2.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, -2.0f, point2f.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 2.0f, point2f.y);
   }
   {
-    const as_mat22f mat22f = as_mat22f_rotation(as_k_pi);
-    const as_point2f point2f =
-      as_mat22f_mul_point2f(&mat22f, (as_point2f){5.0f, 0.0f});
+    const as_point2f point2f = as_mat22f_mul_point2f_v(
+      as_mat22f_rotation(as_k_pi), (as_point2f){5.0f, 0.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, -5.0f, point2f.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point2f.y);
   }
@@ -1372,30 +1370,30 @@ void test_mat22f_mul_point2f(void) {
 
 void test_mat22f_determinant(void) {
   {
-    const as_mat22f mat44f = (as_mat22f){.elem = {1.0f, 3.0f, 6.0f, 7.0f}};
-    const float determinant = as_mat22f_determinant(&mat44f);
+    const float determinant =
+      as_mat22f_determinant_v((as_mat22f){.elem = {1.0f, 3.0f, 6.0f, 7.0f}});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -11.0f, determinant);
   }
   {
-    const as_mat22f mat44f = (as_mat22f){.elem = {10.0f, 20.0f, 25.0f, 35.0f}};
-    const float determinant = as_mat22f_determinant(&mat44f);
+    const float determinant = as_mat22f_determinant_v(
+      (as_mat22f){.elem = {10.0f, 20.0f, 25.0f, 35.0f}});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -150.0f, determinant);
   }
 }
 
 void test_mat22f_inverse(void) {
   {
-    const as_mat22f mat22f = (as_mat22f){.elem = {5.0f, 12.0f, 11.0f, 16.0f}};
     const float expected[] = {
       -4.0f / 13.0f, 3.0f / 13.0f, 11.0f / 52.0f, -5.0f / 52.0f};
-    const as_mat22f inverse = as_mat22f_inverse(&mat22f);
+    const as_mat22f inverse =
+      as_mat22f_inverse_v((as_mat22f){.elem = {5.0f, 12.0f, 11.0f, 16.0f}});
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, inverse.elem, 4);
   }
   {
-    const as_mat22f mat22f = (as_mat22f){.elem = {1.0f, 5.0f, 2.0f, 1.0f}};
     const float expected[] = {
       -1.0f / 9.0f, 5.0f / 9.0f, 2.0f / 9.0f, -1.0f / 9.0f};
-    const as_mat22f inverse = as_mat22f_inverse(&mat22f);
+    const as_mat22f inverse =
+      as_mat22f_inverse_v((as_mat22f){.elem = {1.0f, 5.0f, 2.0f, 1.0f}});
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, inverse.elem, 4);
   }
 }
@@ -1483,8 +1481,8 @@ void test_mat33f_scale_from_vec3f(void) {
 void test_mat33f_from_mat34f(void) {
   {
     // clang-format off
-    const as_mat33f mat33f = as_mat33f_from_mat34f(
-      &(as_mat34f){ .elem = {
+    const as_mat33f mat33f = as_mat33f_from_mat34f_v(
+      (as_mat34f){ .elem = {
         1.0f, 2.0f, 3.0f, 4.0f,
         5.0f, 6.0f, 7.0f, 8.0f,
         9.0f, 10.0f, 11.0f, 12.0f}});
@@ -1497,8 +1495,8 @@ void test_mat33f_from_mat34f(void) {
   }
   {
     // clang-format off
-    const as_mat33f mat33f = as_mat33f_from_mat34f(
-      &(as_mat34f){ .elem = {
+    const as_mat33f mat33f = as_mat33f_from_mat34f_v(
+      (as_mat34f){ .elem = {
         23.0f, 14.0f, 97.0f, 11.0f,
         16.0f, 22.0f, 14.0f, 64.0f,
         75.0f, 27.0f, 18.0f, 33.0f}});
@@ -1514,8 +1512,8 @@ void test_mat33f_from_mat34f(void) {
 void test_mat33f_transpose(void) {
   {
     // clang-format off
-    const as_mat33f mat33f = as_mat33f_transpose(
-      &(as_mat33f){.elem = {
+    const as_mat33f mat33f = as_mat33f_transpose_v(
+      (as_mat33f){.elem = {
         1.0f, 2.0f, 3.0f,
         4.0f, 5.0f, 6.0f,
         7.0f, 8.0f, 9.0f}});
@@ -1528,8 +1526,8 @@ void test_mat33f_transpose(void) {
   }
   {
     // clang-format off
-    const as_mat33f mat33f = as_mat33f_transpose(
-      &(as_mat33f){.elem = {
+    const as_mat33f mat33f = as_mat33f_transpose_v(
+      (as_mat33f){.elem = {
         11.0f, 22.0f, 33.0f,
         44.0f, 55.0f, 66.0f,
         77.0f, 88.0f, 99.0f}});
@@ -1545,16 +1543,16 @@ void test_mat33f_transpose(void) {
 void test_mat33f_x_axis_rotation(void) {
   const float epsilon = 0.0001f;
   {
-    const as_mat33f mat33f = as_mat33f_x_axis_rotation(as_k_half_pi);
-    const as_point3f point3f =
-      as_mat33f_mul_point3f(&mat33f, (as_point3f){.x = 10.0f, .y = 2.0f});
+    const as_point3f point3f = as_mat33f_mul_point3f_v(
+      as_mat33f_x_axis_rotation(as_k_half_pi),
+      (as_point3f){.x = 10.0f, .y = 2.0f});
     const float expected[] = {10.0f, 0.0f, 2.0f};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
   }
   {
-    const as_mat33f mat33f = as_mat33f_x_axis_rotation(as_k_half_pi);
-    const as_point3f point3f =
-      as_mat33f_mul_point3f(&mat33f, (as_point3f){.x = 20.0f, .z = 5.0f});
+    const as_point3f point3f = as_mat33f_mul_point3f_v(
+      as_mat33f_x_axis_rotation(as_k_half_pi),
+      (as_point3f){.x = 20.0f, .z = 5.0f});
     const float expected[] = {20.0f, -5.0f, 0.0f};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
   }
@@ -1563,16 +1561,16 @@ void test_mat33f_x_axis_rotation(void) {
 void test_mat33f_y_axis_rotation(void) {
   const float epsilon = 0.0001f;
   {
-    const as_mat33f mat33f = as_mat33f_y_axis_rotation(as_k_half_pi);
-    const as_point3f point3f =
-      as_mat33f_mul_point3f(&mat33f, (as_point3f){.y = 50.0f, .x = 10.0f});
+    const as_point3f point3f = as_mat33f_mul_point3f_v(
+      as_mat33f_y_axis_rotation(as_k_half_pi),
+      (as_point3f){.y = 50.0f, .x = 10.0f});
     const float expected[] = {0.0f, 50.0f, -10.0f};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
   }
   {
-    const as_mat33f mat33f = as_mat33f_y_axis_rotation(as_k_half_pi);
-    const as_point3f point3f =
-      as_mat33f_mul_point3f(&mat33f, (as_point3f){.y = 10.0f, .z = 12.0f});
+    const as_point3f point3f = as_mat33f_mul_point3f_v(
+      as_mat33f_y_axis_rotation(as_k_half_pi),
+      (as_point3f){.y = 10.0f, .z = 12.0f});
     const float expected[] = {12.0f, 10.0f, 0.0f};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
   }
@@ -1581,38 +1579,43 @@ void test_mat33f_y_axis_rotation(void) {
 void test_mat33f_z_axis_rotation(void) {
   const float epsilon = 0.0001f;
   {
-    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
-    const as_point3f point3f =
-      as_mat33f_mul_point3f(&mat33f, (as_point3f){.z = 5.0f, .x = 2.0f});
+    const as_point3f point3f = as_mat33f_mul_point3f_v(
+      as_mat33f_z_axis_rotation(as_k_half_pi),
+      (as_point3f){.z = 5.0f, .x = 2.0f});
     const float expected[] = {0.0f, 2.0f, 5.0f};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
   }
   {
-    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
-    const as_point3f point3f =
-      as_mat33f_mul_point3f(&mat33f, (as_point3f){.z = 16.0f, .y = 4.0f});
+    const as_point3f point3f = as_mat33f_mul_point3f_v(
+      as_mat33f_z_axis_rotation(as_k_half_pi),
+      (as_point3f){.z = 16.0f, .y = 4.0f});
     const float expected[] = {-4.0f, 0.0f, 16.0f};
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
   }
 }
 
+void test_mat33f_mul_vec3f(void) {
+  const as_vec3f vec3f = as_mat33f_mul_vec3f_v(
+    as_mat33f_scale_from_floats(5.0f, 10.0f, 20.0f),
+    (as_vec3f){.x = 1.0f, .y = 2.0f, .z = 3.0f});
+  const float expected[] = {5.0f, 20.0f, 60.0f};
+  TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, vec3f.elem, 3);
+}
+
 void test_mat33f_mul_point3f(void) {
-  const float epsilon = 0.0001f;
-  {
-    const as_mat33f mat33f = as_mat33f_scale_from_floats(10.0f, 5.0f, 2.0f);
-    const as_point3f point3f = as_mat33f_mul_point3f(
-      &mat33f, (as_point3f){.x = 2.0f, .y = 4.0f, .z = 8.0f});
-    const float expected[] = {20.0f, 20.0f, 16.0f};
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, point3f.elem, 3);
-  }
+  const as_point3f point3f = as_mat33f_mul_point3f_v(
+    as_mat33f_scale_from_floats(10.0f, 5.0f, 2.0f),
+    (as_point3f){.x = 2.0f, .y = 4.0f, .z = 8.0f});
+  const float expected[] = {20.0f, 20.0f, 16.0f};
+  TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, point3f.elem, 3);
 }
 
 void test_mat33f_mul_mat33f(void) {
   {
-    const as_mat33f mat33f = as_mat33f_mul_mat33f(
-      &(as_mat33f){
+    const as_mat33f mat33f = as_mat33f_mul_mat33f_v(
+      (as_mat33f){
         .elem = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}},
-      &(as_mat33f){
+      (as_mat33f){
         .elem = {
           2.0f, 4.0f, 8.0f, 16.0f, 32.0f, 64.0f, 128.0f, 256.0f, 512.0f}});
     // clang-format off
@@ -1624,10 +1627,10 @@ void test_mat33f_mul_mat33f(void) {
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, mat33f.elem, 9);
   }
   {
-    const as_mat33f mat33f = as_mat33f_mul_mat33f(
-      &(as_mat33f){
+    const as_mat33f mat33f = as_mat33f_mul_mat33f_v(
+      (as_mat33f){
         .elem = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}},
-      &(as_mat33f){
+      (as_mat33f){
         .elem = {2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}});
     // clang-format off
     const float expected[] = {
@@ -1642,10 +1645,9 @@ void test_mat33f_mul_mat33f(void) {
 void test_mat33f_mul_mat34f(void) {
   const float epsilon = 0.0001f;
   {
-    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
-    const as_mat34f mat34f =
-      as_mat34f_translation_from_vec3f((as_vec3f){.x = 10.0f});
-    const as_mat34f result = as_mat33f_mul_mat34f(&mat33f, &mat34f);
+    const as_mat34f result = as_mat33f_mul_mat34f_v(
+      as_mat33f_z_axis_rotation(as_k_half_pi),
+      as_mat34f_translation_from_vec3f((as_vec3f){.x = 10.0f}));
     // clang-format off
     const float expected[] = {
       0.0f, -1.0f, 0.0f, 0.0f,
@@ -1655,11 +1657,10 @@ void test_mat33f_mul_mat34f(void) {
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, result.elem, 12);
   }
   {
-    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
-    const as_mat33f opp_mat33f = as_mat33f_z_axis_rotation(-as_k_half_pi);
-    const as_mat34f mat34f =
-      as_mat34f_from_mat33f_and_vec3f(&opp_mat33f, (as_vec3f){.x = 10.0f});
-    const as_mat34f result = as_mat33f_mul_mat34f(&mat33f, &mat34f);
+    const as_mat34f mat34f = as_mat34f_from_mat33f_and_vec3f_v(
+      as_mat33f_z_axis_rotation(-as_k_half_pi), (as_vec3f){.x = 10.0f});
+    const as_mat34f result =
+      as_mat33f_mul_mat34f_v(as_mat33f_z_axis_rotation(as_k_half_pi), mat34f);
     // clang-format off
     const float expected[] = {
       1.0f, 0.0f, 0.0f, 0.0f,
@@ -1678,7 +1679,7 @@ void test_mat33f_determinant(void) {
       1.0f, 3.0f, 1.0f,
       4.0f, 3.0f, 9.0f}};
     // clang-format on
-    const float determinant = as_mat33f_determinant(&mat33f);
+    const float determinant = as_mat33f_determinant_v(mat33f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -36.0f, determinant);
   }
   {
@@ -1688,7 +1689,7 @@ void test_mat33f_determinant(void) {
       3.0f, 11.0f, 15.0f,
       1.0f, 3.0f, 2.0f}};
     // clang-format on
-    const float determinant = as_mat33f_determinant(&mat33f);
+    const float determinant = as_mat33f_determinant_v(mat33f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 152.0f, determinant);
   }
 }
@@ -1705,7 +1706,7 @@ void test_mat33f_inverse(void) {
       5.0f/36.0f, 11.0f/36.0f, -1.0f/9.0f,
       1.0f/4.0f, -1.0f/4.0f, 0.0f};
     // clang-format on
-    const as_mat33f inverse = as_mat33f_inverse(&mat33f);
+    const as_mat33f inverse = as_mat33f_inverse_v(mat33f);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, inverse.elem, 9);
   }
   {
@@ -1719,7 +1720,7 @@ void test_mat33f_inverse(void) {
       -1.0f/6.0f, 1.0f/3.0f, -1.0f/6.0f,
       3.0f/4.0f, -1.0f/3.0f, 1.0f/12.0f};
     // clang-format on
-    const as_mat33f inverse = as_mat33f_inverse(&mat33f);
+    const as_mat33f inverse = as_mat33f_inverse_v(mat33f);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, inverse.elem, 9);
   }
 }
@@ -1855,30 +1856,27 @@ void test_mat34f_mul_point3f(void) {
   const float epsilon = 0.0001f;
   {
     const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
-    const as_mat34f mat34f =
-      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 10.0f});
-    const as_point3f result =
-      as_mat34f_mul_point3f(&mat34f, (as_point3f){.y = 50.0f});
+    const as_point3f result = as_mat34f_mul_point3f_v(
+      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 10.0f}),
+      (as_point3f){.y = 50.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, -40.0f, result.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.y);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.z);
   }
   {
     const as_mat33f mat33f = as_mat33f_y_axis_rotation(-as_k_half_pi);
-    const as_mat34f mat34f =
-      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 2.0f});
-    const as_point3f result =
-      as_mat34f_mul_point3f(&mat34f, (as_point3f){.z = -5.0f});
+    const as_point3f result = as_mat34f_mul_point3f_v(
+      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 2.0f}),
+      (as_point3f){.z = -5.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 7.0f, result.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.y);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.z);
   }
   {
     const as_mat33f mat33f = as_mat33f_x_axis_rotation(as_k_pi);
-    const as_mat34f mat34f =
-      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.z = -2.0f});
-    const as_point3f result =
-      as_mat34f_mul_point3f(&mat34f, (as_point3f){.y = 10.0f});
+    const as_point3f result = as_mat34f_mul_point3f_v(
+      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.z = -2.0f}),
+      (as_point3f){.y = 10.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, -10.0f, result.y);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, -2.0f, result.z);
@@ -1888,31 +1886,28 @@ void test_mat34f_mul_point3f(void) {
 void test_mat34f_mul_vec3f(void) {
   const float epsilon = 0.0001f;
   {
-    const as_mat33f mat33f = as_mat33f_z_axis_rotation(as_k_half_pi);
-    const as_mat34f mat34f =
-      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 10.0f});
-    const as_vec3f result =
-      as_mat34f_mul_vec3f(&mat34f, (as_vec3f){.y = 50.0f});
+    const as_vec3f result = as_mat34f_mul_vec3f_v(
+      as_mat34f_from_mat33f_and_vec3f_v(
+        as_mat33f_z_axis_rotation(as_k_half_pi), (as_vec3f){.x = 10.0f}),
+      (as_vec3f){.y = 50.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, -50.0f, result.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.y);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.z);
   }
   {
-    const as_mat33f mat33f = as_mat33f_y_axis_rotation(-as_k_half_pi);
-    const as_mat34f mat34f =
-      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.x = 2.0f});
-    const as_vec3f result =
-      as_mat34f_mul_vec3f(&mat34f, (as_vec3f){.z = -5.0f});
+    const as_vec3f result = as_mat34f_mul_vec3f_v(
+      as_mat34f_from_mat33f_and_vec3f_v(
+        as_mat33f_y_axis_rotation(-as_k_half_pi), (as_vec3f){.x = 2.0f}),
+      (as_vec3f){.z = -5.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 5.0f, result.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.y);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.z);
   }
   {
-    const as_mat33f mat33f = as_mat33f_x_axis_rotation(as_k_pi);
-    const as_mat34f mat34f =
-      as_mat34f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){.z = -2.0f});
-    const as_vec3f result =
-      as_mat34f_mul_vec3f(&mat34f, (as_vec3f){.y = 10.0f});
+    const as_vec3f result = as_mat34f_mul_vec3f_v(
+      as_mat34f_from_mat33f_and_vec3f_v(
+        as_mat33f_x_axis_rotation(as_k_pi), (as_vec3f){.z = -2.0f}),
+      (as_vec3f){.y = 10.0f});
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.x);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, -10.0f, result.y);
     TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, result.z);
@@ -1935,7 +1930,7 @@ void test_mat34f_mul_mat34f(void) {
       196.0f, 232.0f, 268.0f, 312.0f,
       316.0f, 376.0f, 436.0f, 508.0f};
     // clang-format on
-    const as_mat34f result = as_mat34f_mul_mat34f(&lhs, &rhs);
+    const as_mat34f result = as_mat34f_mul_mat34f_v(lhs, rhs);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 12);
   }
   {
@@ -1953,7 +1948,7 @@ void test_mat34f_mul_mat34f(void) {
       0.0f, 1.0f, 0.0f, 52.0f,
       0.0f, 0.0f, 1.0f, 68.0f};
     // clang-format on
-    const as_mat34f result = as_mat34f_mul_mat34f(&lhs, &rhs);
+    const as_mat34f result = as_mat34f_mul_mat34f_v(lhs, rhs);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 12);
   }
 }
@@ -1974,7 +1969,7 @@ void test_mat34f_mul_mat33f(void) {
       196.0f, 232.0f, 268.0f, 8.0f,
       316.0f, 376.0f, 436.0f, 12.0f};
     // clang-format on
-    const as_mat34f result = as_mat34f_mul_mat33f(&lhs, &rhs);
+    const as_mat34f result = as_mat34f_mul_mat33f_v(lhs, rhs);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 12);
   }
   {
@@ -1992,7 +1987,7 @@ void test_mat34f_mul_mat33f(void) {
       38.0f, 71.0f, 97.0f, 9.0f,
       120.0f, 90.0f, 200.0f, 2.0f};
     // clang-format on
-    const as_mat34f result = as_mat34f_mul_mat33f(&lhs, &rhs);
+    const as_mat34f result = as_mat34f_mul_mat33f_v(lhs, rhs);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 12);
   }
 }
@@ -2006,25 +2001,26 @@ void test_mat34f_inverse(void) {
     const as_point3f transformed_point3f = as_mat34f_mul_point3f(
       &scale_and_translation, (as_point3f){.x = 5.0f, .y = 5.0f, .z = 5.0f});
     const as_mat34f scale_and_translation_inv =
-      as_mat34f_inverse(&scale_and_translation);
+      as_mat34f_inverse_v(scale_and_translation);
     const as_point3f inverse_point3f =
-      as_mat34f_mul_point3f(&scale_and_translation_inv, transformed_point3f);
+      as_mat34f_mul_point3f_v(scale_and_translation_inv, transformed_point3f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, inverse_point3f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, inverse_point3f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, inverse_point3f.z);
   }
   // ensure inverse restores original point (rotation)
   {
-    const as_mat33f rotation = as_mat33f_x_axis_rotation(as_k_half_pi);
-    const as_mat34f rotation_and_translation = as_mat34f_from_mat33f_and_vec3f(
-      &rotation, (as_vec3f){.x = 1.0f, .y = 1.0f, .z = 1.0f});
-    const as_point3f transformed_point3f = as_mat34f_mul_point3f(
-      &rotation_and_translation,
+    const as_mat34f rotation_and_translation =
+      as_mat34f_from_mat33f_and_vec3f_v(
+        as_mat33f_x_axis_rotation(as_k_half_pi),
+        (as_vec3f){.x = 1.0f, .y = 1.0f, .z = 1.0f});
+    const as_point3f transformed_point3f = as_mat34f_mul_point3f_v(
+      rotation_and_translation,
       (as_point3f){.x = 15.0f, .y = 30.0f, .z = 45.0f});
     const as_mat34f scale_and_translation_inv =
-      as_mat34f_inverse(&rotation_and_translation);
+      as_mat34f_inverse_v(rotation_and_translation);
     const as_point3f inverse_point3f =
-      as_mat34f_mul_point3f(&scale_and_translation_inv, transformed_point3f);
+      as_mat34f_mul_point3f_v(scale_and_translation_inv, transformed_point3f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 15.0f, inverse_point3f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 30.0f, inverse_point3f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 45.0f, inverse_point3f.z);
@@ -2125,10 +2121,10 @@ void test_mat44f_translation_from_point3f(void) {
 
 void test_mat44f_from_mat33f_and_vec3f(void) {
   {
-    const as_mat33f mat33f = (as_mat33f){
-      .elem = {4.0f, 1.0f, 9.0f, 2.0f, 8.0f, 7.0f, 6.0f, 3.0f, 5.0f}};
-    const as_mat44f mat44f =
-      as_mat44f_from_mat33f_and_vec3f(&mat33f, (as_vec3f){22.0f, 33.0f, 97.0f});
+    const as_mat44f mat44f = as_mat44f_from_mat33f_and_vec3f_v(
+      (as_mat33f){
+        .elem = {4.0f, 1.0f, 9.0f, 2.0f, 8.0f, 7.0f, 6.0f, 3.0f, 5.0f}},
+      (as_vec3f){22.0f, 33.0f, 97.0f});
     // clang-format off
     const float expected[] = {
       4.0f, 1.0f, 9.0f, 22.0f,
@@ -2154,7 +2150,7 @@ void test_mat44f_transpose(void) {
       3.0f, 7.0f, 11.0f, 15.0f,
       4.0f, 8.0f, 12.0f, 16.0f};
     // clang-format on
-    const as_mat44f transpose = as_mat44f_transpose(&mat44f);
+    const as_mat44f transpose = as_mat44f_transpose_v(mat44f);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, transpose.elem, 16);
   }
   {
@@ -2170,7 +2166,7 @@ void test_mat44f_transpose(void) {
       33.0f, 77.0f, 110.0f, 150.0f,
       44.0f, 88.0f, 120.0f, 160.0f};
     // clang-format on
-    const as_mat44f transpose = as_mat44f_transpose(&mat44f);
+    const as_mat44f transpose = as_mat44f_transpose_v(mat44f);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, transpose.elem, 16);
   }
 }
@@ -2194,7 +2190,7 @@ void test_mat44f_mul_mat44f(void) {
       400.0f, 358.0f, 316.0f, 274.0f,
       560.0f, 502.0f, 444.0f, 386.0f};
     // clang-format on
-    const as_mat44f result = as_mat44f_mul_mat44f(&lhs, &rhs);
+    const as_mat44f result = as_mat44f_mul_mat44f_v(lhs, rhs);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 16);
   }
   {
@@ -2215,7 +2211,7 @@ void test_mat44f_mul_mat44f(void) {
       2173.0f, 3277.0f, 1435.0f, 2258.0f,
       8383.0f, 11400.0f, 4071.0f, 9931.0f};
     // clang-format on
-    const as_mat44f result = as_mat44f_mul_mat44f(&lhs, &rhs);
+    const as_mat44f result = as_mat44f_mul_mat44f_v(lhs, rhs);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 16);
   }
 }
@@ -2294,10 +2290,9 @@ void test_mat44f_perspective_projection_depth_minus_one_to_one_rh(void) {
 
 void test_mat44f_mul_point4f(void) {
   {
-    const as_mat44f translation =
-      as_mat44f_translation_from_floats(20.0f, 40.0f, 60.0f);
-    const as_point4f point4f = as_mat44f_mul_point4f(
-      &translation, (as_point4f){5.0f, 10.0f, 15.0f, 1.0f});
+    const as_point4f point4f = as_mat44f_mul_point4f_v(
+      as_mat44f_translation_from_floats(20.0f, 40.0f, 60.0f),
+      (as_point4f){5.0f, 10.0f, 15.0f, 1.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, point4f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 50.0f, point4f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 75.0f, point4f.z);
@@ -2306,11 +2301,10 @@ void test_mat44f_mul_point4f(void) {
   {
     const float fov = as_k_half_pi;
     const float aspect = 16.0f / 9.0f;
-    const as_mat44f projection =
+    const as_point4f point4f = as_mat44f_mul_point4f_v(
       as_mat44f_perspective_projection_depth_zero_to_one_lh(
-        aspect, fov, 0.01f, 1000.0f);
-    const as_point4f point4f = as_mat44f_mul_point4f(
-      &projection, (as_point4f){67.0f, 12.0f, 34.0f, 1.0f});
+        aspect, fov, 0.01f, 1000.0f),
+      (as_point4f){67.0f, 12.0f, 34.0f, 1.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 37.6875f, point4f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, point4f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 33.99034f, point4f.z);
@@ -2322,11 +2316,10 @@ void test_mat44f_project_point3f(void) {
   {
     const float fov = as_k_half_pi;
     const float aspect = 16.0f / 9.0f;
-    const as_mat44f projection =
+    const as_point4f point4f = as_mat44f_project_point3f_v(
       as_mat44f_perspective_projection_depth_zero_to_one_lh(
-        aspect, fov, 0.01f, 1000.0f);
-    const as_point4f point4f =
-      as_mat44f_project_point3f(&projection, (as_point3f){16.0f, 17.0f, 18.0f});
+        aspect, fov, 0.01f, 1000.0f),
+      (as_point3f){16.0f, 17.0f, 18.0f});
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 9.0f / 18.0f, point4f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 17.0 / 18.0f, point4f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 17.99018f / 18.0f, point4f.z);
@@ -2343,7 +2336,7 @@ void test_mat44f_determinant(void) {
       4.0f, 3.0f, 9.0f, 7.0f,
       5.0f, 2.0f, 0.0f, 9.0f}};
     // clang-format on
-    const float determinant = as_mat44f_determinant(&mat44f);
+    const float determinant = as_mat44f_determinant_v(mat44f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -376.0f, determinant);
   }
   {
@@ -2354,7 +2347,7 @@ void test_mat44f_determinant(void) {
       9.0f, 6.0f, 11.0f, 3.0f,
       13.0f, 14.0f, 3.0f, 4.0f}};
     // clang-format on
-    const float determinant = as_mat44f_determinant(&mat44f);
+    const float determinant = as_mat44f_determinant_v(mat44f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -180.0f, determinant);
   }
   {
@@ -2365,7 +2358,7 @@ void test_mat44f_determinant(void) {
       2.0f, 4.0f, 7.0f, 3.0f,
       1.0f, 3.0f, 4.0f, 5.0f}};
     // clang-format on
-    const float determinant = as_mat44f_determinant(&mat44f);
+    const float determinant = as_mat44f_determinant_v(mat44f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -132.0f, determinant);
   }
 }
@@ -2384,7 +2377,7 @@ void test_mat44f_inverse(void) {
        39.0f/376.0f, -53.0f/376.0f, 13.0f/188.0f, -9.0f/188.0f,
        55.0f/188.0f, -41.0f/188.0f, -13.0f/94.0f, 9.0f/94.0f};
     // clang-format on
-    const as_mat44f inverse = as_mat44f_inverse(&mat44f);
+    const as_mat44f inverse = as_mat44f_inverse_v(mat44f);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, inverse.elem, 16);
   }
   {
@@ -2400,7 +2393,7 @@ void test_mat44f_inverse(void) {
       -7.0f/44.0f, 1.0f/44.0f, 1.0f/44.0f, 5.0f/22.0f,
       -1.0f/44.0f, 13.0f/132.0f, -31.0f/132.0f, 7.0f/22.0f};
     // clang-format on
-    const as_mat44f inverse = as_mat44f_inverse(&mat44f);
+    const as_mat44f inverse = as_mat44f_inverse_v(mat44f);
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, inverse.elem, 16);
   }
 }
@@ -2646,6 +2639,7 @@ int main(void) {
   RUN_TEST(test_mat33f_x_axis_rotation);
   RUN_TEST(test_mat33f_y_axis_rotation);
   RUN_TEST(test_mat33f_z_axis_rotation);
+  RUN_TEST(test_mat33f_mul_vec3f);
   RUN_TEST(test_mat33f_mul_point3f);
   RUN_TEST(test_mat33f_mul_mat33f);
   RUN_TEST(test_mat33f_mul_mat34f);

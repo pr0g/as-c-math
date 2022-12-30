@@ -112,6 +112,10 @@ as_vec3f as_vec3f_from_mat34f(const as_mat34f* const mat, const int col) {
   return (as_vec3f){mat->elem[col], mat->elem[col + 4], mat->elem[col + 8]};
 }
 
+as_vec3f as_vec3f_from_mat34f_v(const as_mat34f mat, const int col) {
+  return as_vec3f_from_mat34f(&mat, col);
+}
+
 as_vec3f as_vec3f_from_float(const float value) {
   return (as_vec3f){value, value, value};
 }
@@ -396,8 +400,17 @@ as_point2f as_mat22f_mul_point2f(
     .y = mat->elem[2] * point.x + mat->elem[3] * point.y};
 }
 
+as_point2f as_mat22f_mul_point2f_v(
+  const as_mat22f mat, const as_point2f point) {
+  return as_mat22f_mul_point2f(&mat, point);
+}
+
 float as_mat22f_determinant(const as_mat22f* mat) {
   return mat->elem[0] * mat->elem[3] - mat->elem[1] * mat->elem[2];
+}
+
+float as_mat22f_determinant_v(const as_mat22f mat) {
+  return as_mat22f_determinant(&mat);
 }
 
 as_mat22f as_mat22f_inverse(const as_mat22f* mat) {
@@ -408,6 +421,10 @@ as_mat22f as_mat22f_inverse(const as_mat22f* mat) {
       [1] = -mat->elem[1] * det_recip,
       [2] = -mat->elem[2] * det_recip,
       [3] = mat->elem[0] * det_recip}};
+}
+
+as_mat22f as_mat22f_inverse_v(const as_mat22f mat) {
+  return as_mat22f_inverse(&mat);
 }
 
 int as_mat33_rc(const int r, const int c) {
@@ -446,6 +463,10 @@ as_mat33f as_mat33f_from_mat34f(const as_mat34f* const mat) {
     }};
 }
 
+as_mat33f as_mat33f_from_mat34f_v(const as_mat34f mat) {
+  return as_mat33f_from_mat34f(&mat);
+}
+
 as_mat33f as_mat33f_transpose(const as_mat33f* const mat) {
   return (as_mat33f){
     .elem = {
@@ -459,6 +480,10 @@ as_mat33f as_mat33f_transpose(const as_mat33f* const mat) {
       [7] = mat->elem[5],
       [8] = mat->elem[8],
     }};
+}
+
+as_mat33f as_mat33f_transpose_v(const as_mat33f mat) {
+  return as_mat33f_transpose(&mat);
 }
 
 as_mat33f as_mat33f_x_axis_rotation(const float radians) {
@@ -503,11 +528,20 @@ as_point3f as_mat33f_mul_point3f(
     as_mat33f_mul_vec3f(mat, as_vec3f_from_point3f(point)));
 }
 
+as_point3f as_mat33f_mul_point3f_v(
+  const as_mat33f mat, const as_point3f point) {
+  return as_mat33f_mul_point3f(&mat, point);
+}
+
 as_vec3f as_mat33f_mul_vec3f(const as_mat33f* const mat, const as_vec3f vec) {
   return (as_vec3f){
     .x = mat->elem[0] * vec.x + mat->elem[1] * vec.y + mat->elem[2] * vec.z,
     .y = mat->elem[3] * vec.x + mat->elem[4] * vec.y + mat->elem[5] * vec.z,
     .z = mat->elem[6] * vec.x + mat->elem[7] * vec.y + mat->elem[8] * vec.z};
+}
+
+as_vec3f as_mat33f_mul_vec3f_v(const as_mat33f mat, const as_vec3f vec) {
+  return as_mat33f_mul_vec3f(&mat, vec);
 }
 
 as_mat33f as_mat33f_mul_mat33f(
@@ -532,6 +566,10 @@ as_mat33f as_mat33f_mul_mat33f(
           + lhs->elem[8] * rhs->elem[7],
       [8] = lhs->elem[6] * rhs->elem[2] + lhs->elem[7] * rhs->elem[5]
           + lhs->elem[8] * rhs->elem[8]}};
+}
+
+as_mat33f as_mat33f_mul_mat33f_v(const as_mat33f lhs, const as_mat33f rhs) {
+  return as_mat33f_mul_mat33f(&lhs, &rhs);
 }
 
 as_mat34f as_mat33f_mul_mat34f(
@@ -564,6 +602,10 @@ as_mat34f as_mat33f_mul_mat34f(
            + lhs->elem[8] * rhs->elem[11]}};
 }
 
+as_mat34f as_mat33f_mul_mat34f_v(const as_mat33f lhs, const as_mat34f rhs) {
+  return as_mat33f_mul_mat34f(&lhs, &rhs);
+}
+
 float as_mat33f_determinant(const as_mat33f* const mat) {
   return mat->elem[0]
          * (mat->elem[4] * mat->elem[8] - mat->elem[5] * mat->elem[7])
@@ -571,6 +613,10 @@ float as_mat33f_determinant(const as_mat33f* const mat) {
            * (mat->elem[5] * mat->elem[6] - mat->elem[3] * mat->elem[8])
        + mat->elem[2]
            * (mat->elem[3] * mat->elem[7] - mat->elem[4] * mat->elem[6]);
+}
+
+float as_mat33f_determinant_v(const as_mat33f mat) {
+  return as_mat33f_determinant(&mat);
 }
 
 as_mat33f as_mat33f_inverse(const as_mat33f* const mat) {
@@ -597,6 +643,10 @@ as_mat33f as_mat33f_inverse(const as_mat33f* const mat) {
       [7] = -m_23 * det_recip,
       [8] = m_33 * det_recip,
     }};
+}
+
+as_mat33f as_mat33f_inverse_v(const as_mat33f mat) {
+  return as_mat33f_inverse(&mat);
 }
 
 int as_mat34_rc(const int r, const int c) {
@@ -648,6 +698,11 @@ as_mat34f as_mat34f_from_mat33f_and_vec3f(
       [11] = translation.z}};
 }
 
+as_mat34f as_mat34f_from_mat33f_and_vec3f_v(
+  const as_mat33f rotation, const as_vec3f translation) {
+  return as_mat34f_from_mat33f_and_vec3f(&rotation, translation);
+}
+
 as_point3f as_mat34f_mul_point3f(
   const as_mat34f* const mat, const as_point3f point) {
   return (as_point3f){
@@ -659,11 +714,20 @@ as_point3f as_mat34f_mul_point3f(
        + mat->elem[10] * point.z + mat->elem[11]};
 }
 
+as_point3f as_mat34f_mul_point3f_v(
+  const as_mat34f mat, const as_point3f point) {
+  return as_mat34f_mul_point3f(&mat, point);
+}
+
 as_vec3f as_mat34f_mul_vec3f(const as_mat34f* const mat, const as_vec3f vec) {
   return (as_vec3f){
     .x = mat->elem[0] * vec.x + mat->elem[1] * vec.y + mat->elem[2] * vec.z,
     .y = mat->elem[4] * vec.x + mat->elem[5] * vec.y + mat->elem[6] * vec.z,
     .z = mat->elem[8] * vec.x + mat->elem[9] * vec.y + mat->elem[10] * vec.z};
+}
+
+as_vec3f as_mat34f_mul_vec3f_v(const as_mat34f mat, const as_vec3f vec) {
+  return as_mat34f_mul_vec3f(&mat, vec);
 }
 
 as_mat34f as_mat34f_mul_mat34f(
@@ -696,6 +760,10 @@ as_mat34f as_mat34f_mul_mat34f(
            + lhs->elem[10] * rhs->elem[11] + lhs->elem[11]}};
 }
 
+as_mat34f as_mat34f_mul_mat34f_v(const as_mat34f lhs, const as_mat34f rhs) {
+  return as_mat34f_mul_mat34f(&lhs, &rhs);
+}
+
 as_mat34f as_mat34f_mul_mat33f(
   const as_mat34f* const lhs, const as_mat33f* const rhs) {
   return (as_mat34f){
@@ -723,6 +791,10 @@ as_mat34f as_mat34f_mul_mat33f(
       [11] = lhs->elem[11]}};
 }
 
+as_mat34f as_mat34f_mul_mat33f_v(const as_mat34f lhs, const as_mat33f rhs) {
+  return as_mat34f_mul_mat33f(&lhs, &rhs);
+}
+
 as_mat34f as_mat34f_inverse(const as_mat34f* const mat) {
   const as_mat33f rotation_scale = as_mat33f_from_mat34f(mat);
   const as_mat33f inverse_rotation_scale = as_mat33f_inverse(&rotation_scale);
@@ -731,6 +803,10 @@ as_mat34f as_mat34f_inverse(const as_mat34f* const mat) {
     (as_point3f){.x = -mat->elem[3], .y = -mat->elem[7], .z = -mat->elem[11]});
   return as_mat34f_from_mat33f_and_vec3f(
     &inverse_rotation_scale, as_vec3f_from_point3f(inverse_translation));
+}
+
+as_mat34f as_mat34f_inverse_v(const as_mat34f mat) {
+  return as_mat34f_inverse(&mat);
 }
 
 int as_mat44_rc(const int r, const int c) {
@@ -767,22 +843,27 @@ as_mat44f as_mat44f_translation_from_point3f(const as_point3f position) {
 }
 
 as_mat44f as_mat44f_from_mat33f_and_vec3f(
-  const as_mat33f* rotation, const as_vec3f translation) {
+  const as_mat33f* mat33, const as_vec3f translation) {
   return (as_mat44f){
     .elem = {
-      [0] = rotation->elem[0],
-      [1] = rotation->elem[1],
-      [2] = rotation->elem[2],
-      [4] = rotation->elem[3],
-      [5] = rotation->elem[4],
-      [6] = rotation->elem[5],
-      [8] = rotation->elem[6],
-      [9] = rotation->elem[7],
-      [10] = rotation->elem[8],
+      [0] = mat33->elem[0],
+      [1] = mat33->elem[1],
+      [2] = mat33->elem[2],
+      [4] = mat33->elem[3],
+      [5] = mat33->elem[4],
+      [6] = mat33->elem[5],
+      [8] = mat33->elem[6],
+      [9] = mat33->elem[7],
+      [10] = mat33->elem[8],
       [3] = translation.x,
       [7] = translation.y,
       [11] = translation.z,
       [15] = 1.0f}};
+}
+
+as_mat44f as_mat44f_from_mat33f_and_vec3f_v(
+  const as_mat33f mat33, const as_vec3f translation) {
+  return as_mat44f_from_mat33f_and_vec3f(&mat33, translation);
 }
 
 as_mat44f as_mat44f_transpose(const as_mat44f* mat) {
@@ -805,6 +886,10 @@ as_mat44f as_mat44f_transpose(const as_mat44f* mat) {
       [14] = mat->elem[11],
       [15] = mat->elem[15],
     }};
+}
+
+as_mat44f as_mat44f_transpose_v(const as_mat44f mat) {
+  return as_mat44f_transpose(&mat);
 }
 
 as_mat44f as_mat44f_mul_mat44f(
@@ -843,6 +928,10 @@ as_mat44f as_mat44f_mul_mat44f(
            + lhs->elem[14] * rhs->elem[10] + lhs->elem[15] * rhs->elem[14],
       [15] = lhs->elem[12] * rhs->elem[3] + lhs->elem[13] * rhs->elem[7]
            + lhs->elem[14] * rhs->elem[11] + lhs->elem[15] * rhs->elem[15]}};
+}
+
+as_mat44f as_mat44f_mul_mat44f_v(const as_mat44f lhs, const as_mat44f rhs) {
+  return as_mat44f_mul_mat44f(&lhs, &rhs);
 }
 
 static as_mat44f as_mat44f_perspective_projection_depth_zero_to_one_handed(
@@ -926,6 +1015,11 @@ as_point4f as_mat44f_mul_point4f(
        + mat->elem[14] * point.z + mat->elem[15] * point.w};
 }
 
+as_point4f as_mat44f_mul_point4f_v(
+  const as_mat44f mat, const as_point4f point) {
+  return as_mat44f_mul_point4f(&mat, point);
+}
+
 static as_point4f perspective_divide(const as_point4f point) {
   return (as_point4f){
     .x = point.x / point.w,
@@ -938,6 +1032,11 @@ as_point4f as_mat44f_project_point3f(
   const as_mat44f* const projection, const as_point3f point) {
   return perspective_divide(
     as_mat44f_mul_point4f(projection, as_point4f_from_point3f(point)));
+}
+
+as_point4f as_mat44f_project_point3f_v(
+  const as_mat44f projection, const as_point3f point) {
+  return as_mat44f_project_point3f(&projection, point);
 }
 
 float as_mat44f_determinant(const as_mat44f* const mat) {
@@ -954,6 +1053,10 @@ float as_mat44f_determinant(const as_mat44f* const mat) {
     - (mat->elem[12]
     * (mat->elem[1] * mat->elem[6] * mat->elem[11] + mat->elem[2] * mat->elem[7] * mat->elem[9] + mat->elem[3] * mat->elem[5] * mat->elem[10]
     - mat->elem[3] * mat->elem[6] * mat->elem[9] - mat->elem[2] * mat->elem[5] * mat->elem[11] - mat->elem[1] * mat->elem[7] * mat->elem[10]));
+}
+
+float as_mat44f_determinant_v(const as_mat44f mat) {
+  return as_mat44f_determinant(&mat);
 }
 
 as_mat44f as_mat44f_inverse(const as_mat44f* const mat) {
@@ -1074,6 +1177,10 @@ as_mat44f as_mat44f_inverse(const as_mat44f* const mat) {
       [13] = m_24 * det_recip,
       [14] = -m_34 * det_recip,
       [15] = m_44 * det_recip}};
+}
+
+as_mat44f as_mat44f_inverse_v(const as_mat44f mat) {
+  return as_mat44f_inverse(&mat);
 }
 
 void as_swap_float(float* lhs, float* rhs) {
