@@ -2,6 +2,13 @@
 
 C linear algebra math library (initial version created during [pikuma-3d-graphics](https://github.com/pr0g/pikuma-3d-graphics)).
 
+## Conventions/Storage
+
+- **Convention**: Column major
+- **Storage**: Column major
+
+`as-c-math` uses column major convention (matrices are multiplied right to left - post-multiply) with vectors appearing on the right of a matrix multiply. The storage order is also column major (basis axes are interleaved) so matrices must be transposed to put them in row major storage before being passed to any graphics API.
+
 ## as C++ library
 
 - [as](https://github.com/pr0g/as) - C++ linear algebra math library  (templated).
