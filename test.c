@@ -1546,15 +1546,17 @@ void test_mat33f_x_axis_rotation(void) {
     const as_point3f point3f = as_mat33f_mul_point3f_v(
       as_mat33f_x_axis_rotation(as_k_half_pi),
       (as_point3f){.x = 10.0f, .y = 2.0f});
-    const float expected[] = {10.0f, 0.0f, 2.0f};
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 10.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 2.0f, point3f.z);
   }
   {
     const as_point3f point3f = as_mat33f_mul_point3f_v(
       as_mat33f_x_axis_rotation(as_k_half_pi),
       (as_point3f){.x = 20.0f, .z = 5.0f});
-    const float expected[] = {20.0f, -5.0f, 0.0f};
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 20.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -5.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.z);
   }
 }
 
@@ -1564,15 +1566,17 @@ void test_mat33f_y_axis_rotation(void) {
     const as_point3f point3f = as_mat33f_mul_point3f_v(
       as_mat33f_y_axis_rotation(as_k_half_pi),
       (as_point3f){.y = 50.0f, .x = 10.0f});
-    const float expected[] = {0.0f, 50.0f, -10.0f};
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 50.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -10.0f, point3f.z);
   }
   {
     const as_point3f point3f = as_mat33f_mul_point3f_v(
       as_mat33f_y_axis_rotation(as_k_half_pi),
       (as_point3f){.y = 10.0f, .z = 12.0f});
-    const float expected[] = {12.0f, 10.0f, 0.0f};
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 12.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 10.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.z);
   }
 }
 
@@ -1582,15 +1586,17 @@ void test_mat33f_z_axis_rotation(void) {
     const as_point3f point3f = as_mat33f_mul_point3f_v(
       as_mat33f_z_axis_rotation(as_k_half_pi),
       (as_point3f){.z = 5.0f, .x = 2.0f});
-    const float expected[] = {0.0f, 2.0f, 5.0f};
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 2.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 5.0f, point3f.z);
   }
   {
     const as_point3f point3f = as_mat33f_mul_point3f_v(
       as_mat33f_z_axis_rotation(as_k_half_pi),
       (as_point3f){.z = 16.0f, .y = 4.0f});
-    const float expected[] = {-4.0f, 0.0f, 16.0f};
-    TEST_ASSERT_FLOAT_ARRAY_WITHIN(epsilon, expected, point3f.elem, 3);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -4.0f, point3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, point3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 16.0f, point3f.z);
   }
 }
 
@@ -1598,16 +1604,18 @@ void test_mat33f_mul_vec3f(void) {
   const as_vec3f vec3f = as_mat33f_mul_vec3f_v(
     as_mat33f_scale_from_floats(5.0f, 10.0f, 20.0f),
     (as_vec3f){.x = 1.0f, .y = 2.0f, .z = 3.0f});
-  const float expected[] = {5.0f, 20.0f, 60.0f};
-  TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, vec3f.elem, 3);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, vec3f.x);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, vec3f.y);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 60.0f, vec3f.z);
 }
 
 void test_mat33f_mul_point3f(void) {
   const as_point3f point3f = as_mat33f_mul_point3f_v(
     as_mat33f_scale_from_floats(10.0f, 5.0f, 2.0f),
     (as_point3f){.x = 2.0f, .y = 4.0f, .z = 8.0f});
-  const float expected[] = {20.0f, 20.0f, 16.0f};
-  TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, point3f.elem, 3);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, point3f.x);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, point3f.y);
+  TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 16.0f, point3f.z);
 }
 
 void test_mat33f_mul_mat33f(void) {

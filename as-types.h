@@ -2,98 +2,53 @@
 #define AS_TYPES_MATH_H
 
 typedef struct as_vec2f {
-  union {
-    struct {
-      float x;
-      float y;
-    };
-    float elem[2];
-  };
+  float x;
+  float y;
 } as_vec2f;
 
 typedef struct as_vec3f {
-  union {
-    struct {
-      float x;
-      float y;
-      float z;
-    };
-    float elem[3];
-  };
+  float x;
+  float y;
+  float z;
 } as_vec3f;
 
 typedef struct as_vec2i {
-  union {
-    struct {
-      int x;
-      int y;
-    };
-    int elem[2];
-  };
+  int x;
+  int y;
 } as_vec2i;
 
 typedef struct as_vec3i {
-  union {
-    struct {
-      int x;
-      int y;
-      int z;
-    };
-    int elem[3];
-  };
+  int x;
+  int y;
+  int z;
 } as_vec3i;
 
 typedef struct as_point2f {
-  union {
-    struct {
-      float x;
-      float y;
-    };
-    float elem[2];
-  };
+  float x;
+  float y;
 } as_point2f;
 
 typedef struct as_point3f {
-  union {
-    struct {
-      float x;
-      float y;
-      float z;
-    };
-    float elem[3];
-  };
+  float x;
+  float y;
+  float z;
 } as_point3f;
 
 typedef struct as_point4f {
-  union {
-    struct {
-      float x;
-      float y;
-      float z;
-      float w;
-    };
-    float elem[4];
-  };
+  float x;
+  float y;
+  float z;
+  float w;
 } as_point4f;
 
 typedef struct as_point2i {
-  union {
-    struct {
-      int x;
-      int y;
-    };
-    int elem[2];
-  };
+  int x;
+  int y;
 } as_point2i;
 
 typedef struct as_size2i {
-  union {
-    struct {
-      int width;
-      int height;
-    };
-    int elem[2];
-  };
+  int width;
+  int height;
 } as_size2i;
 
 typedef struct as_rect {
