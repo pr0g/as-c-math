@@ -46,6 +46,7 @@ as_vec3f as_vec3f_from_vec3i(as_vec3i vec);
 as_vec3f as_vec3f_from_mat34f(const as_mat34f* mat, int col);
 as_vec3f as_vec3f_from_mat34f_v(as_mat34f mat, int col);
 as_vec3f as_vec3f_from_float(float value);
+as_vec3f as_vec3f_from_floats(float x, float y, float z);
 as_vec3f as_vec3f_add_vec3f(as_vec3f lhs, as_vec3f rhs);
 as_vec3f as_vec3f_sub_vec3f(as_vec3f lhs, as_vec3f rhs);
 as_vec3f as_vec3f_mul_float(as_vec3f vec, float scalar);
@@ -182,6 +183,8 @@ as_mat44f as_mat44f_from_mat33f_and_vec3f(
   const as_mat33f* mat33, as_vec3f translation);
 as_mat44f as_mat44f_from_mat33f_and_vec3f_v(
   as_mat33f mat33, as_vec3f translation);
+as_mat44f as_mat44f_from_mat34f(const as_mat34f* mat34);
+as_mat44f as_mat44f_from_mat34f_v(as_mat34f mat34);
 as_mat44f as_mat44f_transpose(const as_mat44f* mat);
 as_mat44f as_mat44f_transpose_v(as_mat44f mat);
 as_mat44f as_mat44f_mul_mat44f(const as_mat44f* lhs, const as_mat44f* rhs);
@@ -198,8 +201,7 @@ as_point4f as_mat44f_mul_point4f(const as_mat44f* mat, as_point4f point);
 as_point4f as_mat44f_mul_point4f_v(as_mat44f mat, as_point4f point);
 as_point4f as_mat44f_project_point3f(
   const as_mat44f* projection, as_point3f point);
-as_point4f as_mat44f_project_point3f_v(
-  as_mat44f projection, as_point3f point);
+as_point4f as_mat44f_project_point3f_v(as_mat44f projection, as_point3f point);
 float as_mat44f_determinant(const as_mat44f* mat);
 float as_mat44f_determinant_v(as_mat44f mat);
 as_mat44f as_mat44f_inverse(const as_mat44f* mat);

@@ -120,6 +120,10 @@ as_vec3f as_vec3f_from_float(const float value) {
   return (as_vec3f){value, value, value};
 }
 
+as_vec3f as_vec3f_from_floats(const float x, const float y, const float z) {
+  return (as_vec3f){x, y, z};
+}
+
 as_vec3f as_vec3f_add_vec3f(const as_vec3f lhs, const as_vec3f rhs) {
   return (as_vec3f){.x = lhs.x + rhs.x, .y = lhs.y + rhs.y, .z = lhs.z + rhs.z};
 }
@@ -864,6 +868,28 @@ as_mat44f as_mat44f_from_mat33f_and_vec3f(
 as_mat44f as_mat44f_from_mat33f_and_vec3f_v(
   const as_mat33f mat33, const as_vec3f translation) {
   return as_mat44f_from_mat33f_and_vec3f(&mat33, translation);
+}
+
+as_mat44f as_mat44f_from_mat34f(const as_mat34f* mat34) {
+  return (as_mat44f){
+    .elem = {
+      [0] = mat34->elem[0],
+      [1] = mat34->elem[1],
+      [2] = mat34->elem[2],
+      [3] = mat34->elem[3],
+      [4] = mat34->elem[4],
+      [5] = mat34->elem[5],
+      [6] = mat34->elem[6],
+      [7] = mat34->elem[7],
+      [8] = mat34->elem[8],
+      [9] = mat34->elem[9],
+      [10] = mat34->elem[10],
+      [11] = mat34->elem[11],
+      [15] = 1.0f}};
+}
+
+as_mat44f as_mat44f_from_mat34f_v(const as_mat34f mat34) {
+  return as_mat44f_from_mat34f(&mat34);
 }
 
 as_mat44f as_mat44f_transpose(const as_mat44f* mat) {
