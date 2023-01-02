@@ -1028,6 +1028,94 @@ as_mat44f as_mat44f_perspective_projection_depth_minus_one_to_one_rh(
     aspect_ratio, vertical_fov_radians, near, far, -1.0f);
 }
 
+static as_mat44f as_mat44f_orthographic_projection_depth_zero_to_one_handed(
+  const float left,
+  const float right,
+  const float bottom,
+  const float top,
+  const float near,
+  const float far,
+  const float handed) {
+  const float x = 1.0f / (right - left);
+  const float y = 1.0f / (top - bottom);
+  const float z = 1.0f / (far - near);
+  return (as_mat44f){
+    .elem = {
+      [0] = 2.0f * x,
+      [5] = 2.0f * y,
+      [10] = z * handed,
+      [3] = -(left + right) * x,
+      [7] = -(bottom + top) * y,
+      [11] = -near * z,
+      [15] = 1.0f}};
+}
+
+as_mat44f as_mat44f_orthographic_projection_depth_zero_to_one_lh(
+  const float left,
+  const float right,
+  const float bottom,
+  const float top,
+  const float near,
+  const float far) {
+  return as_mat44f_orthographic_projection_depth_zero_to_one_handed(
+    left, right, bottom, top, near, far, 1.0f);
+}
+
+as_mat44f as_mat44f_orthographic_projection_depth_zero_to_one_rh(
+  const float left,
+  const float right,
+  const float bottom,
+  const float top,
+  const float near,
+  const float far) {
+  return as_mat44f_orthographic_projection_depth_zero_to_one_handed(
+    left, right, bottom, top, near, far, -1.0f);
+}
+
+static as_mat44f as_mat44f_orthographic_projection_depth_minus_one_to_one_handed(
+  const float left,
+  const float right,
+  const float bottom,
+  const float top,
+  const float near,
+  const float far,
+  const float handed) {
+  const float x = 1.0f / (right - left);
+  const float y = 1.0f / (top - bottom);
+  const float z = 1.0f / (far - near);
+  return (as_mat44f){
+    .elem = {
+      [0] = 2.0f * x,
+      [5] = 2.0f * y,
+      [10] = 2.0f * z * handed,
+      [3] = -(left + right) * x,
+      [7] = -(bottom + top) * y,
+      [11] = -(near + far) * z,
+      [15] = 1.0f}};
+}
+
+as_mat44f as_mat44f_orthographic_projection_depth_minus_one_to_one_lh(
+  const float left,
+  const float right,
+  const float bottom,
+  const float top,
+  const float near,
+  const float far) {
+  return as_mat44f_orthographic_projection_depth_minus_one_to_one_handed(
+    left, right, bottom, top, near, far, 1.0f);
+}
+
+as_mat44f as_mat44f_orthographic_projection_depth_minus_one_to_one_rh(
+  const float left,
+  const float right,
+  const float bottom,
+  const float top,
+  const float near,
+  const float far) {
+  return as_mat44f_orthographic_projection_depth_minus_one_to_one_handed(
+    left, right, bottom, top, near, far, -1.0f);
+}
+
 as_point4f as_mat44f_mul_point4f(
   const as_mat44f* const mat, const as_point4f point) {
   return (as_point4f){

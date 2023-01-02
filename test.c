@@ -427,6 +427,21 @@ void test_vec3f_from_float(void) {
   }
 }
 
+void test_vec3f_from_floats(void) {
+  {
+    const as_vec3f vec3f = as_vec3f_from_floats(1.0f, 10.0f, 100.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 100.0f, vec3f.z);
+  }
+  {
+    const as_vec3f vec3f = as_vec3f_from_floats(5.0f, 15.0f, 20.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, vec3f.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 15.0f, vec3f.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, vec3f.z);
+  }
+}
+
 void test_vec3f_add_vec3f(void) {
   {
     const as_vec3f vec3f = as_vec3f_add_vec3f(
@@ -2144,6 +2159,39 @@ void test_mat44f_from_mat33f_and_vec3f(void) {
   }
 }
 
+void test_mat44f_from_mat34f(void) {
+  {
+    // clang-format off
+    const as_mat44f mat44f = as_mat44f_from_mat34f_v(
+      (as_mat34f) {
+        1.0f, 2.0f, 3.0f, 10.0f,
+        4.0f, 5.0f, 6.0f, 20.0f,
+        7.0f, 8.0f, 9.0f, 30.0f});
+    const float expected[] = {
+      1.0f, 2.0f, 3.0f, 10.0f,
+      4.0f, 5.0f, 6.0f, 20.0f,
+      7.0f, 8.0f, 9.0f, 30.0f,
+      0.0f, 0.0f, 0.0f, 1.0f};
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, mat44f.elem, 16);
+    // clang-format on
+  }
+  {
+    // clang-format off
+    const as_mat44f mat44f = as_mat44f_from_mat34f_v(
+      (as_mat34f) {
+        22.0f, 44.0f, 66.0f, 100.0f,
+        11.0f, 33.0f, 55.0f, 1000.0f,
+        99.0f, 88.0f, 77.0f, 10000.0f});
+    const float expected[] = {
+      22.0f, 44.0f, 66.0f, 100.0f,
+      11.0f, 33.0f, 55.0f, 1000.0f,
+      99.0f, 88.0f, 77.0f, 10000.0f,
+      0.0f,  0.0f,  0.0f,  1.0f};
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, mat44f.elem, 16);
+    // clang-format on
+  }
+}
+
 void test_mat44f_transpose(void) {
   {
     // clang-format off
@@ -2291,6 +2339,70 @@ void test_mat44f_perspective_projection_depth_minus_one_to_one_rh(void) {
       0.0f,      1.0f,  0.0f,       0.0f,
       0.0f,      0.0f, -1.000020f, -0.0200002f,
       0.0f,      0.0f, -1.0f,       0.0f};
+    // clang-format on
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 16);
+  }
+}
+
+void test_mat44f_orthographic_projection_depth_zero_to_one_lh(void) {
+  {
+    const as_mat44f result =
+      as_mat44f_orthographic_projection_depth_zero_to_one_lh(
+        -10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 1000.0f);
+    // clang-format off
+    const float expected[] = {
+      0.1f, 0.0f, 0.0f,    0.0f,
+      0.0f, 0.1f, 0.0f,    0.0f,
+      0.0f, 0.0f, 0.001f, -0.00001f,
+      0.0f, 0.0f, 0.0f,    1.0f};
+    // clang-format on
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 16);
+  }
+}
+
+void test_mat44f_orthographic_projection_depth_zero_to_one_rh(void) {
+  {
+    const as_mat44f result =
+      as_mat44f_orthographic_projection_depth_zero_to_one_rh(
+        -10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 1000.0f);
+    // clang-format off
+    const float expected[] = {
+      0.1f, 0.0f,  0.0f,    0.0f,
+      0.0f, 0.1f,  0.0f,    0.0f,
+      0.0f, 0.0f, -0.001f, -0.00001f,
+      0.0f, 0.0f,  0.0f,    1.0f};
+    // clang-format on
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 16);
+  }
+}
+
+void test_mat44f_orthographic_projection_depth_minus_one_to_one_lh(void) {
+  {
+    const as_mat44f result =
+      as_mat44f_orthographic_projection_depth_minus_one_to_one_lh(
+        -10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 1000.0f);
+    // clang-format off
+    const float expected[] = {
+      0.1f, 0.0f, 0.0f,    0.0f,
+      0.0f, 0.1f, 0.0f,    0.0f,
+      0.0f, 0.0f, 0.002f, -1.00002f,
+      0.0f, 0.0f, 0.0f,    1.0f};
+    // clang-format on
+    TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 16);
+  }
+}
+
+void test_mat44f_orthographic_projection_depth_minus_one_to_one_rh(void) {
+  {
+    const as_mat44f result =
+      as_mat44f_orthographic_projection_depth_minus_one_to_one_rh(
+        -10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 1000.0f);
+    // clang-format off
+    const float expected[] = {
+      0.1f, 0.0f,  0.0f,    0.0f,
+      0.0f, 0.1f,  0.0f,    0.0f,
+      0.0f, 0.0f, -0.002f, -1.00002f,
+      0.0f, 0.0f,  0.0f,    1.0f};
     // clang-format on
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, result.elem, 16);
   }
@@ -2582,6 +2694,7 @@ int main(void) {
   RUN_TEST(test_vec3f_from_vec3i);
   RUN_TEST(test_vec3f_from_mat34f);
   RUN_TEST(test_vec3f_from_float);
+  RUN_TEST(test_vec3f_from_floats);
   RUN_TEST(test_vec3f_add_vec3f);
   RUN_TEST(test_vec3f_sub_vec3f);
   RUN_TEST(test_vec3f_mul_float);
@@ -2670,12 +2783,17 @@ int main(void) {
   RUN_TEST(test_mat44f_translation_from_vec3f);
   RUN_TEST(test_mat44f_translation_from_point3f);
   RUN_TEST(test_mat44f_from_mat33f_and_vec3f);
+  RUN_TEST(test_mat44f_from_mat34f);
   RUN_TEST(test_mat44f_transpose);
   RUN_TEST(test_mat44f_mul_mat44f);
   RUN_TEST(test_mat44f_perspective_projection_depth_zero_to_one_lh);
   RUN_TEST(test_mat44f_perspective_projection_depth_zero_to_one_rh);
   RUN_TEST(test_mat44f_perspective_projection_depth_minus_one_to_one_lh);
   RUN_TEST(test_mat44f_perspective_projection_depth_minus_one_to_one_rh);
+  RUN_TEST(test_mat44f_orthographic_projection_depth_zero_to_one_lh);
+  RUN_TEST(test_mat44f_orthographic_projection_depth_zero_to_one_rh);
+  RUN_TEST(test_mat44f_orthographic_projection_depth_minus_one_to_one_lh);
+  RUN_TEST(test_mat44f_orthographic_projection_depth_minus_one_to_one_rh);
   RUN_TEST(test_mat44f_mul_point4f);
   RUN_TEST(test_mat44f_project_point3f);
   RUN_TEST(test_mat44f_determinant);

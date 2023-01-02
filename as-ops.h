@@ -197,6 +197,14 @@ as_mat44f as_mat44f_perspective_projection_depth_minus_one_to_one_lh(
   float aspect_ratio, float vertical_fov_radians, float near, float far);
 as_mat44f as_mat44f_perspective_projection_depth_minus_one_to_one_rh(
   float aspect_ratio, float vertical_fov_radians, float near, float far);
+as_mat44f as_mat44f_orthographic_projection_depth_zero_to_one_lh(
+  float left, float right, float bottom, float top, float near, float far);
+as_mat44f as_mat44f_orthographic_projection_depth_zero_to_one_rh(
+  float left, float right, float bottom, float top, float near, float far);
+as_mat44f as_mat44f_orthographic_projection_depth_minus_one_to_one_lh(
+  float left, float right, float bottom, float top, float near, float far);
+as_mat44f as_mat44f_orthographic_projection_depth_minus_one_to_one_rh(
+  float left, float right, float bottom, float top, float near, float far);
 as_point4f as_mat44f_mul_point4f(const as_mat44f* mat, as_point4f point);
 as_point4f as_mat44f_mul_point4f_v(as_mat44f mat, as_point4f point);
 as_point4f as_mat44f_project_point3f(
