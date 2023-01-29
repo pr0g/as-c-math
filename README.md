@@ -43,4 +43,4 @@ C linear algebra math library (initial version created during [pikuma-3d-graphic
 - mat shear
 - quaternion
 - basis
-- add _v postfix for matrix functions to allow call by value
+- ~~add _v postfix for matrix functions to allow call by value~~
