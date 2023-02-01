@@ -216,15 +216,15 @@ as_mat44f as_mat44f_inverse(const as_mat44f* mat);
 as_mat44f as_mat44f_inverse_v(as_mat44f mat);
 
 // utils
-void as_swap_float(float* lhs, float* rhs);
-void as_swap_int(int* lhs, int* rhs);
-float as_clamp_float(float value, float min, float max);
-int as_clamp_int(int value, int min, int max);
-float as_max_float(float lhs, float rhs);
-int as_max_int(int lhs, int rhs);
-int as_min_float(float lhs, float rhs);
-int as_min_int(int lhs, int rhs);
-float as_mix_float(float begin, float end, float t);
+void as_float_swap(float* lhs, float* rhs);
+void as_int_swap(int* lhs, int* rhs);
+float as_float_clamp(float value, float min, float max);
+int as_int_clamp(int value, int min, int max);
+float as_float_max(float lhs, float rhs);
+int as_int_max(int lhs, int rhs);
+int as_float_min(float lhs, float rhs);
+int as_int_min(int lhs, int rhs);
+float as_float_mix(float begin, float end, float t);
 
 float as_radians_from_degrees(float degrees);
 float as_degrees_from_radians(float radians);

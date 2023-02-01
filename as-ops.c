@@ -57,7 +57,7 @@ as_vec2f as_vec2f_normalize(const as_vec2f vec) {
 
 as_vec2f as_vec2f_mix(const as_vec2f begin, const as_vec2f end, const float t) {
   return (as_vec2f){
-    .x = as_mix_float(begin.x, end.x, t), .y = as_mix_float(begin.y, end.y, t)};
+    .x = as_float_mix(begin.x, end.x, t), .y = as_float_mix(begin.y, end.y, t)};
 }
 
 as_vec2f as_vec2f_negate(const as_vec2f vec) {
@@ -205,9 +205,9 @@ as_vec3f as_vec3f_z_axis(void) {
 
 as_vec3f as_vec3f_mix(const as_vec3f begin, const as_vec3f end, const float t) {
   return (as_vec3f){
-    .x = as_mix_float(begin.x, end.x, t),
-    .y = as_mix_float(begin.y, end.y, t),
-    .z = as_mix_float(begin.z, end.z, t)};
+    .x = as_float_mix(begin.x, end.x, t),
+    .y = as_float_mix(begin.y, end.y, t),
+    .z = as_float_mix(begin.z, end.z, t)};
 }
 
 as_vec3f as_vec3f_negate(const as_vec3f vec) {
@@ -347,9 +347,9 @@ as_point3f as_point3f_rotate_z_axis(
 as_point3f as_point3f_mix(
   const as_point3f begin, const as_point3f end, const float t) {
   return (as_point3f){
-    .x = as_mix_float(begin.x, end.x, t),
-    .y = as_mix_float(begin.y, end.y, t),
-    .z = as_mix_float(begin.z, end.z, t)};
+    .x = as_float_mix(begin.x, end.x, t),
+    .y = as_float_mix(begin.y, end.y, t),
+    .z = as_float_mix(begin.z, end.z, t)};
 }
 
 as_point3f as_point3f_negate(const as_point3f point) {
@@ -1297,19 +1297,19 @@ as_mat44f as_mat44f_inverse_v(const as_mat44f mat) {
   return as_mat44f_inverse(&mat);
 }
 
-void as_swap_float(float* lhs, float* rhs) {
+void as_float_swap(float* lhs, float* rhs) {
   const float temp = *lhs;
   *lhs = *rhs;
   *rhs = temp;
 }
 
-void as_swap_int(int* lhs, int* rhs) {
+void as_int_swap(int* lhs, int* rhs) {
   const int temp = *lhs;
   *lhs = *rhs;
   *rhs = temp;
 }
 
-float as_clamp_float(const float value, const float min, const float max) {
+float as_float_clamp(const float value, const float min, const float max) {
   if (value < min) {
     return min;
   }
@@ -1319,7 +1319,7 @@ float as_clamp_float(const float value, const float min, const float max) {
   return value;
 }
 
-int as_clamp_int(const int value, const int min, const int max) {
+int as_int_clamp(const int value, const int min, const int max) {
   if (value < min) {
     return min;
   }
@@ -1329,35 +1329,35 @@ int as_clamp_int(const int value, const int min, const int max) {
   return value;
 }
 
-float as_max_float(const float lhs, const float rhs) {
+float as_float_max(const float lhs, const float rhs) {
   if (lhs > rhs) {
     return lhs;
   }
   return rhs;
 }
 
-int as_max_int(const int lhs, const int rhs) {
+int as_int_max(const int lhs, const int rhs) {
   if (lhs > rhs) {
     return lhs;
   }
   return rhs;
 }
 
-int as_min_float(const float lhs, const float rhs) {
+int as_float_min(const float lhs, const float rhs) {
   if (lhs < rhs) {
     return lhs;
   }
   return rhs;
 }
 
-int as_min_int(const int lhs, const int rhs) {
+int as_int_min(const int lhs, const int rhs) {
   if (lhs < rhs) {
     return lhs;
   }
   return rhs;
 }
 
-float as_mix_float(const float begin, const float end, const float t) {
+float as_float_mix(const float begin, const float end, const float t) {
   return (1.0f - t) * begin + t * end;
 }
 

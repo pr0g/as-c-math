@@ -2522,14 +2522,14 @@ void test_swap_float(void) {
   {
     float a = 3.0f;
     float b = 5.0f;
-    as_swap_float(&a, &b);
+    as_float_swap(&a, &b);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, a);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 3.0f, b);
   }
   {
     float a = 12.0f;
     float b = 25.0f;
-    as_swap_float(&a, &b);
+    as_float_swap(&a, &b);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, a);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 12.0f, b);
   }
@@ -2539,14 +2539,14 @@ void test_swap_int(void) {
   {
     int a = 7;
     int b = 2;
-    as_swap_int(&a, &b);
+    as_int_swap(&a, &b);
     TEST_ASSERT_EQUAL_INT32(2, a);
     TEST_ASSERT_EQUAL_INT32(7, b);
   }
   {
     int a = 15;
     int b = 30;
-    as_swap_int(&a, &b);
+    as_int_swap(&a, &b);
     TEST_ASSERT_EQUAL_INT32(30, a);
     TEST_ASSERT_EQUAL_INT32(15, b);
   }
@@ -2554,74 +2554,74 @@ void test_swap_int(void) {
 
 void test_clamp_float(void) {
   {
-    const float clamped = as_clamp_float(2.0f, 5.0f, 10.0f);
+    const float clamped = as_float_clamp(2.0f, 5.0f, 10.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, clamped);
   }
   {
-    const float clamped = as_clamp_float(30.0f, 10.0f, 20.0f);
+    const float clamped = as_float_clamp(30.0f, 10.0f, 20.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 20.0f, clamped);
   }
   {
-    const float clamped = as_clamp_float(18.0f, 15.0f, 20.0f);
+    const float clamped = as_float_clamp(18.0f, 15.0f, 20.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 18.0f, clamped);
   }
 }
 
 void test_clamp_int(void) {
   {
-    const int clamped = as_clamp_int(2, 5, 10);
+    const int clamped = as_int_clamp(2, 5, 10);
     TEST_ASSERT_EQUAL_INT32(5, clamped);
   }
   {
-    const int clamped = as_clamp_int(30, 10, 20);
+    const int clamped = as_int_clamp(30, 10, 20);
     TEST_ASSERT_EQUAL_INT32(20, clamped);
   }
   {
-    const int clamped = as_clamp_int(18, 15, 20);
+    const int clamped = as_int_clamp(18, 15, 20);
     TEST_ASSERT_EQUAL_INT32(18, clamped);
   }
 }
 
 void test_max_float(void) {
   {
-    const float max = as_max_float(5.0f, 10.0f);
+    const float max = as_float_max(5.0f, 10.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, max);
   }
   {
-    const float max = as_max_float(25.0f, 8.0f);
+    const float max = as_float_max(25.0f, 8.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 25.0f, max);
   }
 }
 
 void test_max_int(void) {
   {
-    const int max = as_max_int(5, 10);
+    const int max = as_int_max(5, 10);
     TEST_ASSERT_EQUAL_INT32(10, max);
   }
   {
-    const int max = as_max_int(25.0f, 8.0f);
+    const int max = as_int_max(25.0f, 8.0f);
     TEST_ASSERT_EQUAL_INT32(25, max);
   }
 }
 
 void test_min_float(void) {
   {
-    const float min = as_min_float(2.0f, 21.0f);
+    const float min = as_float_min(2.0f, 21.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, min);
   }
   {
-    const float min = as_min_float(36.0f, 14.0f);
+    const float min = as_float_min(36.0f, 14.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 14.0f, min);
   }
 }
 
 void test_min_int(void) {
   {
-    const int min = as_min_int(57, 63);
+    const int min = as_int_min(57, 63);
     TEST_ASSERT_EQUAL_INT32(57, min);
   }
   {
-    const int min = as_min_int(102.0f, 45.0f);
+    const int min = as_int_min(102.0f, 45.0f);
     TEST_ASSERT_EQUAL_INT32(45, min);
   }
 }
