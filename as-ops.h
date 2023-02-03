@@ -3,6 +3,8 @@
 
 #include "as-types.h"
 
+#include <stdbool.h>
+
 // constants
 extern const float as_k_pi;
 extern const float as_k_half_pi;
@@ -225,6 +227,7 @@ int as_int_max(int lhs, int rhs);
 int as_float_min(float lhs, float rhs);
 int as_int_min(int lhs, int rhs);
 float as_float_mix(float begin, float end, float t);
+bool as_float_near(float lhs, float rhs, float max_diff, float max_rel_diff);
 
 float as_radians_from_degrees(float degrees);
 float as_degrees_from_radians(float radians);

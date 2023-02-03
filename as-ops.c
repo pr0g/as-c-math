@@ -1361,6 +1361,24 @@ float as_float_mix(const float begin, const float end, const float t) {
   return (1.0f - t) * begin + t * end;
 }
 
+// floating point comparison by Bruce Dawson
+// https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+bool as_float_near(
+  const float a,
+  const float b,
+  const float max_diff,
+  const float max_rel_diff) {
+  // check if the numbers are really close
+  // needed when comparing numbers near zero
+  const float diff = fabsf(a - b);
+  if (diff <= max_diff) {
+    return true;
+  }
+  const float largest = fmaxf(fabsf(a), fabsf(b));
+  // find relative difference
+  return diff <= largest * max_rel_diff;
+}
+
 float as_radians_from_degrees(const float degrees) {
   return degrees * (as_k_pi / 180.0f);
 }

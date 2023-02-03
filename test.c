@@ -2518,7 +2518,7 @@ void test_mat44f_inverse(void) {
   }
 }
 
-void test_swap_float(void) {
+void test_float_swap(void) {
   {
     float a = 3.0f;
     float b = 5.0f;
@@ -2535,7 +2535,7 @@ void test_swap_float(void) {
   }
 }
 
-void test_swap_int(void) {
+void test_int_swap(void) {
   {
     int a = 7;
     int b = 2;
@@ -2552,7 +2552,7 @@ void test_swap_int(void) {
   }
 }
 
-void test_clamp_float(void) {
+void test_float_clamp(void) {
   {
     const float clamped = as_float_clamp(2.0f, 5.0f, 10.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, clamped);
@@ -2567,7 +2567,7 @@ void test_clamp_float(void) {
   }
 }
 
-void test_clamp_int(void) {
+void test_int_clamp(void) {
   {
     const int clamped = as_int_clamp(2, 5, 10);
     TEST_ASSERT_EQUAL_INT32(5, clamped);
@@ -2582,7 +2582,7 @@ void test_clamp_int(void) {
   }
 }
 
-void test_max_float(void) {
+void test_float_max(void) {
   {
     const float max = as_float_max(5.0f, 10.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 10.0f, max);
@@ -2593,7 +2593,7 @@ void test_max_float(void) {
   }
 }
 
-void test_max_int(void) {
+void test_int_max(void) {
   {
     const int max = as_int_max(5, 10);
     TEST_ASSERT_EQUAL_INT32(10, max);
@@ -2604,7 +2604,7 @@ void test_max_int(void) {
   }
 }
 
-void test_min_float(void) {
+void test_float_min(void) {
   {
     const float min = as_float_min(2.0f, 21.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 2.0f, min);
@@ -2615,7 +2615,7 @@ void test_min_float(void) {
   }
 }
 
-void test_min_int(void) {
+void test_int_min(void) {
   {
     const int min = as_int_min(57, 63);
     TEST_ASSERT_EQUAL_INT32(57, min);
@@ -2623,6 +2623,39 @@ void test_min_int(void) {
   {
     const int min = as_int_min(102.0f, 45.0f);
     TEST_ASSERT_EQUAL_INT32(45, min);
+  }
+}
+
+void test_float_near(void) {
+  {
+    const float lhs = 0.001f;
+    const float rhs = 0.0011f;
+    const bool near = as_float_near(lhs, rhs, 0.0001f, 0.0001f);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    const float lhs = 1.08420217249e-19f;
+    const float rhs = 1.08420230173e-19f;
+    const bool near = as_float_near(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    const float lhs = 1000000.0f;
+    const float rhs = 1000000.01f;
+    const bool near = as_float_near(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    const float lhs = -2000000.0f;
+    const float rhs = -2000000.01f;
+    const bool near = as_float_near(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    const float lhs = 1000000.0f;
+    const float rhs = 1000000.1f;
+    const bool near = as_float_near(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
   }
 }
 
@@ -2798,14 +2831,15 @@ int main(void) {
   RUN_TEST(test_mat44f_project_point3f);
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);
-  RUN_TEST(test_swap_float);
-  RUN_TEST(test_swap_int);
-  RUN_TEST(test_clamp_float);
-  RUN_TEST(test_clamp_int);
-  RUN_TEST(test_max_float);
-  RUN_TEST(test_max_int);
-  RUN_TEST(test_min_float);
-  RUN_TEST(test_min_int);
+  RUN_TEST(test_float_swap);
+  RUN_TEST(test_int_swap);
+  RUN_TEST(test_float_clamp);
+  RUN_TEST(test_int_clamp);
+  RUN_TEST(test_float_max);
+  RUN_TEST(test_int_max);
+  RUN_TEST(test_float_min);
+  RUN_TEST(test_int_min);
+  RUN_TEST(test_float_near);
   RUN_TEST(test_radians_from_degrees);
   RUN_TEST(test_degrees_from_radians);
   return UNITY_END();
