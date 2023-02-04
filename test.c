@@ -219,6 +219,30 @@ void test_vec2f_negate(void) {
   }
 }
 
+void test_vec2f_near(void) {
+  {
+    const bool near = as_vec2f_near(
+      (as_vec2f){1.0f, 1.0f},
+      (as_vec2f){1.0f, 0.99f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_vec2f_near(
+      (as_vec2f){1.01f, 1.0f},
+      (as_vec2f){1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_vec2f_near(
+      (as_vec2f){2.0f, 2.0f}, (as_vec2f){2.0f, 2.0f}, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+}
+
 void test_vec2i_from_vec2f(void) {
   {
     const as_vec2i vec2i =
@@ -2714,6 +2738,7 @@ int main(void) {
   RUN_TEST(test_vec2f_normalize);
   RUN_TEST(test_vec2f_mix);
   RUN_TEST(test_vec2f_negate);
+  RUN_TEST(test_vec2f_near);
   RUN_TEST(test_vec2i_from_vec2f);
   RUN_TEST(test_vec2i_from_int);
   RUN_TEST(test_vec2i_add_vec2i);

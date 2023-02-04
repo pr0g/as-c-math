@@ -64,6 +64,15 @@ as_vec2f as_vec2f_negate(const as_vec2f vec) {
   return (as_vec2f){.x = -vec.x, .y = -vec.y};
 }
 
+bool as_vec2f_near(
+  const as_vec2f lhs,
+  const as_vec2f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_float_near(lhs.x, rhs.x, max_diff, max_rel_diff)
+      && as_float_near(lhs.y, rhs.y, max_diff, max_rel_diff);
+}
+
 as_vec2i as_vec2i_from_vec2f(const as_vec2f vec) {
   return (as_vec2i){(int)roundf(vec.x), (int)roundf(vec.y)};
 }

@@ -30,6 +30,8 @@ float as_vec2f_dot_vec2f(as_vec2f lhs, as_vec2f rhs);
 as_vec2f as_vec2f_normalize(as_vec2f vec);
 as_vec2f as_vec2f_mix(as_vec2f begin, as_vec2f end, float t);
 as_vec2f as_vec2f_negate(as_vec2f vec);
+bool as_vec2f_near(
+  as_vec2f lhs, as_vec2f rhs, float max_diff, float max_rel_diff);
 
 // vec2i
 as_vec2i as_vec2i_from_vec2f(as_vec2f vec);
