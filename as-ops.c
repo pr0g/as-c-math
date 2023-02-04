@@ -109,6 +109,10 @@ as_vec2i as_vec2i_negate(const as_vec2i vec) {
   return (as_vec2i){.x = -vec.x, .y = -vec.y};
 }
 
+bool as_vec2i_equal(const as_vec2i lhs, const as_vec2i rhs) {
+  return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+
 as_vec3f as_vec3f_from_point3f(const as_point3f point) {
   return (as_vec3f){point.x, point.y, point.z};
 }
@@ -223,6 +227,16 @@ as_vec3f as_vec3f_negate(const as_vec3f vec) {
   return (as_vec3f){-vec.x, -vec.y, -vec.z};
 }
 
+bool as_vec3f_near(
+  const as_vec3f lhs,
+  const as_vec3f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_float_near(lhs.x, rhs.x, max_diff, max_rel_diff)
+      && as_float_near(lhs.y, rhs.y, max_diff, max_rel_diff)
+      && as_float_near(lhs.z, rhs.z, max_diff, max_rel_diff);
+}
+
 as_vec3i as_vec3i_from_vec3f(const as_vec3f vec) {
   return (as_vec3i){(int)roundf(vec.x), (int)roundf(vec.y), (int)roundf(vec.z)};
 }
@@ -258,6 +272,10 @@ as_vec3i as_vec3i_negate(const as_vec3i vec) {
   return (as_vec3i){.x = -vec.x, .y = -vec.y, .z = -vec.z};
 }
 
+bool as_vec3i_equal(const as_vec3i lhs, const as_vec3i rhs) {
+  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+}
+
 as_point2f as_point2f_from_vec2f(const as_vec2f vec) {
   return (as_point2f){vec.x, vec.y};
 }
@@ -290,6 +308,15 @@ as_point2f as_point2f_negate(const as_point2f point) {
   return (as_point2f){.x = -point.x, .y = -point.y};
 }
 
+bool as_point2f_near(
+  const as_point2f lhs,
+  const as_point2f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_float_near(lhs.x, rhs.x, max_diff, max_rel_diff)
+      && as_float_near(lhs.y, rhs.y, max_diff, max_rel_diff);
+}
+
 as_point2i as_point2i_from_point2f(const as_point2f point) {
   return (as_point2i){(int)roundf(point.x), (int)roundf(point.y)};
 }
@@ -316,6 +343,10 @@ float as_point2i_distance_point2i(const as_point2i lhs, const as_point2i rhs) {
 
 as_point2i as_point2i_negate(const as_point2i point) {
   return (as_point2i){.x = -point.x, .y = -point.y};
+}
+
+bool as_point2i_equal(const as_point2i lhs, const as_point2i rhs) {
+  return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
 as_point3f as_point3f_from_vec3f(const as_vec3f vec) {
@@ -363,6 +394,16 @@ as_point3f as_point3f_mix(
 
 as_point3f as_point3f_negate(const as_point3f point) {
   return (as_point3f){.x = -point.x, .y = -point.y, .z = -point.z};
+}
+
+bool as_point3f_near(
+  const as_point3f lhs,
+  const as_point3f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_float_near(lhs.x, rhs.x, max_diff, max_rel_diff)
+      && as_float_near(lhs.y, rhs.y, max_diff, max_rel_diff)
+      && as_float_near(lhs.z, rhs.z, max_diff, max_rel_diff);
 }
 
 as_point4f as_point4f_from_point3f(const as_point3f point) {
@@ -438,6 +479,36 @@ as_mat22f as_mat22f_inverse(const as_mat22f* mat) {
 
 as_mat22f as_mat22f_inverse_v(const as_mat22f mat) {
   return as_mat22f_inverse(&mat);
+}
+
+static bool as_mat_near(
+  const float* lhs_elems,
+  const float* rhs_elems,
+  const float count,
+  const float max_diff,
+  const float max_rel_diff) {
+  for (int i = 0; i < count; ++i) {
+    if (!as_float_near(lhs_elems[i], rhs_elems[i], max_diff, max_rel_diff)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool as_mat22f_near(
+  const as_mat22f* lhs,
+  const as_mat22f* rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat_near(lhs->elem, rhs->elem, 4, max_diff, max_rel_diff);
+}
+
+bool as_mat22f_near_v(
+  const as_mat22f lhs,
+  const as_mat22f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat22f_near(&lhs, &rhs, max_diff, max_rel_diff);
 }
 
 int as_mat33_rc(const int r, const int c) {

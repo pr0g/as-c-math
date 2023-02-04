@@ -369,6 +369,47 @@ void test_vec2i_negate(void) {
   }
 }
 
+void test_vec2i_equal(void) {
+  {
+    const bool equal =
+      as_vec2i_equal((as_vec2i){.x = 1, .y = 2}, (as_vec2i){.x = 1, .y = 2});
+    TEST_ASSERT_TRUE(equal);
+  }
+  {
+    const bool equal =
+      as_vec2i_equal((as_vec2i){.x = 2, .y = 2}, (as_vec2i){.x = 1, .y = 2});
+    TEST_ASSERT_TRUE(!equal);
+  }
+  {
+    const bool equal =
+      as_vec2i_equal((as_vec2i){.x = 4, .y = 3}, (as_vec2i){.x = 4, .y = 5});
+    TEST_ASSERT_TRUE(!equal);
+  }
+}
+
+void test_vec3i_equal(void) {
+  {
+    const bool equal = as_vec3i_equal(
+      (as_vec3i){.x = 1, .y = 2, .z = 3}, (as_vec3i){.x = 1, .y = 2, .z = 3});
+    TEST_ASSERT_TRUE(equal);
+  }
+  {
+    const bool equal = as_vec3i_equal(
+      (as_vec3i){.x = 2, .y = 2, .z = 4}, (as_vec3i){.x = 1, .y = 2, .z = 4});
+    TEST_ASSERT_TRUE(!equal);
+  }
+  {
+    const bool equal = as_vec3i_equal(
+      (as_vec3i){.x = 4, .y = 3, .z = 5}, (as_vec3i){.x = 4, .y = 5, .z = 5});
+    TEST_ASSERT_TRUE(!equal);
+  }
+  {
+    const bool equal = as_vec3i_equal(
+      (as_vec3i){.x = 6, .y = 4, .z = 7}, (as_vec3i){.x = 6, .y = 4, .z = 8});
+    TEST_ASSERT_TRUE(!equal);
+  }
+}
+
 void test_vec3f_from_point3f(void) {
   {
     const as_vec3f vec3f =
@@ -763,6 +804,41 @@ void test_vec3f_negate(void) {
   }
 }
 
+void test_vec3f_near(void) {
+  {
+    const bool near = as_vec3f_near(
+      (as_vec3f){1.0f, 1.0f, 1.0f},
+      (as_vec3f){0.99f, 1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_vec3f_near(
+      (as_vec3f){1.0f, 0.99f, 1.0f},
+      (as_vec3f){1.0f, 1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_vec3f_near(
+      (as_vec3f){1.0f, 1.0f, 1.0f},
+      (as_vec3f){1.0f, 1.0f, 1.1f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_vec3f_near(
+      (as_vec3f){2.0f, 3.0f, 4.0f},
+      (as_vec3f){2.0f, 3.0f, 4.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+}
+
 void test_vec3i_from_vec3f(void) {
   {
     const as_vec3i vec3i =
@@ -996,6 +1072,33 @@ void test_point2f_negate(void) {
   }
 }
 
+void test_point2f_near(void) {
+  {
+    const bool near = as_point2f_near(
+      (as_point2f){1.0f, 1.0f},
+      (as_point2f){1.0f, 0.99f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_point2f_near(
+      (as_point2f){1.01f, 1.0f},
+      (as_point2f){1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_point2f_near(
+      (as_point2f){2.0f, 2.0f},
+      (as_point2f){2.0f, 2.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+}
+
 void test_point2f_distance_point2f(void) {
   {
     const float distance = as_point2f_distance_point2f(
@@ -1131,6 +1234,24 @@ void test_point2i_negate(void) {
       as_point2i_negate((as_point2i){.x = -5, .y = -10});
     TEST_ASSERT_EQUAL_INT32(5, negated.x);
     TEST_ASSERT_EQUAL_INT32(10, negated.y);
+  }
+}
+
+void test_point2i_equal(void) {
+  {
+    const bool equal = as_point2i_equal(
+      (as_point2i){.x = 1, .y = 2}, (as_point2i){.x = 1, .y = 2});
+    TEST_ASSERT_TRUE(equal);
+  }
+  {
+    const bool equal = as_point2i_equal(
+      (as_point2i){.x = 2, .y = 2}, (as_point2i){.x = 1, .y = 2});
+    TEST_ASSERT_TRUE(!equal);
+  }
+  {
+    const bool equal = as_point2i_equal(
+      (as_point2i){.x = 4, .y = 3}, (as_point2i){.x = 4, .y = 5});
+    TEST_ASSERT_TRUE(!equal);
   }
 }
 
@@ -1276,6 +1397,41 @@ void test_point3f_negate(void) {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, negated.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, negated.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -6.0f, negated.z);
+  }
+}
+
+void test_point3f_near(void) {
+  {
+    const bool near = as_point3f_near(
+      (as_point3f){1.0f, 1.0f, 1.0f},
+      (as_point3f){0.99f, 1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_point3f_near(
+      (as_point3f){1.0f, 0.99f, 1.0f},
+      (as_point3f){1.0f, 1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_point3f_near(
+      (as_point3f){1.0f, 1.0f, 1.0f},
+      (as_point3f){1.0f, 1.0f, 1.1f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_point3f_near(
+      (as_point3f){2.0f, 3.0f, 4.0f},
+      (as_point3f){2.0f, 3.0f, 4.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
   }
 }
 
@@ -1434,6 +1590,21 @@ void test_mat22f_inverse(void) {
     const as_mat22f inverse =
       as_mat22f_inverse_v((as_mat22f){.elem = {1.0f, 5.0f, 2.0f, 1.0f}});
     TEST_ASSERT_FLOAT_ARRAY_WITHIN(FLT_EPSILON, expected, inverse.elem, 4);
+  }
+}
+
+void test_mat22f_near(void) {
+  {
+    const as_mat22f lhs = (as_mat22f){1.0f, 2.0f, 3.0f, 4.0f};
+    const as_mat22f rhs = lhs;
+    const bool near = as_mat22f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    const as_mat22f lhs = (as_mat22f){1.0f, 2.0f, 3.0f, 4.0f};
+    const as_mat22f rhs = (as_mat22f){1.0f, 2.0f, 3.1f, 4.0f};
+    const bool near = as_mat22f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
   }
 }
 
@@ -2748,6 +2919,7 @@ int main(void) {
   RUN_TEST(test_vec2i_length);
   RUN_TEST(test_vec2i_length_sq);
   RUN_TEST(test_vec2i_negate);
+  RUN_TEST(test_vec2i_equal);
   RUN_TEST(test_vec3f_from_point3f);
   RUN_TEST(test_vec3f_from_vec3i);
   RUN_TEST(test_vec3f_from_mat34f);
@@ -2767,6 +2939,7 @@ int main(void) {
   RUN_TEST(test_vec3f_axes);
   RUN_TEST(test_vec3f_mix);
   RUN_TEST(test_vec3f_negate);
+  RUN_TEST(test_vec3f_near);
   RUN_TEST(test_vec3i_from_vec3f);
   RUN_TEST(test_vec3i_add_vec3i);
   RUN_TEST(test_vec3i_sub_vec3i);
@@ -2774,6 +2947,7 @@ int main(void) {
   RUN_TEST(test_vec3i_div_float);
   RUN_TEST(test_vec3i_length);
   RUN_TEST(test_vec3i_negate);
+  RUN_TEST(test_vec3i_equal);
   RUN_TEST(test_point2f_from_vec2f);
   RUN_TEST(test_point2f_from_point4f);
   RUN_TEST(test_point2f_from_point2i);
@@ -2781,6 +2955,7 @@ int main(void) {
   RUN_TEST(test_point2f_add_vec2f);
   RUN_TEST(test_point2f_sub_point2f);
   RUN_TEST(test_point2f_negate);
+  RUN_TEST(test_point2f_near);
   RUN_TEST(test_point2f_distance_point2f);
   RUN_TEST(test_point2i_from_point2f);
   RUN_TEST(test_point2i_from_vec2i);
@@ -2789,6 +2964,7 @@ int main(void) {
   RUN_TEST(test_point2i_sub_point2i);
   RUN_TEST(test_point2i_distance_point2i);
   RUN_TEST(test_point2i_negate);
+  RUN_TEST(test_point2i_equal);
   RUN_TEST(test_point3f_from_vec3f);
   RUN_TEST(test_point3f_add_vec3f);
   RUN_TEST(test_point3f_sub_point3f);
@@ -2797,6 +2973,7 @@ int main(void) {
   RUN_TEST(test_point3f_rotate_z_axis);
   RUN_TEST(test_point3f_mix);
   RUN_TEST(test_point3f_negate);
+  RUN_TEST(test_point3f_near);
   RUN_TEST(test_point4f_from_point3f);
   RUN_TEST(test_point4f_from_point2f);
   RUN_TEST(test_mat22_rc);
@@ -2808,6 +2985,7 @@ int main(void) {
   RUN_TEST(test_mat22f_mul_point2f);
   RUN_TEST(test_mat22f_determinant);
   RUN_TEST(test_mat22f_inverse);
+  RUN_TEST(test_mat22f_near);
   RUN_TEST(test_mat33_rc);
   RUN_TEST(test_mat33f_identity);
   RUN_TEST(test_mat33f_uniform_scale);

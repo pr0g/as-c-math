@@ -43,6 +43,7 @@ as_vec2f as_vec2i_div_float(as_vec2i vec, float scalar);
 float as_vec2i_length(as_vec2i vec);
 int as_vec2i_length_sq(as_vec2i vec);
 as_vec2i as_vec2i_negate(as_vec2i vec);
+bool as_vec2i_equal(as_vec2i lhs, as_vec2i rhs);
 
 // vec3f
 as_vec3f as_vec3f_from_point3f(as_point3f point);
@@ -68,6 +69,8 @@ as_vec3f as_vec3f_y_axis(void);
 as_vec3f as_vec3f_z_axis(void);
 as_vec3f as_vec3f_mix(as_vec3f begin, as_vec3f end, float t);
 as_vec3f as_vec3f_negate(as_vec3f vec);
+bool as_vec3f_near(
+  as_vec3f lhs, as_vec3f rhs, float max_diff, float max_rel_diff);
 
 // vec3i
 as_vec3i as_vec3i_from_vec3f(as_vec3f vec);
@@ -78,6 +81,7 @@ as_vec3f as_vec3i_div_float(as_vec3i vec, float scalar);
 float as_vec3i_length(as_vec3i vec);
 int as_vec3i_length_sq(as_vec3i vec);
 as_vec3i as_vec3i_negate(as_vec3i vec);
+bool as_vec3i_equal(as_vec3i lhs, as_vec3i rhs);
 
 // point2f
 as_point2f as_point2f_from_vec2f(as_vec2f vec);
@@ -88,6 +92,8 @@ as_point2f as_point2f_add_vec2f(as_point2f point, as_vec2f vec);
 as_vec2f as_point2f_sub_point2f(as_point2f lhs, as_point2f rhs);
 float as_point2f_distance_point2f(as_point2f lhs, as_point2f rhs);
 as_point2f as_point2f_negate(as_point2f point);
+bool as_point2f_near(
+  as_point2f lhs, as_point2f rhs, float max_diff, float max_rel_diff);
 
 // point2i
 as_point2i as_point2i_from_point2f(as_point2f point);
@@ -97,6 +103,7 @@ as_point2i as_point2i_add_vec2i(as_point2i point, as_vec2i vec);
 as_vec2i as_point2i_sub_point2i(as_point2i lhs, as_point2i rhs);
 float as_point2i_distance_point2i(as_point2i lhs, as_point2i rhs);
 as_point2i as_point2i_negate(as_point2i point);
+bool as_point2i_equal(as_point2i lhs, as_point2i rhs);
 
 // point3f
 as_point3f as_point3f_from_vec3f(as_vec3f vec);
@@ -108,12 +115,14 @@ as_point3f as_point3f_rotate_y_axis(as_point3f point, float radians);
 as_point3f as_point3f_rotate_z_axis(as_point3f point, float radians);
 as_point3f as_point3f_mix(as_point3f begin, as_point3f end, float t);
 as_point3f as_point3f_negate(as_point3f point);
+bool as_point3f_near(
+  as_point3f lhs, as_point3f rhs, float max_diff, float max_rel_diff);
 
 // point4f
 as_point4f as_point4f_from_point3f(as_point3f point);
 as_point4f as_point4f_from_point2f(as_point2f point);
 
-// mat22
+// mat22f
 int as_mat22_rc(int r, int c);
 as_mat22f as_mat22f_identity(void);
 as_mat22f as_mat22f_uniform_scale(float scale);
@@ -126,8 +135,15 @@ float as_mat22f_determinant(const as_mat22f* mat);
 float as_mat22f_determinant_v(as_mat22f mat);
 as_mat22f as_mat22f_inverse(const as_mat22f* mat);
 as_mat22f as_mat22f_inverse_v(as_mat22f mat);
+bool as_mat22f_near(
+  const as_mat22f* lhs,
+  const as_mat22f* rhs,
+  float max_diff,
+  float max_rel_diff);
+bool as_mat22f_near_v(
+  as_mat22f lhs, as_mat22f rhs, float max_diff, float max_rel_diff);
 
-// mat33
+// mat33f
 int as_mat33_rc(int r, int c);
 as_mat33f as_mat33f_identity(void);
 as_mat33f as_mat33f_uniform_scale(float scale);
@@ -154,7 +170,7 @@ float as_mat33f_determinant_v(as_mat33f mat);
 as_mat33f as_mat33f_inverse(const as_mat33f* mat);
 as_mat33f as_mat33f_inverse_v(as_mat33f mat);
 
-// mat34
+// mat34f
 int as_mat34_rc(int r, int c);
 as_mat34f as_mat34f_identity(void);
 as_mat34f as_mat34f_translation_from_floats(
@@ -176,7 +192,7 @@ as_mat34f as_mat34f_mul_mat33f_v(as_mat34f lhs, as_mat33f rhs);
 as_mat34f as_mat34f_inverse(const as_mat34f* mat);
 as_mat34f as_mat34f_inverse_v(as_mat34f mat);
 
-// mat44
+// mat44f
 int as_mat44_rc(int r, int c);
 as_mat44f as_mat44f_identity(void);
 as_mat44f as_mat44f_translation_from_floats(
