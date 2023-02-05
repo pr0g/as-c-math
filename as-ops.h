@@ -169,6 +169,13 @@ float as_mat33f_determinant(const as_mat33f* mat);
 float as_mat33f_determinant_v(as_mat33f mat);
 as_mat33f as_mat33f_inverse(const as_mat33f* mat);
 as_mat33f as_mat33f_inverse_v(as_mat33f mat);
+bool as_mat33f_near(
+  const as_mat33f* lhs,
+  const as_mat33f* rhs,
+  float max_diff,
+  float max_rel_diff);
+bool as_mat33f_near_v(
+  as_mat33f lhs, as_mat33f rhs, float max_diff, float max_rel_diff);
 
 // mat34f
 int as_mat34_rc(int r, int c);
@@ -191,6 +198,13 @@ as_mat34f as_mat34f_mul_mat33f(const as_mat34f* lhs, const as_mat33f* rhs);
 as_mat34f as_mat34f_mul_mat33f_v(as_mat34f lhs, as_mat33f rhs);
 as_mat34f as_mat34f_inverse(const as_mat34f* mat);
 as_mat34f as_mat34f_inverse_v(as_mat34f mat);
+bool as_mat34f_near(
+  const as_mat34f* lhs,
+  const as_mat34f* rhs,
+  float max_diff,
+  float max_rel_diff);
+bool as_mat34f_near_v(
+  as_mat34f lhs, as_mat34f rhs, float max_diff, float max_rel_diff);
 
 // mat44f
 int as_mat44_rc(int r, int c);
@@ -234,6 +248,13 @@ float as_mat44f_determinant(const as_mat44f* mat);
 float as_mat44f_determinant_v(as_mat44f mat);
 as_mat44f as_mat44f_inverse(const as_mat44f* mat);
 as_mat44f as_mat44f_inverse_v(as_mat44f mat);
+bool as_mat44f_near(
+  const as_mat44f* lhs,
+  const as_mat44f* rhs,
+  float max_diff,
+  float max_rel_diff);
+bool as_mat44f_near_v(
+  as_mat44f lhs, as_mat44f rhs, float max_diff, float max_rel_diff);
 
 // utils
 void as_float_swap(float* lhs, float* rhs);

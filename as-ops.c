@@ -733,6 +733,22 @@ as_mat33f as_mat33f_inverse_v(const as_mat33f mat) {
   return as_mat33f_inverse(&mat);
 }
 
+bool as_mat33f_near(
+  const as_mat33f* lhs,
+  const as_mat33f* rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat_near(lhs->elem, rhs->elem, 9, max_diff, max_rel_diff);
+}
+
+bool as_mat33f_near_v(
+  const as_mat33f lhs,
+  const as_mat33f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat33f_near(&lhs, &rhs, max_diff, max_rel_diff);
+}
+
 int as_mat34_rc(const int r, const int c) {
   return as_mat44_rc(r, c);
 }
@@ -891,6 +907,22 @@ as_mat34f as_mat34f_inverse(const as_mat34f* const mat) {
 
 as_mat34f as_mat34f_inverse_v(const as_mat34f mat) {
   return as_mat34f_inverse(&mat);
+}
+
+bool as_mat34f_near(
+  const as_mat34f* lhs,
+  const as_mat34f* rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat_near(lhs->elem, rhs->elem, 12, max_diff, max_rel_diff);
+}
+
+bool as_mat34f_near_v(
+  const as_mat34f lhs,
+  const as_mat34f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat34f_near(&lhs, &rhs, max_diff, max_rel_diff);
 }
 
 int as_mat44_rc(const int r, const int c) {
@@ -1375,6 +1407,22 @@ as_mat44f as_mat44f_inverse(const as_mat44f* const mat) {
 
 as_mat44f as_mat44f_inverse_v(const as_mat44f mat) {
   return as_mat44f_inverse(&mat);
+}
+
+bool as_mat44f_near(
+  const as_mat44f* lhs,
+  const as_mat44f* rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat_near(lhs->elem, rhs->elem, 16, max_diff, max_rel_diff);
+}
+
+bool as_mat44f_near_v(
+  const as_mat44f lhs,
+  const as_mat44f rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_mat44f_near(&lhs, &rhs, max_diff, max_rel_diff);
 }
 
 void as_float_swap(float* lhs, float* rhs) {

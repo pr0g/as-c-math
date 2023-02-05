@@ -1943,6 +1943,24 @@ void test_mat33f_inverse(void) {
   }
 }
 
+void test_mat33f_near(void) {
+  {
+    const as_mat33f lhs =
+      (as_mat33f){1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f};
+    const as_mat33f rhs = lhs;
+    const bool near = as_mat33f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    const as_mat33f lhs =
+      (as_mat33f){1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f};
+    const as_mat33f rhs =
+      (as_mat33f){1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.01f};
+    const bool near = as_mat33f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+}
+
 void test_mat34_rc(void) {
   const int m00 = as_mat34_rc(0, 0);
   const int m01 = as_mat34_rc(0, 1);
@@ -2242,6 +2260,34 @@ void test_mat34f_inverse(void) {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 15.0f, original_point3f.x);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 30.0f, original_point3f.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 45.0f, original_point3f.z);
+  }
+}
+
+void test_mat34f_near(void) {
+  {
+    // clang-format off
+    const as_mat34f lhs =
+      (as_mat34f){ 1.0f,  2.0f,  3.0f,  4.0f,
+                   5.0f,  6.0f,  7.0f,  8.0f,
+                   9.0f, 10.0f, 11.0f, 12.0f};
+    // clang-format on
+    const as_mat34f rhs = lhs;
+    const bool near = as_mat34f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    // clang-format off
+    const as_mat34f lhs =
+      (as_mat34f){ 1.0f,  2.0f,  3.0f,  4.0f,
+                   5.0f,  6.0f,  7.0f,  8.0f,
+                   9.0f, 10.0f, 11.0f, 12.0f};
+    const as_mat34f rhs =
+      (as_mat34f){ 1.0f,  2.0f,  3.0f,  4.0f,
+                   5.0f,  6.0f,  7.0f,  8.0f,
+                   9.0f, 10.0f, 11.0f, 11.9f};
+    // clang-format on
+    const bool near = as_mat34f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
   }
 }
 
@@ -2713,6 +2759,36 @@ void test_mat44f_inverse(void) {
   }
 }
 
+void test_mat44f_near(void) {
+  {
+    // clang-format off
+    const as_mat44f lhs =
+      (as_mat44f){  1.0f,  2.0f,  3.0f,  4.0f,
+                    5.0f,  6.0f,  7.0f,  8.0f,
+                    9.0f, 10.0f, 11.0f, 12.0f,
+                   13.0f, 14.0f, 15.0f, 16.0f};
+    // clang-format on
+    const as_mat44f rhs = lhs;
+    const bool near = as_mat44f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
+  }
+  {
+    // clang-format off
+    const as_mat44f lhs =
+      (as_mat44f){ 1.0f,  2.0f,  3.0f,  4.0f,
+                   5.0f,  6.0f,  7.0f,  8.0f,
+                   9.0f, 10.0f, 11.0f, 12.0f};
+    const as_mat44f rhs =
+      (as_mat44f){  1.0f,  2.0f,  3.0f,  4.0f,
+                    5.0f,  6.0f,  7.0f,  8.0f,
+                    9.0f, 10.0f, 11.0f, 12.0f,
+                   13.0f, 14.0f, 15.0f, 16.1f};
+    // clang-format on
+    const bool near = as_mat44f_near_v(lhs, rhs, FLT_EPSILON, FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+}
+
 void test_float_swap(void) {
   {
     float a = 3.0f;
@@ -3002,6 +3078,7 @@ int main(void) {
   RUN_TEST(test_mat33f_mul_mat34f);
   RUN_TEST(test_mat33f_determinant);
   RUN_TEST(test_mat33f_inverse);
+  RUN_TEST(test_mat33f_near);
   RUN_TEST(test_mat34_rc);
   RUN_TEST(test_mat34f_identity);
   RUN_TEST(test_mat34f_translation_from_floats);
@@ -3013,6 +3090,7 @@ int main(void) {
   RUN_TEST(test_mat34f_mul_mat34f);
   RUN_TEST(test_mat34f_mul_mat33f);
   RUN_TEST(test_mat34f_inverse);
+  RUN_TEST(test_mat34f_near);
   RUN_TEST(test_mat44_rc);
   RUN_TEST(test_mat44f_identity);
   RUN_TEST(test_mat44f_translation_from_floats);
@@ -3034,6 +3112,7 @@ int main(void) {
   RUN_TEST(test_mat44f_project_point3f);
   RUN_TEST(test_mat44f_determinant);
   RUN_TEST(test_mat44f_inverse);
+  RUN_TEST(test_mat44f_near);
   RUN_TEST(test_float_swap);
   RUN_TEST(test_int_swap);
   RUN_TEST(test_float_clamp);
