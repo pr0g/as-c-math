@@ -77,4 +77,11 @@ typedef struct as_plane {
   as_vec3f normal;
 } as_plane;
 
+typedef struct as_quat {
+  float w;
+  float x;
+  float y;
+  float z;
+} as_quat;
+
 #endif // AS_TYPES_MATH_H

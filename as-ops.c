@@ -1425,6 +1425,145 @@ bool as_mat44f_near_v(
   return as_mat44f_near(&lhs, &rhs, max_diff, max_rel_diff);
 }
 
+as_quat as_quat_identity() {
+  return (as_quat){.w = 1.0f, .x = 0.0f, .y = 0.0f, .z = 0.0f};
+}
+
+as_quat as_quat_mul_quat(const as_quat lhs, const as_quat rhs) {
+  return (as_quat){
+    .w = lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z,
+    .x = lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y,
+    .y = lhs.w * rhs.y + lhs.y * rhs.w + lhs.z * rhs.x - lhs.x * rhs.z,
+    .z = lhs.w * rhs.z + lhs.z * rhs.w + lhs.x * rhs.y - lhs.y * rhs.x};
+}
+
+as_quat as_quat_add_quat(const as_quat lhs, const as_quat rhs) {
+  return (as_quat){
+    .w = lhs.w + rhs.w,
+    .x = lhs.x + rhs.x,
+    .y = lhs.y + rhs.y,
+    .z = lhs.z + rhs.z};
+}
+
+as_quat as_quat_sub_quat(const as_quat lhs, const as_quat rhs) {
+  return (as_quat){
+    .w = lhs.w - rhs.w,
+    .x = lhs.x - rhs.x,
+    .y = lhs.y - rhs.y,
+    .z = lhs.z - rhs.z};
+}
+
+as_quat as_quat_mul_float(const as_quat quat, const float scalar) {
+  return (as_quat){
+    .w = quat.w * scalar,
+    .x = quat.x * scalar,
+    .y = quat.y * scalar,
+    .z = quat.z * scalar};
+}
+
+as_quat as_quat_div_float(const as_quat quat, const float scalar) {
+  const float recip = 1.0f / scalar;
+  return as_quat_mul_float(quat, recip);
+}
+
+as_quat as_quat_negate(const as_quat quat) {
+  return (as_quat){.w = -quat.w, .x = -quat.x, .y = -quat.y, .z = -quat.z};
+}
+
+float as_quat_dot(const as_quat lhs, const as_quat rhs) {
+  return lhs.w * rhs.w + lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+}
+
+float as_quat_length_sq(const as_quat quat) {
+  return as_quat_dot(quat, quat);
+}
+
+float as_quat_length(const as_quat quat) {
+  return sqrtf(as_quat_length_sq(quat));
+}
+
+as_quat as_quat_normalize(const as_quat quat) {
+  return as_quat_div_float(quat, as_quat_length(quat));
+}
+
+as_quat as_quat_conjugate(const as_quat quat) {
+  return (as_quat){.w = quat.w, .x = -quat.x, .y = -quat.y, .z = -quat.z};
+}
+
+as_quat as_quat_inverse(const as_quat quat) {
+  return as_quat_div_float(as_quat_conjugate(quat), as_quat_length_sq(quat));
+}
+
+as_vec3f as_quat_rotate_vec3f(const as_quat quat, const as_vec3f vec) {
+  const as_quat result = as_quat_mul_quat(
+    quat,
+    as_quat_mul_quat(
+      (as_quat){.w = 0.0f, .x = vec.x, .y = vec.y, .z = vec.z},
+      as_quat_conjugate(quat)));
+  return (as_vec3f){result.x, result.y, result.z};
+}
+
+as_quat as_quat_axis_rotation(const as_vec3f axis, const float radians) {
+  const as_vec3f quat_axis = as_vec3f_mul_float(axis, sinf(0.5f * radians));
+  return as_quat_normalize((as_quat){
+    .w = cosf(0.5f * radians),
+    .x = quat_axis.x,
+    .y = quat_axis.y,
+    .z = quat_axis.z});
+}
+
+as_quat as_quat_x_axis_rotation(const float radians) {
+  return as_quat_axis_rotation(as_vec3f_x_axis(), radians);
+}
+
+as_quat as_quat_y_axis_rotation(const float radians) {
+  return as_quat_axis_rotation(as_vec3f_y_axis(), radians);
+}
+
+as_quat as_quat_z_axis_rotation(const float radians) {
+  return as_quat_axis_rotation(as_vec3f_z_axis(), radians);
+}
+
+static as_quat as_quat_mix(
+  const as_quat begin, const as_quat end, const float t) {
+  return (as_quat){
+    .w = as_float_mix(begin.w, end.w, t),
+    .x = as_float_mix(begin.x, end.x, t),
+    .y = as_float_mix(begin.y, end.y, t),
+    .z = as_float_mix(begin.z, end.z, t)};
+}
+
+as_quat as_quat_nlerp(const as_quat begin, const as_quat end, const float t) {
+  const as_quat end_s =
+    as_quat_dot(begin, end) < 0.0f ? as_quat_mul_float(end, -1.0f) : end;
+  return as_quat_normalize(as_quat_mix(begin, end_s, t));
+}
+
+as_quat as_quat_slerp(const as_quat begin, const as_quat end, const float t) {
+  const float dot = as_float_clamp(as_quat_dot(begin, end), -1.0f, 1.0f);
+  if (dot > 0.9995f) {
+    return as_quat_mix(begin, end, t);
+  }
+  const as_quat end_s = dot < 0.0f ? as_quat_mul_float(end, -1.0f) : end;
+  const float theta = acosf(fabsf(dot));
+  return as_quat_div_float(
+    as_quat_add_quat(
+      as_quat_mul_float(begin, sinf(1.0f - t) * theta),
+      as_quat_mul_float(end_s, sinf(t * theta))),
+    sinf(theta));
+}
+
+bool as_quat_near(
+  const as_quat lhs,
+  const as_quat rhs,
+  const float max_diff,
+  const float max_rel_diff) {
+  return as_float_near(lhs.w, rhs.w, max_diff, max_rel_diff)
+      && as_float_near(lhs.x, rhs.x, max_diff, max_rel_diff)
+      && as_float_near(lhs.y, rhs.y, max_diff, max_rel_diff)
+      && as_float_near(lhs.z, rhs.z, max_diff, max_rel_diff);
+}
+
 void as_float_swap(float* lhs, float* rhs) {
   const float temp = *lhs;
   *lhs = *rhs;

@@ -256,6 +256,29 @@ bool as_mat44f_near(
 bool as_mat44f_near_v(
   as_mat44f lhs, as_mat44f rhs, float max_diff, float max_rel_diff);
 
+// as_quat
+as_quat as_quat_identity();
+as_quat as_quat_mul_quat(as_quat lhs, as_quat rhs);
+as_quat as_quat_add_quat(as_quat lhs, as_quat rhs);
+as_quat as_quat_sub_quat(as_quat lhs, as_quat rhs);
+as_quat as_quat_mul_float(as_quat quat, float scalar);
+as_quat as_quat_div_float(as_quat quat, float scalar);
+as_quat as_quat_negate(as_quat quat);
+float as_quat_dot(as_quat lhs, as_quat rhs);
+float as_quat_length_sq(as_quat quat);
+float as_quat_length(as_quat quat);
+as_quat as_quat_normalize(as_quat quat);
+as_quat as_quat_conjugate(as_quat quat);
+as_quat as_quat_inverse(as_quat quat);
+as_vec3f as_quat_rotate_vec3f(as_quat quat, as_vec3f vec);
+as_quat as_quat_axis_rotation(as_vec3f axis, float radians);
+as_quat as_quat_x_axis_rotation(float radians);
+as_quat as_quat_y_axis_rotation(float radians);
+as_quat as_quat_z_axis_rotation(float radians);
+as_quat as_quat_nlerp(as_quat begin, as_quat end, float t);
+as_quat as_quat_slerp(as_quat begin, as_quat end, float t);
+bool as_quat_near(as_quat lhs, as_quat rhs, float max_diff, float max_rel_diff);
+
 // utils
 void as_float_swap(float* lhs, float* rhs);
 void as_int_swap(int* lhs, int* rhs);
