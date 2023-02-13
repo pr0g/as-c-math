@@ -2789,7 +2789,7 @@ void test_mat44f_near(void) {
   }
 }
 
-void test_quat_identity() {
+void test_quat_identity(void) {
   const as_quat quat = as_quat_identity();
   TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, quat.w, 1.0f);
   TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, quat.x, 0.0f);
@@ -2797,10 +2797,28 @@ void test_quat_identity() {
   TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, quat.z, 0.0f);
 }
 
-void test_quat_mul_quat() {
+void test_quat_mul_quat(void) {
+  {
+    const as_quat lhs = as_quat_axis_rotation(as_vec3f_x_axis(), as_k_half_pi);
+    const as_quat rhs = as_quat_axis_rotation(as_vec3f_y_axis(), as_k_pi);
+    const as_quat result = as_quat_mul_quat(lhs, rhs);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.w, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 0.7071068f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, 0.7071068f);
+  }
+  {
+    const as_quat lhs = as_quat_axis_rotation(as_vec3f_z_axis(), as_k_pi);
+    const as_quat rhs = as_quat_axis_rotation(as_vec3f_x_axis(), as_k_half_pi);
+    const as_quat result = as_quat_mul_quat(lhs, rhs);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.w, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 0.7071068f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, 0.7071068f);
+  }
 }
 
-void test_quat_axis_rotation() {
+void test_quat_axis_rotation(void) {
   {
     const as_quat quat = as_quat_axis_rotation(as_vec3f_y_axis(), as_k_half_pi);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, quat.w, 0.7071068f);
@@ -2852,7 +2870,7 @@ void test_quat_axis_rotation() {
   }
 }
 
-void test_quat_conjugate() {
+void test_quat_conjugate(void) {
   {
     const as_quat quat =
       as_quat_conjugate((as_quat){.w = 1.0f, .x = 2.0f, .y = 2.0f, .z = 2.0f});
@@ -2871,7 +2889,7 @@ void test_quat_conjugate() {
   }
 }
 
-void test_quat_negate() {
+void test_quat_negate(void) {
   {
     const as_quat quat =
       as_quat_negate((as_quat){.w = 1.0f, .x = 2.0f, .y = 2.0f, .z = 2.0f});
@@ -2887,6 +2905,225 @@ void test_quat_negate() {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, quat.x, -3.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, quat.y, -4.0f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, quat.z, -5.0f);
+  }
+}
+
+void test_quat_add_quat(void) {
+  {
+    const as_quat result = as_quat_add_quat(
+      (as_quat){1.0f, 2.0f, 3.0f, 4.0f}, (as_quat){4.0f, 3.0f, 2.0f, 1.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.w, 5.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 5.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 5.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, 5.0f);
+  }
+  {
+    const as_quat result = as_quat_add_quat(
+      (as_quat){2.0f, 4.0f, 6.0f, 8.0f}, (as_quat){1.0f, 3.0f, 5.0f, 9.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.w, 3.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 7.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 11.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, 17.0f);
+  }
+}
+
+void test_quat_sub_quat(void) {
+  {
+    const as_quat result = as_quat_sub_quat(
+      (as_quat){4.0f, 3.0f, 2.0f, 1.0f}, (as_quat){1.0f, 2.0f, 3.0f, 4.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.w, 3.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, -1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, -3.0f);
+  }
+  {
+    const as_quat result = as_quat_sub_quat(
+      (as_quat){2.0f, 4.0f, 6.0f, 8.0f}, (as_quat){1.0f, 3.0f, 5.0f, 9.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.w, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, -1.0f);
+  }
+}
+
+void test_quat_inverse(void) {
+  {
+    {
+      const as_quat inverse =
+        as_quat_inverse((as_quat){0.7071068f, 0.0f, 0.7071068f, 0.0f});
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.w, 0.7071068f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.x, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.y, -0.7071068f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.z, 0.0f);
+    }
+    {
+      const as_quat lhs = as_quat_y_axis_rotation(-as_k_quarter_pi);
+      const as_quat rhs = as_quat_x_axis_rotation(-as_k_quarter_pi);
+      const as_quat combined = as_quat_mul_quat(lhs, rhs);
+      const as_quat inverse = as_quat_inverse(combined);
+      const as_quat result = as_quat_mul_quat(inverse, combined);
+
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, lhs.w, 0.9238795f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, lhs.x, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, lhs.y, -0.3826834f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, lhs.z, 0.0f);
+
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, rhs.w, 0.9238795f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, rhs.x, -0.3826834f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, rhs.y, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, rhs.z, 0.0f);
+
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, combined.x, -0.35355334825f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, combined.w, 0.85355333052f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, combined.y, -0.35355334825f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, combined.z, -0.14644658464f);
+
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.w, 0.853553475357717f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.x, 0.353553408243744f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.y, 0.353553408243744f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, inverse.z, 0.146446609490221f);
+
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.w, 1.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, 0.0f);
+    }
+  }
+}
+
+void test_quat_rotate_vec3f(void) {
+  {
+    const as_quat rotation = as_quat_y_axis_rotation(as_k_half_pi);
+    const as_vec3f result =
+      as_quat_rotate_vec3f(rotation, (as_vec3f){.z = 1.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, 0.0f);
+  }
+  {
+    const as_quat rotation = as_quat_x_axis_rotation(as_k_half_pi);
+    const as_vec3f result =
+      as_quat_rotate_vec3f(rotation, (as_vec3f){.y = 1.0f});
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.x, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.y, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, result.z, 1.0f);
+  }
+}
+
+void test_quat_nlerp(void) {
+  {
+    const as_quat begin = as_quat_y_axis_rotation(0.0f);
+    const as_quat end = as_quat_y_axis_rotation(as_k_pi);
+
+    const as_quat begin_q = as_quat_nlerp(begin, end, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, begin_q.w, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, begin_q.x, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, begin_q.y, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, begin_q.z, 0.0f);
+
+    const as_quat end_q = as_quat_nlerp(begin, end, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, end_q.w, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, end_q.x, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, end_q.y, -1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, end_q.z, 0.0f);
+
+    const as_quat middle_q = as_quat_nlerp(begin, end, 0.5f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.w, 0.7071068f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.x, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.y, -0.7071068f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.z, 0.0f);
+  }
+
+  {
+    const as_quat begin =
+      as_quat_z_axis_rotation(-as_k_half_pi - as_k_quarter_pi);
+    const as_quat end = as_quat_z_axis_rotation(-as_k_quarter_pi);
+
+    const as_quat middle_q = as_quat_nlerp(begin, end, 0.5f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.w, 0.7071068f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.x, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.y, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, middle_q.z, -0.7071068f);
+  }
+}
+
+void test_quat_slerp(void) {
+  {
+    const as_quat begin = as_quat_identity();
+    const as_quat end = as_quat_x_axis_rotation(as_k_half_pi);
+
+    {
+      const as_quat q_begin = as_quat_slerp(begin, end, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_begin.w, 1.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_begin.x, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_begin.y, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_begin.z, 0.0f);
+
+      const as_quat q_half = as_quat_slerp(begin, end, 0.5f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_half.w, 0.9238795f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_half.x, 0.3826834f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_half.y, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_half.z, 0.0f);
+
+      const as_quat q_end = as_quat_slerp(begin, end, 1.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.w, 0.7071067f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.x, 0.7071067f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.y, 0.0f);
+      TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.z, 0.0f);
+    }
+  }
+  {
+    const as_quat begin = as_quat_x_axis_rotation(as_k_half_pi - 0.01f);
+    const as_quat end = as_quat_x_axis_rotation(as_k_half_pi);
+
+    const as_quat q_end = as_quat_slerp(begin, end, 1.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.w, 0.7071067f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.x, 0.7071067f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.y, 0.0f);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, q_end.z, 0.0f);
+  }
+}
+
+void test_quat_near(void) {
+  {
+    const bool near = as_quat_near(
+      (as_quat){1.0f, 1.0f, 1.0f, 1.0f},
+      (as_quat){0.99f, 1.0f, 1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_quat_near(
+      (as_quat){1.0f, 0.99f, 1.0f, 1.0f},
+      (as_quat){1.0f, 1.0f, 1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_quat_near(
+      (as_quat){1.0f, 1.0f, 1.0f, 1.0f},
+      (as_quat){1.0f, 1.0f, 1.1f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_quat_near(
+      (as_quat){1.0f, 1.0f, 1.0f, 1.01f},
+      (as_quat){1.0f, 1.0f, 1.0f, 1.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(!near);
+  }
+  {
+    const bool near = as_quat_near(
+      (as_quat){2.0f, 3.0f, 4.0f, 5.0f},
+      (as_quat){2.0f, 3.0f, 4.0f, 5.0f},
+      FLT_EPSILON,
+      FLT_EPSILON);
+    TEST_ASSERT_TRUE(near);
   }
 }
 
@@ -3219,6 +3456,13 @@ int main(void) {
   RUN_TEST(test_quat_axis_rotation);
   RUN_TEST(test_quat_conjugate);
   RUN_TEST(test_quat_negate);
+  RUN_TEST(test_quat_add_quat);
+  RUN_TEST(test_quat_sub_quat);
+  RUN_TEST(test_quat_inverse);
+  RUN_TEST(test_quat_rotate_vec3f);
+  RUN_TEST(test_quat_nlerp);
+  RUN_TEST(test_quat_slerp);
+  RUN_TEST(test_quat_near);
   RUN_TEST(test_float_swap);
   RUN_TEST(test_int_swap);
   RUN_TEST(test_float_clamp);

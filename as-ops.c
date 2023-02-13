@@ -4,6 +4,7 @@
 
 const float as_k_pi = 3.14159265358979323846f;
 const float as_k_half_pi = 1.57079632679489661923f;
+const float as_k_quarter_pi = 0.78539816339744827900f;
 const float as_k_two_pi = 6.28318530717958647692f;
 const float as_k_tau = 6.28318530717958647692f;
 
@@ -1548,7 +1549,7 @@ as_quat as_quat_slerp(const as_quat begin, const as_quat end, const float t) {
   const float theta = acosf(fabsf(dot));
   return as_quat_div_float(
     as_quat_add_quat(
-      as_quat_mul_float(begin, sinf(1.0f - t) * theta),
+      as_quat_mul_float(begin, sinf((1.0f - t) * theta)),
       as_quat_mul_float(end_s, sinf(t * theta))),
     sinf(theta));
 }

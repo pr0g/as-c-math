@@ -8,6 +8,7 @@
 // constants
 extern const float as_k_pi;
 extern const float as_k_half_pi;
+extern const float as_k_quarter_pi;
 extern const float as_k_two_pi;
 extern const float as_k_tau;
 
