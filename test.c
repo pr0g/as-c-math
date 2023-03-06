@@ -3082,6 +3082,39 @@ void test_quat_slerp(void) {
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.y);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.z);
   }
+  {
+    const as_quat q_end = as_quat_slerp(
+      (as_quat){-1.0f, 0.0f, 0.0f, 0.0f},
+      (as_quat){1.0f, 0.0f, 0.0f, 0.0f},
+      0.0f);
+
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, q_end.w);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.z);
+  }
+  {
+    const as_quat q_end = as_quat_slerp(
+      (as_quat){-1.0f, 0.0f, 0.0f, 0.0f},
+      (as_quat){1.0f, 0.0f, 0.0f, 0.0f},
+      0.0f);
+
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, -1.0f, q_end.w);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.z);
+  }
+  {
+    const as_quat q_end = as_quat_slerp(
+      (as_quat){1.0f, 0.0f, 0.0f, 0.0f},
+      (as_quat){-1.0f, 0.0f, 0.0f, 0.0f},
+      0.5f);
+
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 1.0f, q_end.w);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.x);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.y);
+    TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 0.0f, q_end.z);
+  }
 }
 
 void test_quat_near(void) {

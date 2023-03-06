@@ -1536,17 +1536,18 @@ static as_quat as_quat_mix(
 
 as_quat as_quat_nlerp(const as_quat begin, const as_quat end, const float t) {
   const as_quat end_s =
-    as_quat_dot(begin, end) < 0.0f ? as_quat_mul_float(end, -1.0f) : end;
+    as_quat_dot(begin, end) < 0.0f ? as_quat_negate(end) : end;
   return as_quat_normalize(as_quat_mix(begin, end_s, t));
 }
 
 as_quat as_quat_slerp(const as_quat begin, const as_quat end, const float t) {
   const float dot = as_float_clamp(as_quat_dot(begin, end), -1.0f, 1.0f);
-  if (dot > 0.9995f) {
-    return as_quat_mix(begin, end, t);
+  const float abs_dot = fabsf(dot);
+  const as_quat end_s = dot < 0.0f ? as_quat_negate(end) : end;
+  if (abs_dot > 0.9995f) {
+    return as_quat_normalize(as_quat_mix(begin, end_s, t));
   }
-  const as_quat end_s = dot < 0.0f ? as_quat_mul_float(end, -1.0f) : end;
-  const float theta = acosf(fabsf(dot));
+  const float theta = acosf(abs_dot);
   return as_quat_div_float(
     as_quat_add_quat(
       as_quat_mul_float(begin, sinf((1.0f - t) * theta)),
