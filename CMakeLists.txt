@@ -3,7 +3,7 @@ project(as-c-math LANGUAGES C)
 
 include(FetchContent)
 
-option(AS_MATH_ENABLE_TEST "Enable testing" OFF)
+option(AS_MATH_ENABLE_TEST "Enable testing" ON)
 option(AS_MATH_ENABLE_COVERAGE "Enable coverage" OFF)
 
 add_library(${PROJECT_NAME})
