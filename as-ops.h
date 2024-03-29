@@ -258,7 +258,7 @@ bool as_mat44f_near_v(
   as_mat44f lhs, as_mat44f rhs, float max_diff, float max_rel_diff);
 
 // as_quat
-as_quat as_quat_identity();
+as_quat as_quat_identity(void);
 as_quat as_quat_mul_quat(as_quat lhs, as_quat rhs);
 as_quat as_quat_add_quat(as_quat lhs, as_quat rhs);
 as_quat as_quat_sub_quat(as_quat lhs, as_quat rhs);
