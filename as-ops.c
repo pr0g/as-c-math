@@ -1426,7 +1426,7 @@ bool as_mat44f_near_v(
   return as_mat44f_near(&lhs, &rhs, max_diff, max_rel_diff);
 }
 
-as_quat as_quat_identity() {
+as_quat as_quat_identity(void) {
   return (as_quat){.w = 1.0f, .x = 0.0f, .y = 0.0f, .z = 0.0f};
 }
 
