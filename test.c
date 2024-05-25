@@ -175,7 +175,7 @@ void test_vec2f_normalize(void) {
 
 void test_vec2f_mix(void) {
   {
-    const as_vec2f begin = (as_vec2f){};
+    const as_vec2f begin = (as_vec2f){0};
     const as_vec2f end = as_vec2f_from_float(10.0f);
     const as_vec2f mixed = as_vec2f_mix(begin, end, 0.5f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mixed.x);
@@ -754,7 +754,7 @@ void test_vec3f_axes(void) {
 
 void test_vec3f_mix(void) {
   {
-    const as_vec3f begin = (as_vec3f){};
+    const as_vec3f begin = (as_vec3f){0};
     const as_vec3f end = as_vec3f_from_float(10.0f);
     const as_vec3f mixed = as_vec3f_mix(begin, end, 0.5f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mixed.x);
@@ -1366,7 +1366,7 @@ void test_point3f_rotate_z_axis(void) {
 
 void test_point3f_mix(void) {
   {
-    const as_point3f begin = (as_point3f){};
+    const as_point3f begin = (as_point3f){0};
     const as_point3f end = as_point3f_from_float(10.0f);
     const as_point3f mixed = as_point3f_mix(begin, end, 0.5f);
     TEST_ASSERT_FLOAT_WITHIN(FLT_EPSILON, 5.0f, mixed.x);
