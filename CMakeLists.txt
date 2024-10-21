@@ -16,8 +16,8 @@ target_compile_features(${PROJECT_NAME} PRIVATE c_std_99)
 target_link_libraries(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:GNU>:-lm>)
 
 if(AS_MATH_ENABLE_COVERAGE)
-  target_compile_options(${PROJECT_NAME} PRIVATE -fprofile-arcs -ftest-coverage)
-  target_link_options(${PROJECT_NAME} PRIVATE -coverage)
+  target_compile_options(${PROJECT_NAME} PRIVATE --coverage)
+  target_link_options(${PROJECT_NAME} PRIVATE --coverage)
 endif()
 
 if(AS_MATH_ENABLE_TEST)
@@ -31,9 +31,8 @@ if(AS_MATH_ENABLE_TEST)
   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME} unity)
   target_compile_features(${PROJECT_NAME}-test PRIVATE c_std_99)
   if(AS_MATH_ENABLE_COVERAGE)
-    target_compile_options(${PROJECT_NAME}-test PRIVATE -fprofile-arcs
-                                                        -ftest-coverage)
-    target_link_options(${PROJECT_NAME}-test PRIVATE -coverage)
+    target_compile_options(${PROJECT_NAME}-test PRIVATE --coverage)
+    target_link_options(${PROJECT_NAME}-test PRIVATE --coverage)
   endif()
 endif()
 
