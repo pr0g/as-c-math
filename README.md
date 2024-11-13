@@ -4,10 +4,10 @@ C linear algebra math library (initial version created during [pikuma-3d-graphic
 
 ## Conventions/Storage
 
-- **Convention**: Column major
-- **Storage**: Column major
+- **Convention**: Column vectors
+- **Storage**: Row major
 
-`as-c-math` uses column major convention (matrices are multiplied right to left - post-multiply) with vectors appearing on the right of a matrix multiply. The storage order is also column major (basis axes are interleaved) so matrices must be transposed to put them in row major storage before being passed to any graphics API.
+`as-c-math` uses column vectors (matrices are multiplied right to left - post-multiply) with vectors appearing on the right of a matrix multiply. The storage order is row major however (basis axes are interleaved). Matrices must be transposed before being passed to any graphics API to ensure the basis vectors are contiguous in memory.
 
 ## as C++ library
 
@@ -22,7 +22,7 @@ C linear algebra math library (initial version created during [pikuma-3d-graphic
 ## WIP
 
 - ~~negate~~
-- near
+- ~~near~~
 - vec_min
 - vec_max
 - vec_min_elem
@@ -41,6 +41,6 @@ C linear algebra math library (initial version created during [pikuma-3d-graphic
 - ~~mat_determinant~~
 - ~~mat_inverse~~
 - mat shear
-- quaternion
+- ~~quaternion~~
 - basis
 - ~~add _v postfix for matrix functions to allow call by value~~
