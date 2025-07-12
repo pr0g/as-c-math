@@ -132,6 +132,8 @@ as_mat22f as_mat22f_scale_from_vec2f(as_vec2f scale_xy);
 as_mat22f as_mat22f_rotation(float radians);
 as_point2f as_mat22f_mul_point2f(const as_mat22f* mat, as_point2f point);
 as_point2f as_mat22f_mul_point2f_v(as_mat22f mat, as_point2f point);
+as_vec2f as_mat22f_mul_vec2f(const as_mat22f* mat, as_vec2f vec);
+as_vec2f as_mat22f_mul_vec2f_v(as_mat22f mat, as_vec2f vec);
 float as_mat22f_determinant(const as_mat22f* mat);
 float as_mat22f_determinant_v(as_mat22f mat);
 as_mat22f as_mat22f_inverse(const as_mat22f* mat);

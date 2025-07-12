@@ -1563,6 +1563,22 @@ void test_mat22f_mul_point2f(void) {
   }
 }
 
+void test_mat22f_mul_vec2f(void) {
+  const float epsilon = 0.0001f;
+  {
+    const as_vec2f vec2f = as_mat22f_mul_vec2f_v(
+      as_mat22f_rotation(as_k_half_pi), (as_vec2f){0.0f, -1.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 1.0f, vec2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, vec2f.y);
+  }
+  {
+    const as_vec2f vec2f = as_mat22f_mul_vec2f_v(
+      as_mat22f_rotation(as_k_pi), (as_vec2f){1.0f, 0.0f});
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, -1.0f, vec2f.x);
+    TEST_ASSERT_FLOAT_WITHIN(epsilon, 0.0f, vec2f.y);
+  }
+}
+
 void test_mat22f_determinant(void) {
   {
     const float determinant =
@@ -3430,6 +3446,7 @@ int main(void) {
   RUN_TEST(test_mat22f_scale_from_vec2f);
   RUN_TEST(test_mat22f_rotation);
   RUN_TEST(test_mat22f_mul_point2f);
+  RUN_TEST(test_mat22f_mul_vec2f);
   RUN_TEST(test_mat22f_determinant);
   RUN_TEST(test_mat22f_inverse);
   RUN_TEST(test_mat22f_near);

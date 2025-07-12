@@ -460,6 +460,15 @@ as_point2f as_mat22f_mul_point2f_v(
   return as_mat22f_mul_point2f(&mat, point);
 }
 
+as_vec2f as_mat22f_mul_vec2f(const as_mat22f* mat, const as_vec2f vec) {
+  return (as_vec2f){.x = mat->elem[0] * vec.x + mat->elem[1] * vec.y,
+                    .y = mat->elem[2] * vec.x + mat->elem[3] * vec.y};
+}
+
+as_vec2f as_mat22f_mul_vec2f_v(as_mat22f mat, const as_vec2f vec) {
+  return as_mat22f_mul_vec2f(&mat, vec);
+}
+
 float as_mat22f_determinant(const as_mat22f* mat) {
   return mat->elem[0] * mat->elem[3] - mat->elem[1] * mat->elem[2];
 }
